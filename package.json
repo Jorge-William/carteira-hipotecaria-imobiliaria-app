@@ -1,0 +1,32 @@
+{
+  "name": "carteira-hipotecaria-imobiliaria-app",
+  "version": "1.0.0",
+  "description": "Aplicação que gerencia a documentaçõa dos mutuários do clube militar",
+  "main": "server.js",
+  "scripts": {
+    "build": "cd frontend && npm run build",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "node.js",
+    "javascript",
+    "react",
+    "express",
+    "semantic-ui"
+  ],
+  "author": "Jorge William",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0"
+  }
+}
