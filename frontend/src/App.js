@@ -1,11 +1,13 @@
-import ComponentTest from './ComponentTest';
+import React from 'react'
+import LoginRoute from './routes/Login.route'
 
 function App() {
-  return (
-    <div className="App">
-      <ComponentTest />
-    </div>
-  );
+	return (
+		<div>
+			<h1>Olá mundo!</h1>
+			<LoginRoute />
+		</div>
+	)
 }
 
-export default App;
+export default App
