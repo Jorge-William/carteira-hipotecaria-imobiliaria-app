@@ -1,13 +1,14 @@
 import React from 'react'
-import LoginRoute from './routes/Login.route'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-function App() {
-	return (
-		<div>
-			<h1>Olá mundo!</h1>
-			<LoginRoute />
-		</div>
-	)
+class App extends React.Component {
+	render() {
+		return (
+			<div className='container'>
+				<h1>Principal</h1>
+			</div>
+		)
+	}
 }
 
 export default App

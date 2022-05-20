@@ -5,11 +5,11 @@ import axios from 'axios'
 // Tuto bezkoder ---> const API_URL = "http://localhost:5001/";
 
 class AuthService {
-	login(username, password) {
+	login(email, senha) {
 		return axios
-			.post('/signin', {
-				username,
-				password
+			.post('/login', {
+				email,
+				senha
 			})
 			.then((response) => {
 				if (response.data.accessToken) {
@@ -23,13 +23,13 @@ class AuthService {
 		localStorage.removeItem('user')
 	}
 
-	register(username, email, password) {
-		return axios.post('/signup', {
-			username,
-			email,
-			password
-		})
-	}
+	// register(username, email, password) {
+	// 	return axios.post('/signup', {
+	// 		username,
+	// 		email,
+	// 		password
+	// 	})
+	// }
 
 	getCurrentUser() {
 		return JSON.parse(localStorage.getItem('user'))
