@@ -1,11 +1,12 @@
 {
   "name": "carteira-hipotecaria-imobiliaria-app",
   "version": "1.0.0",
-  "description": "Aplicação que gerencia a documentaçõa dos mutuários do clube militar",
+  "description": "Aplicação que gerencia a documentação dos mutuários do clube militar",
   "main": "server.js",
   "scripts": {
     "build": "cd frontend && npm run build",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon src/server.js -e js"
   },
   "keywords": [
     "node.js",
@@ -17,9 +18,14 @@
   "author": "Jorge William",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.19.2"
   },
   "devDependencies": {
     "eslint": "^8.15.0",
@@ -27,6 +33,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.5.0"
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "nodemon": "^2.0.16"
   }
 }
