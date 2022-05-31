@@ -2,6 +2,7 @@ import React from 'react'
 import '../style/Login.page.css'
 import { Navigate } from 'react-router-dom'
 import validator from 'validator'
+import AuthService from '../services/auth.service'
 
 class LoginPage extends React.Component {
 	constructor(props) {
@@ -13,7 +14,8 @@ class LoginPage extends React.Component {
 			senha: '',
 			loading: false,
 			redirect: false,
-			disabled: true
+			disabled: true,
+			loginError: false
 		}
 	}
 
@@ -32,11 +34,29 @@ class LoginPage extends React.Component {
 	}
 
 	handleLogin(e) {
+		const { email, senha } = this.state;
 		e.preventDefault()
-		this.setState({
-			loading: true,
-			redirect: true
+		AuthService.login(email, senha)
+		.then(
+			(result) => {
+				if(result.id) {
+					this.setState({
+						loading: true,
+						redirect: true
+					})
+				}
+			}
+		).catch((error) =>{
+
+			this.setState({
+				loginError: true
+			})
+			
+			console.log(error.response.data.message)
 		})
+
+
+
 	}
 
 	render() {
@@ -94,7 +114,12 @@ class LoginPage extends React.Component {
 												onClick={this.handleLogin}
 												disabled={this.state.disabled}
 											>
-												{this.state.disabled && (
+												
+												<span>Entrar</span>
+												{/* {!this.state.disabled && (
+												)} */}
+											</button>
+											{this.state.senha.length > 1 && (
 													<div>
 														<span className='spinner-border spinner-border-sm'></span>
 														<span>
@@ -102,10 +127,10 @@ class LoginPage extends React.Component {
 														</span>
 													</div>
 												)}
-												{!this.state.disabled && (
-													<span>Entrar</span>
-												)}
-											</button>
+											{this.state.loginError && (
+													<div class="alert alert-danger" role="alert">
+													Há algo de errado com suas credenciais, tente novamente ou contacte o administrador.
+												  </div>	)}
 										</div>
 									</form>
 								</div>

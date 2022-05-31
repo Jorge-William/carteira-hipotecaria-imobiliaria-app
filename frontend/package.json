@@ -15,6 +15,7 @@
     "validator": "^13.7.0",
     "web-vitals": "^2.1.4"
   },
+  "proxy": "http://localhost:5001",
   "scripts": {
     "client": "cd frontend && npm run start",
     "start": "react-scripts start",
