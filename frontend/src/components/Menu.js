@@ -52,7 +52,7 @@ class Menu extends React.Component {
 										aria-labelledby='navbarDropdown'
 									>
 										<li>
-											<a class='dropdown-item' href='#'>
+											<a class='dropdown-item' href='/'>
 												SFH
 											</a>
 										</li>
@@ -60,7 +60,7 @@ class Menu extends React.Component {
 											<hr class='dropdown-divider' />
 										</li>
 										<li>
-											<a class='dropdown-item' href='#'>
+											<a class='dropdown-item' href='/'>
 												LEI
 											</a>
 										</li>

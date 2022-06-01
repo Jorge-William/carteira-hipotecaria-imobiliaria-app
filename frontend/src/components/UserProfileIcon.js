@@ -1,6 +1,7 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../style/UserProfileIcon.css'
+// import AuthService from '../services/auth.service'
 
 class UserProfileIcon extends React.Component {
 	render() {
@@ -16,10 +17,10 @@ class UserProfileIcon extends React.Component {
 					<i className='bi bi-person' height='40px'></i>
 				</button>
 				<ul
-					class='dropdown-menu dropdown-menu-sm-start dropdown-menu-md-end'
+					className='dropdown-menu dropdown-menu-sm-start dropdown-menu-md-end'
 					aria-labelledby='dropdownMenuButton'
 				>
-					<li class='dropdown-header'>
+					<li className='dropdown-header'>
 						<h3>Jorge William</h3>
 					</li>
 					<li className='dropdown-divider'></li>
@@ -35,20 +36,31 @@ class UserProfileIcon extends React.Component {
 					</li>
 					<li>
 						<a className='dropdown-item' href='/'>
-							Auditoria
-							<span class='badge bg-danger m-1'>4</span>
-						</a>
-					</li>
-					<li>
-						<a className='dropdown-item' href='/'>
 							Configurações
 						</a>
 					</li>
-					<li className='dropdown-divider'></li>
 					<li>
 						<a className='dropdown-item' href='/'>
-							<strong>Fazer logout</strong>
+							Auditoria
+							<span className='badge bg-danger m-1'>4</span>
 						</a>
+					</li>
+					<li className='dropdown-divider'></li>
+					<li data-bs-toggle='modal' data-bs-target='#exampleModal'>
+						{/* <button
+							className='btn  dropdown-item'
+							data-bs-toggle='modal'
+							data-bs-target='#exampleModal'
+							onClick={() => {
+								AuthService.logout()
+							}}
+						>
+							<strong>Fazer logout</strong>
+						</button> */}
+
+						<span className='dropdown-item' type='button'>
+							Sair
+						</span>
 					</li>
 				</ul>
 			</section>

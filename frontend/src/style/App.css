@@ -1,0 +1,9 @@
+/* Margin para tirar os componentes de debaixo do menu  */
+body {
+    margin-top: 60px;
+}
+#btn-sair{
+    text-decoration: none;
+    color: white
+
+}

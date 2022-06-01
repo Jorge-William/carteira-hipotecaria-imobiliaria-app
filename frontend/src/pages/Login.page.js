@@ -34,34 +34,29 @@ class LoginPage extends React.Component {
 	}
 
 	handleLogin(e) {
-		const { email, senha } = this.state;
+		const { email, senha } = this.state
 		e.preventDefault()
 		AuthService.login(email, senha)
-		.then(
-			(result) => {
-				if(result.id) {
+			.then((result) => {
+				if (result.id) {
 					this.setState({
 						loading: true,
 						redirect: true
 					})
 				}
-			}
-		).catch((error) =>{
-
-			this.setState({
-				loginError: true
 			})
-			
-			console.log(error.response.data.message)
-		})
+			.catch((error) => {
+				this.setState({
+					loginError: true
+				})
 
-
-
+				console.log(error.response.data.message)
+			})
 	}
 
 	render() {
 		if (this.state.redirect) {
-			return <Navigate to='/principal' />
+			return (<Navigate to='/principal' />), window.location.reload()
 		} else {
 			return (
 				<div className='borda'>
@@ -114,23 +109,26 @@ class LoginPage extends React.Component {
 												onClick={this.handleLogin}
 												disabled={this.state.disabled}
 											>
-												
 												<span>Entrar</span>
 												{/* {!this.state.disabled && (
 												)} */}
 											</button>
 											{this.state.senha.length > 1 && (
-													<div>
-														<span className='spinner-border spinner-border-sm'></span>
-														<span>
-															Validando...
-														</span>
-													</div>
-												)}
+												<div>
+													<span className='spinner-border spinner-border-sm'></span>
+													<span>Validando...</span>
+												</div>
+											)}
 											{this.state.loginError && (
-													<div class="alert alert-danger" role="alert">
-													Há algo de errado com suas credenciais, tente novamente ou contacte o administrador.
-												  </div>	)}
+												<div
+													class='alert alert-danger'
+													role='alert'
+												>
+													Há algo de errado com suas
+													credenciais, tente novamente
+													ou contacte o administrador.
+												</div>
+											)}
 										</div>
 									</form>
 								</div>
