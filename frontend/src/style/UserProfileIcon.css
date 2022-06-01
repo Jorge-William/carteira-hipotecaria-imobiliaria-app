@@ -1,0 +1,9 @@
+.perfil{
+    height: 40px;
+    width: 40px;
+    margin-left: 5px;
+    border-radius: 100px;
+    border: 1px solid white; 
+    overflow: hidden;
+
+}
