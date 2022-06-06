@@ -1,144 +1,71 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import '../style/Login.page.css'
-import { Navigate } from 'react-router-dom'
-import validator from 'validator'
+// import validator from 'validator'
+// import AuthService from '../services/auth.service'
+import { useNavigate } from 'react-router-dom'
 import AuthService from '../services/auth.service'
 
-class LoginPage extends React.Component {
-	constructor(props) {
-		super(props)
-		this.onChange = this.onChange.bind(this)
-		this.handleLogin = this.handleLogin.bind(this)
-		this.state = {
-			email: '',
-			senha: '',
-			loading: false,
-			redirect: false,
-			disabled: true,
-			loginError: false
+const LoginPage = ({ authenticate }) => {
+	const navigate = useNavigate()
+
+	// const [disable, setDisable] = useState(false)
+
+	// setEmail = (e) => {
+	// 	this.setState(
+	// 		{
+	// 			[e.target.name]: e.target.value
+	// 		},
+	// 		() => {
+	// 			validator.isEmail(email) && email > 6
+	// 				? setDisable(false)
+	// 				: setDisable(true)
+	// 		}
+	// 	)
+	// }
+
+	const useInput = (initialValue) => {
+		const [value, setValue] = useState(initialValue)
+
+		const handleChange = (event) => {
+			setValue(event.target.value)
+		}
+
+		return {
+			value,
+			onChange: handleChange
 		}
 	}
 
-	onChange(e) {
-		this.setState(
-			{
-				[e.target.name]: e.target.value
-			},
-			() => {
-				validator.isEmail(this.state.email) &&
-				this.state.senha.length > 6
-					? this.setState({ disabled: false })
-					: this.setState({ disabled: true })
-			}
-		)
-	}
+	const email = useInput('')
+	const senha = useInput('')
 
-	handleLogin(e) {
-		const { email, senha } = this.state
-		e.preventDefault()
+	const onClick = () => {
 		AuthService.login(email, senha)
 			.then((result) => {
-				if (result.id) {
-					this.setState({
-						loading: true,
-						redirect: true
-					})
-				}
+				console.log(result)
+				authenticate()
+				navigate('dashboard')
 			})
-			.catch((error) => {
-				this.setState({
-					loginError: true
-				})
-
-				console.log(error.response.data.message)
+			.catch((err) => {
+				console.log(err)
 			})
 	}
 
-	render() {
-		if (this.state.redirect) {
-			return (<Navigate to='/principal' />), window.location.reload()
-		} else {
-			return (
-				<div className='borda'>
-					<div className='row justify-content-center '>
-						<div className='col-sm-4 align-self-end'>
-							<div className='card mt-5'>
-								<div className='card-header'>Login</div>
-								<div className='card-body'>
-									<form
-										className='p-4'
-										onSubmit={this.handleLogin}
-									>
-										<div className='mb-3'>
-											<label
-												htmlFor='exampleInputEmail1'
-												class='form-label'
-											>
-												Email
-											</label>
-											<input
-												value={this.state.email}
-												name='email'
-												type='email'
-												className='form-control'
-												id='exampleInputEmail1'
-												aria-describedby='emailHelp'
-												onChange={this.onChange}
-											/>
-										</div>
-										<div className='mb-3'>
-											<label
-												htmlFor='exampleInputPassword1'
-												className='form-label'
-											>
-												Senha
-											</label>
-											<input
-												value={this.state.senha}
-												name='senha'
-												type='password'
-												className='form-control'
-												id='exampleInputPassword1'
-												onChange={this.onChange}
-											/>
-										</div>
-										<div className='d-grid gap-4 col mx-auto mt-4'>
-											<button
-												type='submit'
-												className='btn btn-primary'
-												onClick={this.handleLogin}
-												disabled={this.state.disabled}
-											>
-												<span>Entrar</span>
-												{/* {!this.state.disabled && (
-												)} */}
-											</button>
-											{this.state.senha.length > 1 && (
-												<div>
-													<span className='spinner-border spinner-border-sm'></span>
-													<span>Validando...</span>
-												</div>
-											)}
-											{this.state.loginError && (
-												<div
-													class='alert alert-danger'
-													role='alert'
-												>
-													Há algo de errado com suas
-													credenciais, tente novamente
-													ou contacte o administrador.
-												</div>
-											)}
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			)
-		}
-	}
+	return (
+		<div className='borda'>
+			<form>
+				<input placeholder='Email' onChange={email.onChange} />
+				<input
+					placeholder='password'
+					type='password'
+					onChange={senha.onChange}
+				/>
+				<button type='button' onClick={onClick}>
+					Entrar
+				</button>
+			</form>
+		</div>
+	)
 }
 
 export default LoginPage
