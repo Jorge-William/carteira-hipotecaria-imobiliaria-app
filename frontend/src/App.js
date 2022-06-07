@@ -29,14 +29,10 @@ const App = () => {
 					/>
 				)}
 				{auth && (
-					<>
-						<Route
-							path='/profile'
-							element={
-								<Dashboard logout={() => setAuth(false)} />
-							}
-						/>
-					</>
+					<Route
+						path='/profile'
+						element={<Dashboard logout={() => setAuth(false)} />}
+					/>
 				)}
 				<Route
 					path='*'

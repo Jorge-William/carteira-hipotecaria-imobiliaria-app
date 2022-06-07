@@ -17,9 +17,9 @@ const create = async (req, res, next) => {
   } = req.body;
   try {
     /**
-       * O método build() do sequelize prepara a query e a salva
-       * em uma variável nâo se conectando ao banco
-   * */
+		 * O método build() do sequelize prepara a query e a salva
+		 * em uma variável nâo se conectando ao banco
+		 * */
     const user = User.build({
       name,
       lastName,
@@ -39,16 +39,22 @@ const create = async (req, res, next) => {
     // next() é chamado para que o fluxo constinue, retornando uma resposta para o router
     next();
   } catch (error) {
-    res.status(500).send({ errorMessage: error, message: "Não foi possivel criar o usuário" });
+    res.status(500).send({
+      errorMessage: error,
+      message: "Não foi possivel criar o usuário",
+    });
   }
 };
 
 // ------------------------------------- Login -----------------------------------
 const login = async (req, res, next) => {
   try {
-    const user = await User.findOne({ where: { email: `${req.body.email}` } });
+    const user = await User.findOne({
+      where: { email: `${req.body.email.value}` },
+    });
+    // console.log(user);
     if (user) {
-      const plainText = req.body.password;
+      const plainText = req.body.password.value;
       const hashed = user.dataValues.password;
       const passwordIsValid = await bcrypt.compare(plainText, hashed);
       if (passwordIsValid) {
@@ -77,7 +83,9 @@ const login = async (req, res, next) => {
       throw new Error();
     }
   } catch (error) {
-    res.status(401).send({ message: "Algo deu errado com o login." });
+    res.status(401).send({
+      message: "Algo deu errado com o login seu lindo.",
+    });
   }
 };
 

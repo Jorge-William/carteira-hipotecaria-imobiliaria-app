@@ -3,12 +3,10 @@ import Menu from '../components/Menu'
 class Dashboard extends React.Component {
 	render() {
 		return (
-			<>
-				<section>
-					<Menu />
-					<h1>Dashboard</h1>
-				</section>
-			</>
+			<section>
+				<Menu />
+				<h1>Dashboard</h1>
+			</section>
 		)
 	}
 }

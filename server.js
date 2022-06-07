@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 // ----------------------------------------------------------------------------
 
 const corsOptions = {
-  origin: "http://localhost:5001",
+  origin: "http://localhost:5001/",
 };
 
 app.use(cors(corsOptions));

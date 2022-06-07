@@ -1,8 +1,15 @@
 import React from 'react'
 import UserProfileIcon from './UserProfileIcon'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import AuthService from '../services/auth.service'
 
 const Menu = ({ logout }) => {
+	const deslogar = (e) => {
+		e.preventDefault()
+		logout()
+		AuthService.logout()
+	}
+
 	return (
 		<section className='container'>
 			<nav class='navbar navbar-expand-lg fixed-top navbar-dark bg-dark'>
@@ -149,7 +156,8 @@ const Menu = ({ logout }) => {
 							<button
 								type='button'
 								className='btn btn-danger'
-								onClick={logout}
+								data-bs-dismiss='modal'
+								onClick={deslogar}
 							>
 								Sair
 							</button>

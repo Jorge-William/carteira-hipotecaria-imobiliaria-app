@@ -1,5 +1,10 @@
-.borda{
-    /* border: solid red 1px; */
-    height: 500px;
+/* .borda{
+    border: solid red 1px;
+} */
+
+#aside-login{
+    height:600px;
+    background: rgb(68, 98, 219);
+
 }
 
