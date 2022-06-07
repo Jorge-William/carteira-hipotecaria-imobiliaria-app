@@ -1,6 +1,10 @@
 const express = require("express");
 const auth = require("../../middleware/auth.middleware");
-const { login, create, logout } = require("../../controllers/user/user.controller");
+const {
+  login,
+  create,
+  logout,
+} = require("../../controllers/user/user.controller");
 
 const router = new express.Router();
 
@@ -12,10 +16,18 @@ router.post("/login", login, async (req, res) => {
   try {
     // Por enquanto retorna todos os dados do usuario para o frontend
     res.send({
-      message: "Bem vindo ", id, name, lastName, type, token,
+      message: "Bem vindo ",
+      id,
+      name,
+      lastName,
+      type,
+      token,
     });
   } catch (error) {
-    res.status(400).send({ error: req.user, message: "Algo deu errado com o seu login." });
+    res.status(400).send({
+      error: req.user,
+      message: "Algo deu errado com o seu login.",
+    });
   }
 });
 // -------------------------------------------------------------------------------

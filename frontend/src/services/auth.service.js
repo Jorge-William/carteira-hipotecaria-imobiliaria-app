@@ -2,7 +2,8 @@
 /* eslint-disable no-tabs */
 import axios from 'axios'
 //* * O prefixo do servidor já está configurado no package.json (proxy script) */
-// Tuto bezkoder ---> const API_URL = "http://localhost:5001/";
+// Tuto bezkoder --->
+// const API_URL = 'http://localhost:5001'
 
 class AuthService {
 	login(email, password) {
@@ -12,15 +13,21 @@ class AuthService {
 				password
 			})
 			.then((response) => {
+				console.log(response)
+
 				if (response.data.token) {
-					localStorage.setItem('user', JSON.stringify(response.data))
+					localStorage.setItem(
+						'userData',
+						JSON.stringify(response.data)
+					)
 				}
 				return response.data
 			})
+			.catch((err) => err.message)
 	}
 
 	logout() {
-		localStorage.removeItem('user')
+		localStorage.removeItem('userData')
 	}
 
 	// register(username, email, password) {
