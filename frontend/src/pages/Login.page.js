@@ -36,19 +36,33 @@ const LoginPage = ({ authenticate }) => {
 	}
 
 	return (
-		<div className='container '>
-			<div className='row align-items-center borda'>
-				<section className='col-8 borda' id='aside-login'>
-					{/* <img src={Capa} alt='teste' /> */}
-				</section>
-				<section className='col-4'>
-					<div className='m-4'>
-						<h2>Insira suas credenciais</h2>
+		<div className='container  borda-container'>
+			<div className='row align-items-center'>
+				<section className='col-6 borda-aside' id='aside-login'>
+					<div className='m-4 '>
+						<h1>Efetuar Login</h1>
+						<h4>Seja bem vindo novamente!</h4>
+						<p>
+							Ainda não posssui acesso? Contacte o administrador
+						</p>
 					</div>
-					<form onSubmit={onClick} className='m-4'>
+				</section>
+				<section className='col-6' id='form-section'>
+					{useInput(false) && (
+						<div class='alert alert-danger m-3' role='alert'>
+							E-mail ou senha incorretos. Insira suas informações
+							de login novamente ou solicite ajuda do
+							administrador para obter acesso à sua conta.
+						</div>
+					)}
+
+					<form onSubmit={onClick} className='m-3'>
 						<div class='mb-3'>
-							<label for='exampleInputEmail1' class='form-label'>
-								Email
+							<label
+								for='exampleInputEmail1'
+								class='form-label label-color'
+							>
+								Endereço de e-mail
 							</label>
 							<input
 								type='email'
@@ -61,7 +75,7 @@ const LoginPage = ({ authenticate }) => {
 						<div class='mb-3'>
 							<label
 								for='exampleInputPassword1'
-								class='form-label'
+								class='form-label label-color'
 							>
 								Senha
 							</label>
@@ -72,9 +86,21 @@ const LoginPage = ({ authenticate }) => {
 								onChange={senha.onChange}
 							/>
 						</div>
-						<button type='submit' class='btn btn-primary'>
-							Entrar
-						</button>
+						<div className='mb-4'>
+							<small className='label-color'>
+								Ao fazer login, eu concordo com a{' '}
+								<a href='/dashboard'>
+									Declaração de Privacidade e os Termos de
+									Serviço da aplicação
+								</a>
+								.
+							</small>
+						</div>
+						<div className='d-grid gap-2'>
+							<button type='submit' class='btn btn-primary '>
+								Efetuar login
+							</button>
+						</div>
 					</form>
 				</section>
 			</div>
