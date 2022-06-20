@@ -22,6 +22,7 @@ router.post("/login", login, async (req, res) => {
       lastName,
       type,
       token,
+      userIsValid: true,
     });
   } catch (error) {
     res.status(400).send({

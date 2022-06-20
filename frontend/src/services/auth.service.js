@@ -13,7 +13,7 @@ class AuthService {
 				password
 			})
 			.then((response) => {
-				console.log(response)
+				// console.log(response.data.userIsValid)
 
 				if (response.data.token) {
 					localStorage.setItem(
@@ -21,9 +21,9 @@ class AuthService {
 						JSON.stringify(response.data)
 					)
 				}
-				return response.data
+				return response.data.userIsValid
 			})
-			.catch((err) => err.message)
+			.catch((err) => err.response.data.userIsValid)
 	}
 
 	logout() {

@@ -84,7 +84,7 @@ const login = async (req, res, next) => {
     }
   } catch (error) {
     res.status(401).send({
-      message: "Algo deu errado com o login, verifique suas credenciais.",
+      message: "Algo deu errado com o login, verifique suas credenciais.", userIsValid: false,
     });
   }
 };
