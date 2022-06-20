@@ -31,3 +31,7 @@ h1{
     /* border: solid red 1px; */
     color: white;
 }
+
+.loading-container{
+    height: 500px;
+}

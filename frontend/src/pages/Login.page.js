@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import 'animate.css'
 import '../style/Login.page.css'
 import validator from 'validator'
+import PageLoader from '../components/PageLoader'
 // import AuthService from '../services/auth.service'
 import { useNavigate } from 'react-router-dom'
 import AuthService from '../services/auth.service'
@@ -56,16 +57,6 @@ const LoginPage = ({ authenticate }) => {
 
 	return (
 		<div className='container  borda-container'>
-			{pageLoading && (
-				<section>
-					<div class='spinner-border' role='status'>
-						<span class='visually-hidden'>Loading...</span>
-					</div>
-					<div className='spinner-grow' role='status'>
-						<span class='visually-hidden'>Loading...</span>
-					</div>
-				</section>
-			)}
 			<div className='row align-items-center'>
 				<section className='col-6 borda-aside' id='aside-login'>
 					<div className='m-4 '>
@@ -76,6 +67,15 @@ const LoginPage = ({ authenticate }) => {
 						<p>
 							Ainda não posssui acesso? Contacte o administrador
 						</p>
+					</div>
+					<div className='container loading-container'>
+						<div className='row'>
+							<div className='col'></div>
+							<div className='col align-self-end'>
+								{pageLoading && <PageLoader />}
+							</div>
+							<div className='col'></div>
+						</div>
 					</div>
 				</section>
 				<section className='col-6' id='form-section'>
