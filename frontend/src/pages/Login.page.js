@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import '../style/Login.page.css'
-// import validator from 'validator'
+import validator from 'validator'
 // import AuthService from '../services/auth.service'
 import { useNavigate } from 'react-router-dom'
 import AuthService from '../services/auth.service'
@@ -24,15 +24,28 @@ const LoginPage = ({ authenticate }) => {
 	const email = useInput('')
 	const senha = useInput('')
 
+	// Caso email não seja válido e a senha seja menor que 8 o botão entrar será desabilitado
+	const isValid = () => {
+		const emailValid = validator.isEmail(email.value);
+		const senhaValid = senha.value.length > 7;
+		if(!emailValid || !senhaValid) {
+			return true
+		} else {
+			return false
+		}
+
+	}
+
 	const onClick = (e) => {
 		e.preventDefault()
-		const result = AuthService.login(email, senha).catch(
+		const result = AuthService.login(email.value, senha.value).catch(
 			(err) => err.message
 		)
-		if (result) {
-			authenticate()
-			navigate('dashboard')
-		}
+		console.log(result);
+		// if (result) {
+		// 	authenticate()
+		// 	navigate('dashboard')
+		// }
 	}
 
 	return (
@@ -97,7 +110,7 @@ const LoginPage = ({ authenticate }) => {
 							</small>
 						</div>
 						<div className='d-grid gap-2'>
-							<button type='submit' class='btn btn-primary '>
+							<button disabled={ isValid() } type='submit' class='btn btn-primary '>
 								Efetuar login
 							</button>
 						</div>
