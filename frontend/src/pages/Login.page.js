@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
+import 'animate.css'
 import '../style/Login.page.css'
-// import validator from 'validator'
+import validator from 'validator'
 // import AuthService from '../services/auth.service'
 import { useNavigate } from 'react-router-dom'
 import AuthService from '../services/auth.service'
 
 const LoginPage = ({ authenticate }) => {
 	const navigate = useNavigate()
+
+	const [errorMessage, setErrorMessage] = useState(false)
+	const [pageLoading, setPageLoading] = useState(false)
 
 	const useInput = (initialValue) => {
 		const [value, setValue] = useState(initialValue)
@@ -24,32 +28,62 @@ const LoginPage = ({ authenticate }) => {
 	const email = useInput('')
 	const senha = useInput('')
 
-	const onClick = (e) => {
+	// Caso email não seja válido e a senha seja menor que 8 o botão entrar será desabilitado
+	const isValid = () => {
+		const emailValid = validator.isEmail(email.value)
+		const senhaValid = senha.value.length > 7
+		if (!emailValid || !senhaValid) {
+			return true
+		} else {
+			return false
+		}
+	}
+
+	const onClick = async (e) => {
 		e.preventDefault()
-		const result = AuthService.login(email, senha).catch(
-			(err) => err.message
-		)
-		if (result) {
-			authenticate()
-			navigate('dashboard')
+		const response = await AuthService.login(email.value, senha.value)
+		console.log(response)
+		if (response) {
+			setPageLoading(true)
+			setTimeout(() => {
+				authenticate()
+				navigate('dashboard')
+			}, 5000)
+		} else {
+			await setErrorMessage(true)
 		}
 	}
 
 	return (
 		<div className='container  borda-container'>
+			{pageLoading && (
+				<section>
+					<div class='spinner-border' role='status'>
+						<span class='visually-hidden'>Loading...</span>
+					</div>
+					<div className='spinner-grow' role='status'>
+						<span class='visually-hidden'>Loading...</span>
+					</div>
+				</section>
+			)}
 			<div className='row align-items-center'>
 				<section className='col-6 borda-aside' id='aside-login'>
 					<div className='m-4 '>
 						<h1>Efetuar Login</h1>
-						<h4>Seja bem vindo novamente!</h4>
+						<h4 class='animate__jello'>
+							Seja bem vindo novamente!
+						</h4>
 						<p>
 							Ainda não posssui acesso? Contacte o administrador
 						</p>
 					</div>
 				</section>
 				<section className='col-6' id='form-section'>
-					{useInput(false) && (
-						<div class='alert alert-danger m-3' role='alert'>
+					{errorMessage && (
+						<div
+							class='alert alert-danger m-3 animate__animated animate__shakeY animate__delay-1s animate__repeat-3'
+							role='alert'
+						>
 							E-mail ou senha incorretos. Insira suas informações
 							de login novamente ou solicite ajuda do
 							administrador para obter acesso à sua conta.
@@ -97,7 +131,11 @@ const LoginPage = ({ authenticate }) => {
 							</small>
 						</div>
 						<div className='d-grid gap-2'>
-							<button type='submit' class='btn btn-primary '>
+							<button
+								disabled={isValid()}
+								type='submit'
+								class='btn btn-primary '
+							>
 								Efetuar login
 							</button>
 						</div>

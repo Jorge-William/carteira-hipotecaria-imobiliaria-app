@@ -17,9 +17,9 @@ const create = async (req, res, next) => {
   } = req.body;
   try {
     /**
-		 * O método build() do sequelize prepara a query e a salva
-		 * em uma variável nâo se conectando ao banco
-		 * */
+       * O método build() do sequelize prepara a query e a salva
+       * em uma variável nâo se conectando ao banco
+       * */
     const user = User.build({
       name,
       lastName,
@@ -50,11 +50,11 @@ const create = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const user = await User.findOne({
-      where: { email: `${req.body.email.value}` },
+      where: { email: `${req.body.email}` },
     });
     // console.log(user);
     if (user) {
-      const plainText = req.body.password.value;
+      const plainText = req.body.password;
       const hashed = user.dataValues.password;
       const passwordIsValid = await bcrypt.compare(plainText, hashed);
       if (passwordIsValid) {
@@ -84,7 +84,7 @@ const login = async (req, res, next) => {
     }
   } catch (error) {
     res.status(401).send({
-      message: "Algo deu errado com o login seu lindo.",
+      message: "Algo deu errado com o login, verifique suas credenciais.", userIsValid: false,
     });
   }
 };

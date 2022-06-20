@@ -140,6 +140,6 @@ const ImoveisLei = sequelize.define("imoveis_lei", {
 MutuarioLei.hasMany(ImoveisLei, { foreignKey: "mutuario_id" });
 MutuarioLei.hasMany(DocumentoLei, { foreignKey: "mutuario_id" });
 
-sequelize.sync({ alter: true });
+sequelize.sync();
 
 module.exports = { MutuarioLei, DocumentoLei, ImoveisLei };
