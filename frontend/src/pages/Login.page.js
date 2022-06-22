@@ -49,7 +49,7 @@ const LoginPage = ({ authenticate }) => {
 			setTimeout(() => {
 				authenticate()
 				navigate('dashboard')
-			}, 5000)
+			}, 2000)
 		} else {
 			await setErrorMessage(true)
 		}
@@ -60,7 +60,7 @@ const LoginPage = ({ authenticate }) => {
 			<div className='row align-items-center'>
 				<section className='col-6 borda-aside' id='aside-login'>
 					<div className='m-4 '>
-						<h1>Efetuar Login</h1>
+						<h1 id='side-info'>Efetuar Login</h1>
 						<h4 class='animate__jello'>
 							Seja bem vindo novamente!
 						</h4>

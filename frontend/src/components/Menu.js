@@ -2,6 +2,7 @@ import React from 'react'
 import UserProfileIcon from './UserProfileIcon'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AuthService from '../services/auth.service'
+import { Link } from 'react-router-dom'
 
 const Menu = ({ logout }) => {
 	const deslogar = (e) => {
@@ -14,9 +15,9 @@ const Menu = ({ logout }) => {
 		<section className='container'>
 			<nav class='navbar navbar-expand-lg fixed-top navbar-dark bg-dark'>
 				<div class='container'>
-					<a class='navbar-brand' href='/'>
+					<Link class='navbar-brand' to='/dashboard'>
 						CHI
-					</a>
+					</Link>
 					<button
 						class='navbar-toggler'
 						type='button'
@@ -34,13 +35,13 @@ const Menu = ({ logout }) => {
 					>
 						<ul class='navbar-nav me-auto mb-2 mb-lg-0'>
 							<li class='nav-item'>
-								<a
+								<Link
+									to='/dashboard'
 									class='nav-link active'
 									aria-current='page'
-									href='dashboard'
 								>
 									Home
-								</a>
+								</Link>
 							</li>
 							<li class='nav-item dropdown'>
 								<a
@@ -58,17 +59,23 @@ const Menu = ({ logout }) => {
 									aria-labelledby='navbarDropdown'
 								>
 									<li>
-										<a class='dropdown-item' href='/'>
+										<Link
+											to='/mutuario-sfh'
+											class='dropdown-item'
+										>
 											SFH
-										</a>
+										</Link>
 									</li>
 									<li>
 										<hr class='dropdown-divider' />
 									</li>
 									<li>
-										<a class='dropdown-item' href='/'>
+										<Link
+											to='/mutuario-lei'
+											class='dropdown-item'
+										>
 											LEI
-										</a>
+										</Link>
 									</li>
 								</ul>
 							</li>

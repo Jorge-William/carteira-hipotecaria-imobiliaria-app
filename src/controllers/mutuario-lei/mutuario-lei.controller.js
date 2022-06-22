@@ -1,17 +1,19 @@
-const { MutuarioLei, ImoveisLei } = require("../../models/mutuario-lei.model");
+const { MutuarioLei, ImoveisLei } = require('../../models/mutuario-lei.model')
 
 const listarTodosMutuarios = async (req, res, next) => {
-  const result = await MutuarioLei.findAll({
-    raw: true,
-    include: [{
-      model: await ImoveisLei,
-      required: false,
-    }],
-    order: [["id", "ASC"]],
-  });
-  res.send(result);
-  next();
-};
+	const result = await MutuarioLei.findAll({
+		raw: false,
+		include: [
+			{
+				model: await ImoveisLei,
+				required: false
+			}
+		],
+		order: [['id', 'ASC']]
+	})
+	res.send(result)
+	next()
+}
 
 // const create = async (req, res, next) => {
 //   const {
@@ -44,4 +46,4 @@ const listarTodosMutuarios = async (req, res, next) => {
 //   }
 // };
 
-module.exports = listarTodosMutuarios;
+module.exports = listarTodosMutuarios

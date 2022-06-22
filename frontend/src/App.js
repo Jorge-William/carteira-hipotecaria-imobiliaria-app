@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import 'animate.css';
+import 'animate.css'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './style/App.css'
 import Login from './pages/Login.page'
 import Menu from './components/Menu'
 import Dashboard from './pages/Dashboard.page'
+import MutuarioLei from './pages/MutuarioLei.page'
+import MutuarioSfh from './pages/MutuarioSfh.page'
 
 const App = () => {
 	const [auth, setAuth] = useState(null)
@@ -31,9 +33,15 @@ const App = () => {
 				)}
 				{auth && (
 					<Route
-						path='/profile'
+						path='/dashboard'
 						element={<Dashboard logout={() => setAuth(false)} />}
 					/>
+				)}
+				{auth && (
+					<Route path='/mutuario-lei' element={<MutuarioLei />} />
+				)}
+				{auth && (
+					<Route path='/mutuario-sfh' element={<MutuarioSfh />} />
 				)}
 				<Route
 					path='*'
