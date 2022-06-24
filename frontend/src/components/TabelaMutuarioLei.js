@@ -1,12 +1,17 @@
 import React from 'react'
 import getMutuariosLei from '../services/getMutuarios.service'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import Pagination from './Pagination'
+import '../style/Pagination.scss'
+
+let PageSize = 20
 
 const TabelaMutuarioLei = () => {
 	const [mutLeiData, setMutLeiData] = useState([])
 	const [isLoading, setLoading] = useState(true)
+	const [currentPage, setCurrentPage] = useState(1)
 
 	const fetchMutuarios = () => {
 		getMutuariosLei().then((mutuario) => setMutLeiData(mutuario))
@@ -19,6 +24,12 @@ const TabelaMutuarioLei = () => {
 		}, 5000)
 	}, [])
 
+	const currentTableData = useMemo(() => {
+		const firstPageIndex = (currentPage - 1) * PageSize
+		const lastPageIndex = firstPageIndex + PageSize
+		return mutLeiData.slice(firstPageIndex, lastPageIndex)
+	}, [currentPage, mutLeiData])
+
 	return isLoading ? (
 		<Skeleton count={20} />
 	) : (
@@ -26,6 +37,7 @@ const TabelaMutuarioLei = () => {
 			<table className='table table-striped table-bordered'>
 				<thead>
 					<tr>
+						<th scope='col'>#</th>
 						<th scope='col'>Pasta</th>
 						<th scope='col'>Nome</th>
 						<th scope='col'>Endreço</th>
@@ -39,10 +51,11 @@ const TabelaMutuarioLei = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{mutLeiData?.map((data) => {
+					{currentTableData?.map((data) => {
 						return (
 							<tr key={data.id}>
-								<th scope='row'>{data.rotulo}</th>
+								<th scope='row'>{data.id}</th>
+								<td>{data.rotulo}</td>
 								<td>{data.nome}</td>
 								<td>{data.imoveis_leis[0].end}</td>
 								<td>{data.imoveis_leis[0].numero}</td>
@@ -57,6 +70,13 @@ const TabelaMutuarioLei = () => {
 					})}
 				</tbody>
 			</table>
+			<Pagination
+				className='pagination-bar justify-content-center mt-5'
+				currentPage={currentPage}
+				totalCount={mutLeiData.length}
+				pageSize={PageSize}
+				onPageChange={(page) => setCurrentPage(page)}
+			/>
 		</div>
 	)
 }
