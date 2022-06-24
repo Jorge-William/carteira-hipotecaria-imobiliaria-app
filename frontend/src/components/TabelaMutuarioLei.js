@@ -1,12 +1,16 @@
 import React from 'react'
 import getMutuariosLei from '../services/getMutuarios.service'
 import { useEffect, useState } from 'react'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const TabelaMutuarioLei = () => {
 	const [mutLeiData, setMutLeiData] = useState([])
+	const [isLoading, setLoading] = useState(true)
 
 	const fetchMutuarios = () => {
 		getMutuariosLei().then((mutuario) => setMutLeiData(mutuario))
+		setLoading(false)
 	}
 	useEffect(() => {
 		console.log('Carregou!')
@@ -15,7 +19,9 @@ const TabelaMutuarioLei = () => {
 		}, 5000)
 	}, [])
 
-	return (
+	return isLoading ? (
+		<Skeleton count={20} />
+	) : (
 		<div>
 			<table className='table table-striped table-bordered'>
 				<thead>

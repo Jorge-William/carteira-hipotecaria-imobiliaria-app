@@ -43,7 +43,6 @@ const LoginPage = ({ authenticate }) => {
 	const onClick = async (e) => {
 		e.preventDefault()
 		const response = await AuthService.login(email.value, senha.value)
-		console.log(response)
 		if (response) {
 			setPageLoading(true)
 			setTimeout(() => {
