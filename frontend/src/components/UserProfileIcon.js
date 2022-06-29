@@ -14,7 +14,7 @@ class UserProfileIcon extends React.Component {
 					data-bs-display='static'
 					aria-expanded='false'
 				>
-					<i className='bi bi-person' height='40px'></i>
+					<i className='bi bi-person'></i>
 				</button>
 				<ul
 					className='dropdown-menu dropdown-menu-sm-start dropdown-menu-md-end'

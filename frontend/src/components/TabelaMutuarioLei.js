@@ -5,6 +5,8 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Pagination from './Pagination'
 import '../style/Pagination.scss'
+import TableFilter from '../components/TableFilter.js'
+import JanelaMutuarioLei from './JanelaMutuarioLei.modal'
 
 let PageSize = 20
 
@@ -12,6 +14,7 @@ const TabelaMutuarioLei = () => {
 	const [mutLeiData, setMutLeiData] = useState([])
 	const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
+	const [teste, setTeste] = useState(true)
 
 	const fetchMutuarios = () => {
 		getMutuariosLei().then((mutuario) => setMutLeiData(mutuario))
@@ -21,7 +24,7 @@ const TabelaMutuarioLei = () => {
 		console.log('Carregou!')
 		setTimeout(() => {
 			fetchMutuarios()
-		}, 5000)
+		}, 1000)
 	}, [])
 
 	const currentTableData = useMemo(() => {
@@ -29,11 +32,13 @@ const TabelaMutuarioLei = () => {
 		const lastPageIndex = firstPageIndex + PageSize
 		return mutLeiData.slice(firstPageIndex, lastPageIndex)
 	}, [currentPage, mutLeiData])
-
 	return isLoading ? (
-		<Skeleton count={20} />
+		<Skeleton count={20} /> || teste === true
 	) : (
 		<div>
+			<section>
+				<TableFilter data={mutLeiData} />
+			</section>
 			<table className='table table-striped table-bordered'>
 				<thead>
 					<tr>
@@ -56,7 +61,18 @@ const TabelaMutuarioLei = () => {
 							<tr key={data.id}>
 								<th scope='row'>{data.id}</th>
 								<td>{data.rotulo}</td>
-								<td>{data.nome}</td>
+								{/*  Link nomes */}
+								<td>
+									{/* ---------------------------------------- Modal -------------------------------------- */}
+									<a
+										href='#'
+										data-bs-toggle='modal'
+										data-bs-target='#janelaMutuarioLei'
+										className='link'
+									>
+										{data.nome}
+									</a>
+								</td>
 								<td>{data.imoveis_leis[0].end}</td>
 								<td>{data.imoveis_leis[0].numero}</td>
 								<td>{data.imoveis_leis[0].complemento}</td>
@@ -71,12 +87,13 @@ const TabelaMutuarioLei = () => {
 				</tbody>
 			</table>
 			<Pagination
-				className='pagination-bar justify-content-center mt-5'
+				className='pagination-bar justify-content-center mt-3'
 				currentPage={currentPage}
 				totalCount={mutLeiData.length}
 				pageSize={PageSize}
 				onPageChange={(page) => setCurrentPage(page)}
 			/>
+			<JanelaMutuarioLei />
 		</div>
 	)
 }

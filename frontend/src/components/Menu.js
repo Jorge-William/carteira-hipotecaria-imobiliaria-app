@@ -3,6 +3,7 @@ import UserProfileIcon from './UserProfileIcon'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AuthService from '../services/auth.service'
 import { Link } from 'react-router-dom'
+import logoClubeMilitar from '../assets/brasao_do_clube_militar.png'
 
 const Menu = ({ logout }) => {
 	const deslogar = (e) => {
@@ -16,7 +17,11 @@ const Menu = ({ logout }) => {
 			<nav class='navbar navbar-expand-lg fixed-top navbar-dark bg-dark'>
 				<div class='container'>
 					<Link class='navbar-brand' to='/dashboard'>
-						CHI
+						<img
+							style={{ width: 60 }}
+							src={logoClubeMilitar}
+							alt='Logotipo do clube militar RJ'
+						/>
 					</Link>
 					<button
 						class='navbar-toggler'

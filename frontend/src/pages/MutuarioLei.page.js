@@ -5,7 +5,9 @@ const MutuarioLei = () => {
 	return (
 		<section>
 			<h1>Mutuario Lei</h1>
+			<hr />
 			<TabelaMutuarioLei />
+			<br />
 		</section>
 	)
 }
