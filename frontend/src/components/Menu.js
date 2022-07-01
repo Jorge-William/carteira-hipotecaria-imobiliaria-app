@@ -119,14 +119,14 @@ const Menu = ({ logout }) => {
 							<input
 								class='form-control me-2'
 								type='search'
-								placeholder='Search'
-								aria-label='Search'
+								placeholder='Busca'
+								aria-label='Busca'
 							/>
 							<button
 								class='btn btn-outline-success'
 								type='submit'
 							>
-								Busca
+								Buscar
 							</button>
 						</form>
 						<UserProfileIcon />

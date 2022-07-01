@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import '../style/Autocomplete.css'
+import LinkMutuario from './LinkMutuario'
 
 const Autocomplete = (props) => {
 	const [active, setActive] = useState(0)
@@ -117,7 +118,7 @@ const Autocomplete = (props) => {
 									return item.rotulo === input
 								})
 							)
-						} else {
+						} else if ('nome') {
 							setFilter(
 								data.find((item) => {
 									return item.nome === input
@@ -156,15 +157,10 @@ const Autocomplete = (props) => {
 									{/*  Link nomes */}
 									<td>
 										{/* ---------------------------------------- Modal -------------------------------------- */}
-										<a
-											href='#'
-											data-bs-toggle='modal'
-											data-bs-target='#janelaMutuarioLei'
-											className='link'
-											onClick={() => console.log('oi')}
-										>
-											{filter.nome}
-										</a>
+										<LinkMutuario
+											pasta={filter.rotulo}
+											mutuario={filter.nome}
+										/>
 									</td>
 									<td>{filter.imoveis_leis[0].end}</td>
 									<td>{filter.imoveis_leis[0].numero}</td>

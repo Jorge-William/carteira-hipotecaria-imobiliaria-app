@@ -6,7 +6,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import Pagination from './Pagination'
 import '../style/Pagination.scss'
 import TableFilter from '../components/TableFilter.js'
-import JanelaMutuarioLei from './JanelaMutuarioLei.modal'
+import LinkMutuario from './LinkMutuario'
 
 let PageSize = 20
 
@@ -14,7 +14,6 @@ const TabelaMutuarioLei = () => {
 	const [mutLeiData, setMutLeiData] = useState([])
 	const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
-	const [teste, setTeste] = useState(true)
 
 	const fetchMutuarios = () => {
 		getMutuariosLei().then((mutuario) => setMutLeiData(mutuario))
@@ -33,7 +32,7 @@ const TabelaMutuarioLei = () => {
 		return mutLeiData.slice(firstPageIndex, lastPageIndex)
 	}, [currentPage, mutLeiData])
 	return isLoading ? (
-		<Skeleton count={20} /> || teste === true
+		<Skeleton count={20} />
 	) : (
 		<div>
 			<section>
@@ -64,14 +63,19 @@ const TabelaMutuarioLei = () => {
 								{/*  Link nomes */}
 								<td>
 									{/* ---------------------------------------- Modal -------------------------------------- */}
-									<a
+									{/* <a
 										href='#'
 										data-bs-toggle='modal'
 										data-bs-target='#janelaMutuarioLei'
 										className='link'
-									>
-										{data.nome}
-									</a>
+										onClick={() => console.log(data.nome)}
+									> */}
+									<LinkMutuario
+										mutuario={data.nome}
+										pasta={data.rotulo}
+									/>
+
+									{/* </a> */}
 								</td>
 								<td>{data.imoveis_leis[0].end}</td>
 								<td>{data.imoveis_leis[0].numero}</td>
@@ -93,7 +97,6 @@ const TabelaMutuarioLei = () => {
 				pageSize={PageSize}
 				onPageChange={(page) => setCurrentPage(page)}
 			/>
-			<JanelaMutuarioLei />
 		</div>
 	)
 }

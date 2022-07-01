@@ -1,13 +1,14 @@
-import { useEffect } from 'react'
-const JanelaMutuarioLei = () => {
-	useEffect(() => {
-		console.log('Estou lendo o servidor')
-	}, [])
+const ExibirMutuarioLei = ({ mutuario, id }) => {
+	console.log('Modal ' + id)
 
+	// const handleClick = async (mutuario) => {
+	// 	const result = await getMutuarioLei(mutuario)
+	// 	return setResult(result)
+	// }
 	return (
 		<div
 			class='modal fade'
-			id='janelaMutuarioLei'
+			id={id}
 			data-bs-backdrop='static'
 			data-bs-keyboard='false'
 			tabindex='-1'
@@ -18,7 +19,7 @@ const JanelaMutuarioLei = () => {
 				<div class='modal-content'>
 					<div class='modal-header'>
 						<h2 class='modal-title' id='staticBackdropLabel'>
-							Titulo do modal
+							{mutuario}
 						</h2>
 						<button
 							type='button'
@@ -27,7 +28,7 @@ const JanelaMutuarioLei = () => {
 							aria-label='Close'
 						></button>
 					</div>
-					<div class='modal-body'>...</div>
+					<div class='modal-body'>Aeeeeeeê otário funcionou!!!!</div>
 					<div class='modal-footer'>
 						<button
 							type='button'
@@ -36,6 +37,7 @@ const JanelaMutuarioLei = () => {
 						>
 							Fechar
 						</button>
+
 						<button type='button' class='btn btn-primary'>
 							Salvar
 						</button>
@@ -46,4 +48,4 @@ const JanelaMutuarioLei = () => {
 	)
 }
 
-export default JanelaMutuarioLei
+export default ExibirMutuarioLei
