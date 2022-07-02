@@ -1,21 +1,24 @@
 import ExibirMutuarioLei from './modal/JanelaMutuarioLei.modal'
 
-const LinkMutuario = ({ mutuario, pasta }) => {
+const LinkMutuario = ({ pasta, mutuario, values }) => {
 	// const handleClick = async (mutuario) => {
 	// 	const result = await getMutuarioLei(mutuario)
 	// 	return setResult(result)
 	// }
+	console.log()
 	return (
 		<>
 			<a
 				data-bs-toggle='modal'
 				data-bs-target={'#' + pasta}
 				className='link'
+				data-bs-placement='top'
+				title='Clique para detalhes'
 				// onClick={() => editarNome()}
 			>
 				{mutuario}
 			</a>
-			<ExibirMutuarioLei mutuario={mutuario} id={pasta} />
+			<ExibirMutuarioLei id={pasta} dados={values} />
 		</>
 	)
 }

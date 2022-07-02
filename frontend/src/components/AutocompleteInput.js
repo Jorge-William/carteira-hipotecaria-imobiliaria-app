@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import '../style/Autocomplete.css'
-import LinkMutuario from './LinkMutuario'
 
 const Autocomplete = (props) => {
 	const [active, setActive] = useState(0)
@@ -45,7 +44,7 @@ const Autocomplete = (props) => {
 		if (isShow && input) {
 			if (filtered.length) {
 				return (
-					<ul className='autocomplete'>
+					<ul className='autocomplete ms-3'>
 						{filtered.map((suggestion, index) => {
 							let className
 							if (index === active) {
@@ -54,7 +53,7 @@ const Autocomplete = (props) => {
 							return (
 								<li
 									className={className}
-									key={suggestion}
+									key={index}
 									onClick={onClick}
 								>
 									{suggestion}
@@ -157,10 +156,14 @@ const Autocomplete = (props) => {
 									{/*  Link nomes */}
 									<td>
 										{/* ---------------------------------------- Modal -------------------------------------- */}
-										<LinkMutuario
-											pasta={filter.rotulo}
-											mutuario={filter.nome}
-										/>
+
+										<a
+											data-bs-toggle='modal'
+											data-bs-target='#exampleModal2'
+											// onClick={() => setLiberaModal()}
+										>
+											{filter.nome}
+										</a>
 									</td>
 									<td>{filter.imoveis_leis[0].end}</td>
 									<td>{filter.imoveis_leis[0].numero}</td>
@@ -174,10 +177,235 @@ const Autocomplete = (props) => {
 									<td>{filter.imoveis_leis[0].hipoteca}</td>
 								</tr>
 							</tbody>
+							<button
+								className='btn btn-outline-danger mt-3'
+								onClick={() => setFilter(false)}
+							>
+								Redefinir busca
+							</button>
 						</table>
 					)}
 				</div>
 			</div>
+
+			{filter && (
+				<div
+					class='modal fade'
+					id='exampleModal2'
+					data-bs-backdrop='static'
+					data-bs-keyboard='false'
+					tabindex='-1'
+					aria-labelledby='staticBackdropLabel'
+					aria-hidden='true'
+				>
+					<div class='modal-dialog modal-xl modal-dialog-centered'>
+						<div class='modal-content'>
+							<div class='modal-header'>
+								<h2
+									class='modal-title'
+									id='staticBackdropLabel'
+								>
+									Detalhes
+								</h2>
+								<button
+									type='button'
+									class='btn-close'
+									data-bs-dismiss='modal'
+									aria-label='Close'
+								></button>
+							</div>
+							<div class='modal-body'>
+								<div className='container'>
+									<div className='row justify-content-center'>
+										<div className='mt-3 mb-5 col-4 text-center'>
+											<h3>{filter.nome}</h3>
+										</div>
+									</div>
+									{/* <hr /> */}
+									<div className='container'>
+										<div className='row  justify-content-center'>
+											<div className='col-8 mb-5'>
+												<div className='row mt-3 mb-5'>
+													<div className='col-4'>
+														<strong>Pasta: </strong>
+														{filter.rotulo}
+													</div>
+													<div className='col-4'>
+														<strong>
+															Telefone:{' '}
+														</strong>
+														{
+															filter
+																.imoveis_leis[0]
+																.telefone
+														}
+													</div>
+													<div className='col-4'>
+														Tipo Lei
+													</div>
+												</div>
+												<h4>Imóvel</h4>
+												<div className='row mt-5'>
+													<div className='col'>
+														<strong>
+															Data de liquidação:
+														</strong>{' '}
+														{
+															filter
+																.imoveis_leis[0]
+																.dt_liq
+														}
+													</div>
+													<div className='col'>
+														<strong>
+															Escritura:{' '}
+														</strong>
+														{filter.imoveis_leis[0]
+															.escritura === 1 ? (
+															<p>Sim</p>
+														) : (
+															<p>Não</p>
+														)}
+													</div>
+													<div className='col'>
+														<strong>
+															Hipoteca:{' '}
+														</strong>
+														{filter.imoveis_leis[0]
+															.hipoteca === 1 ? (
+															<p>Sim</p>
+														) : (
+															<p>Não</p>
+														)}
+													</div>
+												</div>
+												<div className='row mt-3'>
+													<div className='col'>
+														<strong>
+															Número da obra:{' '}
+														</strong>
+														{
+															filter
+																.imoveis_leis[0]
+																.num_obra
+														}
+													</div>
+													<div className='col'>
+														<strong>
+															Código Histórico:{' '}
+														</strong>
+														{
+															filter
+																.imoveis_leis[0]
+																.cod_historico
+														}
+													</div>
+													<div className='col'>
+														<strong>
+															Observação:{' '}
+														</strong>
+														{
+															filter
+																.imoveis_leis[0]
+																.obs
+														}
+													</div>
+												</div>
+												<div className='row mt-3'>
+													<div className='col-6'>
+														<strong>
+															Endereço:
+														</strong>{' '}
+														{
+															filter
+																.imoveis_leis[0]
+																.end
+														}
+													</div>
+													<div className='col'>
+														<strong>Número:</strong>{' '}
+														{
+															filter
+																.imoveis_leis[0]
+																.numero
+														}
+													</div>
+													<div className='col'>
+														<strong>CEP:</strong>{' '}
+														{
+															filter
+																.imoveis_leis[0]
+																.cep
+														}
+													</div>
+												</div>
+												<div className='row mt-3'>
+													<div className='col'>
+														<strong>Bairro:</strong>{' '}
+														{
+															filter
+																.imoveis_leis[0]
+																.bairro
+														}
+													</div>
+													<div className='col'>
+														<strong>Comp:</strong>{' '}
+														{
+															filter
+																.imoveis_leis[0]
+																.complemento
+														}
+													</div>
+													<div className='col'>
+														<strong>
+															Cidade:{' '}
+														</strong>
+														{
+															filter
+																.imoveis_leis[0]
+																.cidade
+														}
+													</div>
+													<div className='col'>
+														<strong>UF: </strong>
+														{
+															filter
+																.imoveis_leis[0]
+																.uf
+														}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class='modal-footer'>
+								<button
+									type='button'
+									class='btn btn-outline-success'
+								>
+									Documentos
+								</button>
+
+								<button
+									type='button'
+									class='btn btn-secondary'
+									data-bs-dismiss='modal'
+								>
+									Fechar
+								</button>
+								<button
+									type='button'
+									class='btn btn-outline-warning'
+								>
+									Editar
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
 		</div>
 	)
 }

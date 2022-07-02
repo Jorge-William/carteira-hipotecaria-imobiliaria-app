@@ -3,6 +3,7 @@ import '../style/TableFilter.css'
 import AdicionarMutuarioLei from './modal/AdicionarMutuarioLei.modal'
 
 const TableFilter = (data) => {
+	console.log(data)
 	return (
 		<section className='mb-5'>
 			<div className='row justify-content-center'>
