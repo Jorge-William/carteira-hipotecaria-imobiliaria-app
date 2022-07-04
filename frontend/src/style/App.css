@@ -1,0 +1,19 @@
+/* Margin para tirar os componentes de debaixo do menu  */
+body {
+    margin-top: 100px;
+}
+#btn-sair{
+    text-decoration: none;
+    color: white
+
+}
+
+a:hover.link{
+    color: rgb(149, 149, 149);
+    /* font-size: 13px; */
+    font-weight: 300;
+}
+a{
+    /* text-decoration: none; */
+    color: rgb(57, 57, 57);
+}

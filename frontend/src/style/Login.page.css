@@ -1,0 +1,37 @@
+.borda{
+    border: solid red 1px;
+}
+
+#aside-login{
+    height:600px;
+    background: rgb(207, 211, 223);
+}
+
+.label-color{
+   color: #747487
+}
+
+.borda-container{
+    margin-top: 150px;
+    border-radius: 20px;
+    /* border: red solid 1px; */
+    width: 850px;
+    box-shadow:20px 10px 50px 15px rgb(219, 223, 239);
+}
+
+.borda-aside{
+    border-radius: 20px 0px 0px 20px ;
+}
+#form-section{
+    width:420px;
+}
+
+#side-info{
+    text-transform: uppercase;
+    /* border: solid red 1px; */
+    color: white;
+}
+
+.loading-container{
+    height: 500px;
+}
