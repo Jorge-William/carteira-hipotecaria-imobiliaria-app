@@ -133,10 +133,25 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 									</div>
 								</div>
 							</div>
+							<div class='collapse' id='collapseExample'>
+								<div class='card card-body'>
+									Some placeholder content for the collapse
+									component. This panel is hidden by default
+									but revealed when the user activates the
+									relevant trigger.
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class='modal-footer'>
-						<button type='button' class='btn btn-outline-success'>
+						<button
+							type='button'
+							class='btn btn-outline-success'
+							data-bs-toggle='collapse'
+							data-bs-target='#collapseExample'
+							aria-expanded='false'
+							aria-controls='collapseExample'
+						>
 							Documentos
 						</button>
 
