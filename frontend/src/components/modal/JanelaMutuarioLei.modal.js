@@ -1,8 +1,46 @@
+import { useState } from 'react'
+import getDocumentos from '../../services/getDocumentos.serice'
+import '../../style/ExibirMutuario.css'
+
 const ExibirMutuarioLei = ({ id, dados }) => {
-	// const handleClick = async (mutuario) => {
 	// 	const result = await getMutuarioLei(mutuario)
+	// const handleClick = async (mutuario) => {
 	// 	return setResult(result)
 	// }
+	const [documentos, setDocumentos] = useState([])
+
+	const handleClick = async () => {
+		// Posição 0 é o id do mutuário e a posição 17 é o tipo(L ou C)
+		const result = await getDocumentos(dados[0], dados[17])
+
+		setDocumentos(result)
+	}
+
+	const renderSwitch = (status) => {
+		switch (status) {
+			case '0':
+				return (
+					<p className='ms-2' style={{ color: 'orange' }}>
+						<i
+							class='bi bi-exclamation-triangle-fill'
+							style={{ fontSize: 28 }}
+						></i>
+					</p>
+				)
+			case '1':
+				return <p style={{ color: 'grey' }}>Não auditado</p>
+			case '3':
+				return (
+					<p className='ms-2' style={{ color: 'green' }}>
+						<i
+							class='bi bi-patch-check-fill'
+							style={{ fontSize: 28 }}
+						></i>
+					</p>
+				)
+			default:
+		}
+	}
 
 	return (
 		<div
@@ -34,7 +72,6 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 									<h3>{dados[2]}</h3>
 								</div>
 							</div>
-							{/* <hr /> */}
 							<div className='container'>
 								<div className='row  justify-content-center'>
 									<div className='col-8 mb-5'>
@@ -134,15 +171,154 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 								</div>
 							</div>
 							<div class='collapse' id='collapseExample'>
-								<div class='card card-body'>
-									Some placeholder content for the collapse
-									component. This panel is hidden by default
-									but revealed when the user activates the
-									relevant trigger.
+								<div class='card card-body container-documentos'>
+									{/* ---------------------------- Accordion Container ---------------------------- */}
+
+									<div
+										class='accordion accordion-flush'
+										id='accordionFlushExample'
+									>
+										{/* ---------------------------- Accordion Container FIM ---------------------------- */}
+
+										{documentos.map((item, key) => {
+											return (
+												<div
+													key={key}
+													class='accordion-item'
+												>
+													<h2
+														class='accordion-header'
+														id='flush-headingOne'
+													>
+														<button
+															class='accordion-button collapsed'
+															type='button'
+															data-bs-toggle='collapse'
+															data-bs-target={`#chave${key}`}
+															aria-expanded='false'
+															aria-controls='flush-collapseOne'
+														>
+															{item.descricao}
+														</button>
+													</h2>
+													<div
+														id={`chave${key}`}
+														class='accordion-collapse collapse'
+														aria-labelledby='flush-headingOne'
+														data-bs-parent='#accordionFlushExample'
+													>
+														<div className='accordion-body'>
+															<table
+																class='table table-striped table-hover'
+																key={key}
+															>
+																<thead>
+																	<tr className='table-dark'>
+																		<th scope='col'>
+																			ID
+																		</th>
+																		<th scope='col'>
+																			Nome
+																			do
+																			arquivo
+																		</th>
+																		<th scope='col'>
+																			Data
+																			registro
+																		</th>
+																		<th scope='col'>
+																			Páginas
+																		</th>
+																		<th scope='col'>
+																			Pasta
+																		</th>
+																		<th scope='col'>
+																			auditor
+																		</th>
+																		<th scope='col'>
+																			Status
+																		</th>
+																		<th scope='col'>
+																			Arquivo
+																		</th>
+																		<th>
+																			Ação
+																		</th>
+																	</tr>
+																</thead>
+																<tbody
+																	style={{
+																		fontSize: 18
+																	}}
+																>
+																	<tr
+																		key={
+																			key
+																		}
+																	>
+																		<th scope='row'>
+																			{
+																				item.id
+																			}
+																		</th>
+																		<td>
+																			{
+																				item.nome_arquivo
+																			}
+																		</td>
+																		<td>
+																			{
+																				item.dt_registro
+																			}
+																		</td>
+
+																		<td>
+																			{
+																				item.qtd_pag
+																			}
+																		</td>
+																		<td>
+																			{
+																				item.cod_pasta
+																			}
+																		</td>
+																		<td>
+																			{
+																				item.auditor
+																			}
+																		</td>
+																		<td>
+																			{renderSwitch(
+																				item.status
+																			)}
+																		</td>
+																		<td>
+																			<button className='btn btn-success btn-sm'>
+																				Abrir{' '}
+																				<i class='bi bi-file-earmark-text'></i>
+																			</button>
+																		</td>
+																		<td>
+																			<p className='ms-1'>
+																				<button className='btn btn-danger btn-sm'>
+																					<i className='bi bi-trash'></i>
+																				</button>
+																			</p>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											)
+										})}
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+
 					<div class='modal-footer'>
 						<button
 							type='button'
@@ -151,6 +327,7 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 							data-bs-target='#collapseExample'
 							aria-expanded='false'
 							aria-controls='collapseExample'
+							onClick={handleClick}
 						>
 							Documentos
 						</button>

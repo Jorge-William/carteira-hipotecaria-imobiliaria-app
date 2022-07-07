@@ -4,6 +4,7 @@ const cors = require("cors");
 const userRoutes = require("./src/routes/user/index");
 const mutuarioLeiRoutes = require("./src/routes/mutuario-lei/index");
 const documentoLei = require("./src/routes/documento-lei/index");
+const documentos = require("./src/routes/documentos/index");
 
 const app = express();
 require("dotenv").config();
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(userRoutes);
 app.use(mutuarioLeiRoutes);
 app.use(documentoLei);
+app.use(documentos);
 // ----------------------------------------------------------------------------
 
 const PORT = process.env.PORT || 5000;
