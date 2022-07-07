@@ -108,7 +108,8 @@ const TabelaMutuarioLei = () => {
 											data.imoveis_leis[0].dt_liq,
 											data.imoveis_leis[0].cod_historico,
 											data.imoveis_leis[0].num_obra,
-											data.telefone
+											data.telefone,
+											data.tipo
 										]}
 									/>
 
