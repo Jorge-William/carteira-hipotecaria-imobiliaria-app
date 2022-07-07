@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import getDocumentos from '../../services/getDocumentos.serice'
-import '../../style/ExibirMutuario.css'
 
 const ExibirMutuarioLei = ({ id, dados }) => {
 	// 	const result = await getMutuarioLei(mutuario)
