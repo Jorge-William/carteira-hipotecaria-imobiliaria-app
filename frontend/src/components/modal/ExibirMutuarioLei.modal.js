@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import getDocumentos from '../../services/getDocumentos.serice'
+import renderSwitch from '../../helpers/renderSwitch'
 
 const ExibirMutuarioLei = ({ id, dados }) => {
 	// 	const result = await getMutuarioLei(mutuario)
@@ -13,32 +14,6 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 		const result = await getDocumentos(dados[0], dados[17])
 
 		setDocumentos(result)
-	}
-
-	const renderSwitch = (status) => {
-		switch (status) {
-			case '0':
-				return (
-					<p className='ms-2' style={{ color: 'orange' }}>
-						<i
-							class='bi bi-exclamation-triangle-fill'
-							style={{ fontSize: 28 }}
-						></i>
-					</p>
-				)
-			case '1':
-				return <p style={{ color: 'grey' }}>Não auditado</p>
-			case '3':
-				return (
-					<p className='ms-2' style={{ color: 'green' }}>
-						<i
-							class='bi bi-patch-check-fill'
-							style={{ fontSize: 28 }}
-						></i>
-					</p>
-				)
-			default:
-		}
 	}
 
 	return (

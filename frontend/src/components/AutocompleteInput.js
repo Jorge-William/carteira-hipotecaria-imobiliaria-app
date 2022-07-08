@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import '../style/Autocomplete.css'
+import renderSwitch from '../helpers/renderSwitch'
+import getDocumentos from '../services/getDocumentos.serice'
 
 const Autocomplete = (props) => {
 	const [active, setActive] = useState(0)
@@ -7,6 +9,14 @@ const Autocomplete = (props) => {
 	const [isShow, setIsShow] = useState(false)
 	const [input, setInput] = useState('')
 	const [filter, setFilter] = useState(null)
+	const [documentos, setDocumentos] = useState([])
+
+	const handleClick = async () => {
+		// Posição 0 é o id do mutuário e a posição 17 é o tipo(L ou C)
+		const result = await getDocumentos(filter.id, filter.tipo)
+
+		setDocumentos(result)
+	}
 
 	const onChange = (e) => {
 		const { suggestions } = props
@@ -379,11 +389,162 @@ const Autocomplete = (props) => {
 										</div>
 									</div>
 								</div>
+								<div class='collapse' id='collapseExample'>
+									<div class='card card-body container-documentos'>
+										{/* ---------------------------- Accordion Container ---------------------------- */}
+
+										<div
+											class='accordion accordion-flush'
+											id='accordionFlushExample'
+										>
+											{/* ---------------------------- Accordion Container FIM ---------------------------- */}
+
+											{documentos.map((item, key) => {
+												return (
+													<div
+														key={key}
+														class='accordion-item'
+													>
+														<h2
+															class='accordion-header'
+															id='flush-headingOne'
+														>
+															<button
+																class='accordion-button collapsed'
+																type='button'
+																data-bs-toggle='collapse'
+																data-bs-target={`#chave${key}`}
+																aria-expanded='false'
+																aria-controls='flush-collapseOne'
+															>
+																{item.descricao}
+															</button>
+														</h2>
+														<div
+															id={`chave${key}`}
+															class='accordion-collapse collapse'
+															aria-labelledby='flush-headingOne'
+															data-bs-parent='#accordionFlushExample'
+														>
+															<div className='accordion-body'>
+																<table
+																	class='table table-striped table-hover'
+																	key={key}
+																>
+																	<thead>
+																		<tr className='table-dark'>
+																			<th scope='col'>
+																				ID
+																			</th>
+																			<th scope='col'>
+																				Nome
+																				do
+																				arquivo
+																			</th>
+																			<th scope='col'>
+																				Data
+																				registro
+																			</th>
+																			<th scope='col'>
+																				Páginas
+																			</th>
+																			<th scope='col'>
+																				Pasta
+																			</th>
+																			<th scope='col'>
+																				auditor
+																			</th>
+																			<th scope='col'>
+																				Status
+																			</th>
+																			<th scope='col'>
+																				Arquivo
+																			</th>
+																			<th>
+																				Ação
+																			</th>
+																		</tr>
+																	</thead>
+																	<tbody
+																		style={{
+																			fontSize: 18
+																		}}
+																	>
+																		<tr
+																			key={
+																				key
+																			}
+																		>
+																			<th scope='row'>
+																				{
+																					item.id
+																				}
+																			</th>
+																			<td>
+																				{
+																					item.nome_arquivo
+																				}
+																			</td>
+																			<td>
+																				{
+																					item.dt_registro
+																				}
+																			</td>
+
+																			<td>
+																				{
+																					item.qtd_pag
+																				}
+																			</td>
+																			<td>
+																				{
+																					item.cod_pasta
+																				}
+																			</td>
+																			<td>
+																				{
+																					item.auditor
+																				}
+																			</td>
+																			<td>
+																				{renderSwitch(
+																					item.status
+																				)}
+																			</td>
+																			<td>
+																				<button className='btn btn-success btn-sm'>
+																					Abrir{' '}
+																					<i class='bi bi-file-earmark-text'></i>
+																				</button>
+																			</td>
+																			<td>
+																				<p className='ms-1'>
+																					<button className='btn btn-danger btn-sm'>
+																						<i className='bi bi-trash'></i>
+																					</button>
+																				</p>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												)
+											})}
+										</div>
+									</div>
+								</div>
 							</div>
 							<div class='modal-footer'>
 								<button
 									type='button'
 									class='btn btn-outline-success'
+									data-bs-target='#collapseExample'
+									data-bs-toggle='collapse'
+									aria-expanded='false'
+									aria-controls='collapseExample'
+									onClick={handleClick}
 								>
 									Documentos
 								</button>

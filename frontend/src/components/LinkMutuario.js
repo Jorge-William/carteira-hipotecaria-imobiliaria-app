@@ -1,4 +1,4 @@
-import ExibirMutuarioLei from './modal/JanelaMutuarioLei.modal'
+import ExibirMutuarioLei from './modal/ExibirMutuarioLei.modal'
 
 const LinkMutuario = ({ pasta, mutuario, values }) => {
 	// const handleClick = async (mutuario) => {
