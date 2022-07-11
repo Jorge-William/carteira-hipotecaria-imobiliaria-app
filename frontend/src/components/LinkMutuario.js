@@ -5,7 +5,6 @@ const LinkMutuario = ({ pasta, mutuario, values }) => {
 	// 	const result = await getMutuarioLei(mutuario)
 	// 	return setResult(result)
 	// }
-	console.log()
 	return (
 		<>
 			<a

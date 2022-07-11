@@ -1,6 +1,8 @@
 const express = require("express");
 // const create = require("../../controllers/mutuario-lei/mutuario-lei.controller");
-const { listarTodosMutuarios, exibeMutuario } = require("../../controllers/mutuario-lei/mutuario-lei.controller");
+const {
+  listarTodosMutuarios,
+} = require("../../controllers/mutuario-lei/mutuario-lei.controller");
 
 const router = new express.Router();
 
@@ -10,7 +12,7 @@ router.get("/mutuariolei", listarTodosMutuarios, async (req, res) => {
 });
 
 // ------------------------------------ Motrar um mutuario  ------------------------------------
-router.get("/mostrarmutuario", exibeMutuario, async (req, res) => {
+router.post("/mutuariobyid", async (req, res) => {
   res.send({ msg: "olá mundo" });
 });
 

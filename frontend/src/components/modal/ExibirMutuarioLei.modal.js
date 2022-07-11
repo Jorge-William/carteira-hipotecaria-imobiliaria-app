@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import getDocumentos from '../../services/getDocumentos.serice'
+import getDocumentos from '../../services/getDocumentos.service'
 import renderSwitch from '../../helpers/renderSwitch'
 
 const ExibirMutuarioLei = ({ id, dados }) => {
@@ -18,7 +18,7 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 
 	return (
 		<div
-			class='modal fade'
+			className='modal fade'
 			id={id}
 			data-bs-backdrop='static'
 			data-bs-keyboard='false'
@@ -26,20 +26,20 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 			aria-labelledby='staticBackdropLabel'
 			aria-hidden='true'
 		>
-			<div class='modal-dialog modal-xl modal-dialog-centered'>
-				<div class='modal-content'>
-					<div class='modal-header'>
-						<h2 class='modal-title' id='staticBackdropLabel'>
+			<div className='modal-dialog modal-xl modal-dialog-centered'>
+				<div className='modal-content'>
+					<div className='modal-header'>
+						<h2 className='modal-title' id='staticBackdropLabel'>
 							Detalhes
 						</h2>
 						<button
 							type='button'
-							class='btn-close'
+							className='btn-close'
 							data-bs-dismiss='modal'
 							aria-label='Close'
 						></button>
 					</div>
-					<div class='modal-body'>
+					<div className='modal-body'>
 						<div className='container'>
 							<div className='row justify-content-center'>
 								<div className='mt-3 mb-5 col-4 text-center'>
@@ -144,12 +144,12 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 									</div>
 								</div>
 							</div>
-							<div class='collapse' id='collapseExample'>
-								<div class='card card-body container-documentos'>
+							<div className='collapse' id='collapseExample'>
+								<div className='card card-body container-documentos'>
 									{/* ---------------------------- Accordion Container ---------------------------- */}
 
 									<div
-										class='accordion accordion-flush'
+										className='accordion accordion-flush'
 										id='accordionFlushExample'
 									>
 										{/* ---------------------------- Accordion Container FIM ---------------------------- */}
@@ -158,14 +158,14 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 											return (
 												<div
 													key={key}
-													class='accordion-item'
+													className='accordion-item'
 												>
 													<h2
-														class='accordion-header'
+														className='accordion-header'
 														id='flush-headingOne'
 													>
 														<button
-															class='accordion-button collapsed'
+															className='accordion-button collapsed'
 															type='button'
 															data-bs-toggle='collapse'
 															data-bs-target={`#chave${key}`}
@@ -177,13 +177,13 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 													</h2>
 													<div
 														id={`chave${key}`}
-														class='accordion-collapse collapse'
+														className='accordion-collapse collapse'
 														aria-labelledby='flush-headingOne'
 														data-bs-parent='#accordionFlushExample'
 													>
 														<div className='accordion-body'>
 															<table
-																class='table table-striped table-hover'
+																className='table table-striped table-hover'
 																key={key}
 															>
 																<thead>
@@ -269,7 +269,7 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 																		<td>
 																			<button className='btn btn-success btn-sm'>
 																				Abrir{' '}
-																				<i class='bi bi-file-earmark-text'></i>
+																				<i className='bi bi-file-earmark-text'></i>
 																			</button>
 																		</td>
 																		<td>
@@ -293,10 +293,10 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 						</div>
 					</div>
 
-					<div class='modal-footer'>
+					<div className='modal-footer'>
 						<button
 							type='button'
-							class='btn btn-outline-success'
+							className='btn btn-outline-success'
 							data-bs-toggle='collapse'
 							data-bs-target='#collapseExample'
 							aria-expanded='false'
@@ -308,12 +308,12 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 
 						<button
 							type='button'
-							class='btn btn-secondary'
+							className='btn btn-secondary'
 							data-bs-dismiss='modal'
 						>
 							Fechar
 						</button>
-						<button type='button' class='btn btn-outline-warning'>
+						<button type='button' className='btn btn-outline-warning'>
 							Editar
 						</button>
 					</div>

@@ -123,16 +123,16 @@ const TabelaMutuarioLei = () => {
 								<td>{data.imoveis_leis[0].uf}</td>
 								<td>
 									{data.imoveis_leis[0].escritura === 1 ? (
-										<i class='ms-3 bi disponivel bi-file-earmark-text'></i>
+										<i className='ms-3 bi disponivel bi-file-earmark-text'></i>
 									) : (
-										<i class='ms-3 bi indisponivel bi-file-earmark-text'></i>
+										<i className='ms-3 bi indisponivel bi-file-earmark-text'></i>
 									)}
 								</td>
 								<td>
 									{data.imoveis_leis[0].hipoteca === 1 ? (
-										<i class='ms-2 bi disponivel bi-house'></i>
+										<i className='ms-2 bi disponivel bi-house'></i>
 									) : (
-										<i class='ms-2 bi indisponivel bi-house'></i>
+										<i className='ms-2 bi indisponivel bi-house'></i>
 									)}
 								</td>
 							</tr>
