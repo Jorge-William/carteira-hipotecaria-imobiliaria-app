@@ -103,6 +103,7 @@ const Autocomplete = (props) => {
 						placeholder={placeholder}
 						onChange={onChange}
 						onKeyDown={onKeyDown}
+						value={input}
 					/>
 				</div>
 				<button
@@ -134,55 +135,61 @@ const Autocomplete = (props) => {
 				<div className='col mt-3'>
 					{filter && (
 						<>
-						<table className='table table-striped table-bordered'>
-							<thead>
-								<tr>
-									<th scope='col'>#</th>
-									<th scope='col'>Pasta</th>
-									<th scope='col'>Nome</th>
-									<th scope='col'>Endreço</th>
-									<th scope='col'>Nº</th>
-									<th scope='col'>Complemento</th>
-									<th scope='col'>Bairro</th>
-									<th scope='col'>Cidade</th>
-									<th scope='col'>UF</th>
-									<th scope='col'>Esc</th>
-									<th scope='col'>Hip</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope='row'>{filter.id}</th>
-									<td>{filter.rotulo}</td>
-									{/*  Link nomes */}
-									<td>
-										{/* ---------------------------------------- Modal -------------------------------------- */}
+							<table className='table table-striped table-bordered'>
+								<thead>
+									<tr>
+										<th scope='col'>#</th>
+										<th scope='col'>Pasta</th>
+										<th scope='col'>Nome</th>
+										<th scope='col'>Endreço</th>
+										<th scope='col'>Nº</th>
+										<th scope='col'>Complemento</th>
+										<th scope='col'>Bairro</th>
+										<th scope='col'>Cidade</th>
+										<th scope='col'>UF</th>
+										<th scope='col'>Esc</th>
+										<th scope='col'>Hip</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th scope='row'>{filter.id}</th>
+										<td>{filter.rotulo}</td>
+										{/*  Link nomes */}
+										<td>
+											{/* ---------------------------------------- Modal -------------------------------------- */}
 
-										{/* <a
+											{/* <a
 											data-bs-toggle='modal'
 											data-bs-target='#exampleModal2'
 											// onClick={() => setLiberaModal()}
 										> */}
-										{
-											<Link to={`/detalhes/${filter.id}`}>
-												{filter.nome}
-											</Link>
-										}
-										{/* </a> */}
-									</td>
-									<td>{filter.imoveis_leis[0].end}</td>
-									<td>{filter.imoveis_leis[0].numero}</td>
-									<td>
-										{filter.imoveis_leis[0].complemento}
-									</td>
-									<td>{filter.imoveis_leis[0].bairro}</td>
-									<td>{filter.imoveis_leis[0].cidade}</td>
-									<td>{filter.imoveis_leis[0].uf}</td>
-									<td>{filter.imoveis_leis[0].escritura}</td>
-									<td>{filter.imoveis_leis[0].hipoteca}</td>
-								</tr>
-							</tbody>
-						</table>
+											{
+												<Link
+													to={`/detalhes/${filter.id}`}
+												>
+													{filter.nome}
+												</Link>
+											}
+											{/* </a> */}
+										</td>
+										<td>{filter.imoveis_leis[0].end}</td>
+										<td>{filter.imoveis_leis[0].numero}</td>
+										<td>
+											{filter.imoveis_leis[0].complemento}
+										</td>
+										<td>{filter.imoveis_leis[0].bairro}</td>
+										<td>{filter.imoveis_leis[0].cidade}</td>
+										<td>{filter.imoveis_leis[0].uf}</td>
+										<td>
+											{filter.imoveis_leis[0].escritura}
+										</td>
+										<td>
+											{filter.imoveis_leis[0].hipoteca}
+										</td>
+									</tr>
+								</tbody>
+							</table>
 							<button
 								className='btn btn-outline-danger mt-3'
 								onClick={() => setFilter(false)}
@@ -190,7 +197,6 @@ const Autocomplete = (props) => {
 								Redefinir busca
 							</button>
 						</>
-
 					)}
 				</div>
 			</div>
