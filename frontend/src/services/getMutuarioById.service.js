@@ -1,11 +1,10 @@
 import axios from 'axios'
 
-const getDocumentos = async (id, tipo) => {
+const getMutuarioById = async (id) => {
 	return axios
-		.post('/documentos', {
+		.post('/mutuariobyid', {
 			params: {
-				id,
-				tipo
+				id
 			}
 		})
 		.then((result) => {
@@ -13,5 +12,4 @@ const getDocumentos = async (id, tipo) => {
 		})
 }
 
-
-export default  getDocumentos
+export default getMutuarioById

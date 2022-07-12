@@ -15,14 +15,6 @@ const listarTodosMutuarios = async (req, res, next) => {
   next();
 };
 
-const exibeMutuario = async (req, res, next) => {
-  const mutuario = req.body;
-
-  console.log(mutuario);
-
-  next();
-};
-
 // const create = async (req, res, next) => {
 //   const {
 //     rotulo,
@@ -54,4 +46,4 @@ const exibeMutuario = async (req, res, next) => {
 //   }
 // };
 
-module.exports = { listarTodosMutuarios, exibeMutuario };
+module.exports = { listarTodosMutuarios };

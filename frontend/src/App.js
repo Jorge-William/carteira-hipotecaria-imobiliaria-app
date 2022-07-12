@@ -8,9 +8,11 @@ import Menu from './components/Menu'
 import Dashboard from './pages/Dashboard.page'
 import MutuarioLei from './pages/MutuarioLei.page'
 import MutuarioSfh from './pages/MutuarioSfh.page'
+import MutuarioLeiDetalhesPage from './pages/MutuarioLeiDetalhes.page'
 
 const App = () => {
 	const [auth, setAuth] = useState(null)
+	// const { id } = useParams()
 
 	useEffect(() => {
 		let user = localStorage.getItem('user')
@@ -41,8 +43,17 @@ const App = () => {
 					<Route path='/mutuario-lei' element={<MutuarioLei />} />
 				)}
 				{auth && (
+					<Route
+						path='/detalhes/:id'
+						element={<MutuarioLeiDetalhesPage />}
+					/>
+				)}
+				{auth && (
 					<Route path='/mutuario-sfh' element={<MutuarioSfh />} />
 				)}
+				{/* {auth && (
+					<Route path='/mutuario-lei/detalhes' element={<MutuarioSfh />} />
+				)} */}
 				<Route
 					path='*'
 					element={<Navigate to={auth ? '/dashboard' : '/login'} />}

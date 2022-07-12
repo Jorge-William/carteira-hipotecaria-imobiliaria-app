@@ -9,7 +9,7 @@ const TableFilter = (data) => {
 			<div className='row justify-content-center'>
 				<div id='botao-filtro' className='col-md-3 d-grid'>
 					<a
-						class='btn btn-outline-primary'
+						className='btn btn-outline-primary'
 						data-bs-toggle='collapse'
 						href='#buscaPorPasta'
 						role='button'
@@ -21,7 +21,7 @@ const TableFilter = (data) => {
 				</div>
 				<div id='botao-filtro' className='col-md-3 d-grid'>
 					<a
-						class='btn btn-outline-success'
+						className='btn btn-outline-success'
 						href='#buscaPorPasta'
 						role='button'
 						aria-expanded='false'
@@ -30,17 +30,17 @@ const TableFilter = (data) => {
 						data-bs-target='#staticBackdrop-mutuario'
 					>
 						Adicionar um Mutuário
-						<i class='bi bi-person-plus-fill ms-2'></i>
+						<i className='bi bi-person-plus-fill ms-2'></i>
 					</a>
 				</div>
 			</div>
 			<AdicionarMutuarioLei />
-			<div class='collapse' id='buscaPorPasta'>
-				<div class='card card-body'>
-					<ul class='nav nav-tabs' id='myTab' role='tablist'>
-						<li class='nav-item' role='presentation'>
+			<div className='collapse' id='buscaPorPasta'>
+				<div className='card card-body'>
+					<ul className='nav nav-tabs' id='myTab' role='tablist'>
+						<li className='nav-item' role='presentation'>
 							<button
-								class='nav-link active'
+								className='nav-link active'
 								id='home-tab'
 								data-bs-toggle='tab'
 								data-bs-target='#home'
@@ -52,9 +52,9 @@ const TableFilter = (data) => {
 								Busca por pasta
 							</button>
 						</li>
-						<li class='nav-item' role='presentation'>
+						<li className='nav-item' role='presentation'>
 							<button
-								class='nav-link'
+								className='nav-link'
 								id='profile-tab'
 								data-bs-toggle='tab'
 								data-bs-target='#profile'
@@ -67,15 +67,15 @@ const TableFilter = (data) => {
 							</button>
 						</li>
 					</ul>
-					<div class='tab-content' id='myTabContent'>
+					<div className='tab-content' id='myTabContent'>
 						<div
-							class='tab-pane fade show active'
+							className='tab-pane fade show active'
 							id='home'
 							role='tabpanel'
 							aria-labelledby='home-tab'
 						>
 							<br />
-							<div class='card card-body'>
+							<div className='card card-body'>
 								<div className='row '>
 									<div className='col-md-12'>
 										<Autocomplete
@@ -98,13 +98,13 @@ const TableFilter = (data) => {
 							</div>
 						</div>
 						<div
-							class='tab-pane fade'
+							className='tab-pane fade'
 							id='profile'
 							role='tabpanel'
 							aria-labelledby='profile-tab'
 						>
 							<br />
-							<div class='card card-body'>
+							<div className='card card-body'>
 								<div className='row '>
 									<div className='col-12'>
 										<Autocomplete
