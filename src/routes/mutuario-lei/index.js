@@ -3,6 +3,7 @@ const express = require("express");
 const {
   listarTodosMutuarios,
 } = require("../../controllers/mutuario-lei/mutuario-lei.controller");
+const sequelize = require("../../database/sequelize.connection");
 
 const router = new express.Router();
 
@@ -13,7 +14,18 @@ router.get("/mutuariolei", listarTodosMutuarios, async (req, res) => {
 
 // ------------------------------------ Motrar um mutuario  ------------------------------------
 router.post("/mutuariobyid", async (req, res) => {
-  res.send({ msg: "olá mundo" });
+  const { id } = req.body.params;
+
+  const [result, metadata] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade,uf, hipoteca,escritura, complemento,
+  telefone, dt_liq, num_obra, cod_historico, obs, cep
+  FROM testdb.mutuarios_lei a
+  LEFT JOIN testdb.imoveis_lei b 
+  ON a.id = b.mutuario_id
+  where a.id = ${id};`);
+
+  res.status(200).send({ result });
+
+  console.log(metadata);
 });
 
 // ------------------------------------ Criar  ------------------------------------

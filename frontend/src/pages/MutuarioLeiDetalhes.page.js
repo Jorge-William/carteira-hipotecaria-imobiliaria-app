@@ -5,10 +5,24 @@ import DetalhesMutuario from '../components/DetalhesMutuario'
 const MutuarioLeiDetalhesPage = () => {
 	const { id } = useParams()
 	return (
-		<div>
-			<h1>Mutuario Lei Detalhes</h1>
+		<div className='mb-4'>
+			<div className='row'>
+				<div className='col'>
+					<h2 className='mb-5'>Mutuario Lei Detalhes</h2>
+				</div>
+				<div className='col justify-end'>
+					<button className='btn btn-outline-primary'>
+						<Link to='/mutuario-lei'>Voltar</Link>
+					</button>
+				</div>
+			</div>
 			<DetalhesMutuario id={id} />
-			<Link to='/mutuario-lei'>Voltar</Link>
+			<br />
+			<button className='btn btn-outline-primary'>
+				<Link style={{ textDecoration: 'none' }} to='/mutuario-lei'>
+					Voltar
+				</Link>
+			</button>
 		</div>
 	)
 }

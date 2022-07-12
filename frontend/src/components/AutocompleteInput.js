@@ -94,7 +94,7 @@ const Autocomplete = (props) => {
 				}}
 				className=' row'
 			>
-				<div class='input-group mb-1 col'>
+				<div className='input-group mb-1 col'>
 					<input
 						type='text'
 						className='form-control'
