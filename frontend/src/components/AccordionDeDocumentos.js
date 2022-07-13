@@ -3,6 +3,7 @@ import Skeleton from 'react-loading-skeleton'
 
 const AccordionDeDocumentos = ({ documentos }) => {
 	console.log(documentos)
+
 	return documentos.length === 0 ? (
 		<>
 			<Skeleton count={5} />
@@ -90,7 +91,11 @@ const AccordionDeDocumentos = ({ documentos }) => {
 												</td>
 												<td>
 													<p className='ms-1'>
-														<button className='btn btn-danger btn-sm'>
+														<button
+															className='btn btn-danger btn-sm'
+															data-bs-toggle='modal'
+															data-bs-target={`#documento${key}`}
+														>
 															<i className='bi bi-trash'></i>
 														</button>
 													</p>
@@ -98,6 +103,57 @@ const AccordionDeDocumentos = ({ documentos }) => {
 											</tr>
 										</tbody>
 									</table>
+								</div>
+								{/* // ------------------------------------------Modal-------------------------------------------------- */}
+								<div
+									class='modal fade'
+									id={`documento${key}`}
+									data-bs-backdrop='static'
+									data-bs-keyboard='false'
+									tabindex='-1'
+									aria-labelledby='staticBackdropLabel'
+									aria-hidden='true'
+								>
+									<div class='modal-dialog modal-dialog-centered'>
+										<div class='modal-content'>
+											<div class='modal-header'>
+												<h3
+													class='modal-title text-danger'
+													id='staticBackdropLabel'
+												>
+													Atenção!
+												</h3>
+												<button
+													type='button'
+													class='btn-close'
+													data-bs-dismiss='modal'
+													aria-label='Close'
+												></button>
+											</div>
+											<div class='modal-body'>
+												<h3 className='text-secondary mb-4'>
+													Deseja realmente deletar o
+													documento?
+												</h3>
+												<h4>{item.descricao}</h4>
+											</div>
+											<div class='modal-footer'>
+												<button
+													type='button'
+													class='btn btn-success'
+													data-bs-dismiss='modal'
+												>
+													Cancelar
+												</button>
+												<button
+													type='button'
+													class='btn btn-danger'
+												>
+													Sim deletar
+												</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
