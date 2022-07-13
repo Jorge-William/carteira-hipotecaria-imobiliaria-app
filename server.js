@@ -5,6 +5,7 @@ const userRoutes = require("./src/routes/user/index");
 const mutuarioLeiRoutes = require("./src/routes/mutuario-lei/index");
 const documentoLei = require("./src/routes/documento-lei/index");
 const documentos = require("./src/routes/documentos/index");
+const dashboard = require("./src/routes/dashboard/index");
 
 const app = express();
 require("dotenv").config();
@@ -29,6 +30,7 @@ app.use(userRoutes);
 app.use(mutuarioLeiRoutes);
 app.use(documentoLei);
 app.use(documentos);
+app.use(dashboard);
 // ----------------------------------------------------------------------------
 
 const PORT = process.env.PORT || 5000;
