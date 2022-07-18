@@ -9,20 +9,26 @@ const MutuarioLeiDetalhesPage = () => {
 		<div className='pb-5'>
 			<div className='row'>
 				<div className='col'>
-					<h2 className='mb-5'>Mutuario Lei Detalhes</h2>
+					<h2 className='mb-5'>Detalhes</h2>
 				</div>
 				<div className='col'>
 					<button className='btn btn-outline-primary float-end'>
-						<Link to='/mutuario-lei'>
+						<Link to='/mutuario/lei'>
 							<i className='bi bi-arrow-left'></i>Voltar
 						</Link>
 					</button>
 				</div>
 			</div>
+			{
+				//---------------------------- Componente ---------------------
+			}
 			<DetalhesMutuario id={id} />
+			{
+				//---------------------------- Componente fim ---------------------
+			}
 			<br />
 			<button className='btn btn-outline-primary'>
-				<Link to='/mutuario-lei'>
+				<Link to='/mutuario/lei'>
 					<i className='bi bi-arrow-left'></i>Voltar
 				</Link>
 			</button>
