@@ -11,7 +11,9 @@ const router = new express.Router();
 // ------------------------------------ Login ------------------------------------
 router.post("/login", login, async (req, res) => {
   const {
-    id, name, lastName, token, type,
+/* eslint-disable */
+    id, name, lastName, token, type, usuario_id,
+    
   } = req.user;
   try {
     // Por enquanto retorna todos os dados do usuario para o frontend
@@ -20,6 +22,8 @@ router.post("/login", login, async (req, res) => {
       id,
       name,
       lastName,
+      usuario_id,
+      /* eslint-enable */
       type,
       token,
       userIsValid: true,

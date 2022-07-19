@@ -26,7 +26,7 @@ router.get("/mutuariolei", async (req, res) => {
 router.post("/alldatamutuariobyid", async (req, res) => {
   const { id } = req.body.params;
 
-  const [result, metadata] =		await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade,uf, hipoteca,escritura, complemento,
+  const [result, metadata] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
   telefone, dt_liq, num_obra, cod_historico, obs, cep
   FROM testdb.mutuarios_lei a
   LEFT JOIN testdb.imoveis_lei b 
@@ -47,7 +47,7 @@ router.post("/cabecalhodocumento", async (req, res) => {
     { type: QueryTypes.SELECT },
   );
   const tipoDoc = await sequelize.query(
-    "select id, descricao from tipos_doc_lei",
+    "select id, abreviacao, descricao from tipos_doc_lei",
     { type: QueryTypes.SELECT },
   );
 

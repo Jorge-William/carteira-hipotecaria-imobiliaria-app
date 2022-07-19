@@ -25,6 +25,10 @@ const User = sequelize.define("operadores", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  usuario_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   type: {
     type: DataTypes.STRING,
     allowNull: false,

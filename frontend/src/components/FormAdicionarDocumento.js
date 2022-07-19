@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import SelectInput from './SelectInput'
 import { useState, useEffect } from 'react'
 import Skeleton from 'react-loading-skeleton'
+import DialogoAddDocumento from './modal/DialogoAddDocumento.js'
 
 const FormAdicionarDocumento = ({ dados }) => {
 	/**  O hook useParams serve para sabermos o id e voltar
@@ -141,8 +142,16 @@ const FormAdicionarDocumento = ({ dados }) => {
 								<i className='bi bi-arrow-left'></i>Voltar
 							</Link>
 						</button>
-						<button className='btn btn-success mt-4'>Salvar</button>
+						<button
+							type='button'
+							className='btn btn-success mt-4'
+							data-bs-toggle='modal'
+							data-bs-target='#adicionar-documento'
+						>
+							Salvar
+						</button>
 					</div>
+					<DialogoAddDocumento pasta={mutuarioData.rotulo} />
 				</div>
 			</form>
 		</section>
