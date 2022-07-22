@@ -1,4 +1,5 @@
-const DialogoAddDocumento = ({ pasta }) => {
+import icon from '../../assets/786.gif'
+const DialogoAddDocumento = ({ pasta, uploadDoc, load }) => {
 	// const { pasta } = props
 	console.log(pasta)
 	return (
@@ -13,9 +14,7 @@ const DialogoAddDocumento = ({ pasta }) => {
 				<div class='modal-dialog modal-dialog-centered'>
 					<div class='modal-content'>
 						<div class='modal-header'>
-							<h3 class='modal-title' id='exampleModalLabel'>
-								Atenção
-							</h3>
+							{!load && <img src={icon} alt='Loading-img' />}
 							<button
 								type='button'
 								class='btn-close'
@@ -37,7 +36,11 @@ const DialogoAddDocumento = ({ pasta }) => {
 							>
 								Cancelar
 							</button>
-							<button type='button' class='btn btn-primary'>
+							<button
+								type='button'
+								class='btn btn-primary'
+								onClick={(e) => uploadDoc(e.target.value)}
+							>
 								Salvar documento
 							</button>
 						</div>

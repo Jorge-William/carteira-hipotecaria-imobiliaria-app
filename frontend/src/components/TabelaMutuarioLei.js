@@ -9,7 +9,7 @@ import '../style/TabelaMutuario.css'
 import TableFilter from '../components/TableFilter.js'
 import { Link } from 'react-router-dom'
 
-let PageSize = 20
+let PageSize = 15
 
 const TabelaMutuarioLei = () => {
 	const [mutLeiData, setMutLeiData] = useState([])

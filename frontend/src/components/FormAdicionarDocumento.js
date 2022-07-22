@@ -2,15 +2,17 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import SelectInput from './SelectInput'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import DialogoAddDocumento from './modal/DialogoAddDocumento.js'
+import axios from 'axios'
 
 const FormAdicionarDocumento = ({ dados }) => {
 	/**  O hook useParams serve para sabermos o id e voltar
 	 * exatamente para o mutuario que deu origem a inclusão do documento
 	 */
 	const { id } = useParams()
+	const filesElement = useRef(null)
 
 	// const { values } = dados
 
@@ -19,8 +21,25 @@ const FormAdicionarDocumento = ({ dados }) => {
 		rotulo: '',
 		nome: ''
 	})
-	// console.log(dados.tipoDoc)
-	// console.log(mutuarioData)
+	const [dadosDocumento, setDadosDocumento] = useState({
+		tipoDocId: ''
+	})
+	const [fileSelected, setFileSelected] = useState()
+	const [load, setLoad] = useState(false)
+
+	const callback = (value) => {
+		setDadosDocumento({ tipoDocId: value })
+	}
+
+	const handleChange = (event) => {
+		const value = event.target.value
+		setDadosDocumento({
+			...dadosDocumento,
+			[event.target.name]: value
+		})
+	}
+
+
 
 	useEffect(() => {
 		const result = dados.result
@@ -31,6 +50,28 @@ const FormAdicionarDocumento = ({ dados }) => {
 		changeState()
 	}, [mutuarioData, dados.result])
 	// console.log(mutuarioData)
+
+	const fileHandler = (event) => {
+		setFileSelected(event.target.files[0])
+	}
+
+	const uploadDoc = async () => {
+		const formData = new FormData()
+		formData.append('file', fileSelected)
+		setLoad(true)
+
+		fetch('/upload', {
+			method: 'POST',
+			body: formData
+		})
+			.then((result) => {
+				console.log('Success: ' + result)
+				setLoad(false)
+			})
+			.catch((error) => {
+				console.log('Error: ' + error)
+			})
+	}
 
 	return (
 		<section className='mt-5'>
@@ -104,20 +145,35 @@ const FormAdicionarDocumento = ({ dados }) => {
 							Tipo do documento
 						</label>
 						{/* ----------------------- Select componente---------------------------- */}
-						<SelectInput tipoDoc={dados.tipoDoc} />
+						<SelectInput
+							tipoDoc={dados.tipoDoc}
+							callback={callback}
+						/>
 						{/* --------------------------------------------------------------------- */}
 					</div>
 					<div className='col-md-6 col-sm-12'>
 						<label for='formFile' class='form-label'>
 							Arquivo
 						</label>
-						<input class='form-control' type='file' id='formFile' />
+						<input
+							class='form-control'
+							type='file'
+							ref={filesElement}
+							id='formFile'
+							onChange={fileHandler}
+						/>
 					</div>
 					<div className='col-md-1 col-sm-12'>
 						<label for='paginas' class='form-label'>
 							Páginas
 						</label>
-						<input type='text' class='form-control' id='paginas' />
+						<input
+							type='text'
+							class='form-control'
+							id='paginas'
+							name='paginas'
+							onChange={handleChange}
+						/>
 					</div>
 				</div>
 				<div className='row'>
@@ -132,6 +188,8 @@ const FormAdicionarDocumento = ({ dados }) => {
 							class='form-control'
 							id='exampleFormControlTextarea1'
 							rows='3'
+							name='observacao'
+							onChange={handleChange}
 						></textarea>
 					</div>
 				</div>
@@ -150,8 +208,12 @@ const FormAdicionarDocumento = ({ dados }) => {
 						>
 							Salvar
 						</button>
+						<DialogoAddDocumento
+							pasta={mutuarioData.rotulo}
+							uploadDoc={uploadDoc}
+							load={load}
+						/>
 					</div>
-					<DialogoAddDocumento pasta={mutuarioData.rotulo} />
 				</div>
 			</form>
 		</section>

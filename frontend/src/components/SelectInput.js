@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 const SelectInput = (props) => {
 	const { tipoDoc } = props
-	// console.log(tipoDoc)
+	// console.log(props)
 	const [tipoDocArray, setTipoDocArray] = useState([
 		{ id: '', descricao: '' }
 	])
@@ -18,8 +18,8 @@ const SelectInput = (props) => {
 	// console.log(tipoDocArray)
 
 	return (
-		<form>
-			<select class='form-select' aria-label='Default select example'>
+<>
+			<select class='form-select' aria-label='Default select example' onChange={(e) => props.callback(e.target.value) }>
 				<option selected>Selecione uma opção</option>
 				{tipoDocArray?.map((item, key) => {
 					return (
@@ -29,7 +29,7 @@ const SelectInput = (props) => {
 					)
 				})}
 			</select>
-		</form>
+		</>
 	)
 }
 

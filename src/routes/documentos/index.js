@@ -1,4 +1,6 @@
 const express = require("express");
+const multer = require("multer");
+const storage = require("../../config/multer.config");
 const sequelize = require("../../database/sequelize.connection");
 // const { DocumentoLei } = require("../../models/mutuario-lei.model");
 // const create = require("../../controllers/mutuario-lei/mutuario-lei.controller");
@@ -31,6 +33,17 @@ router.post("/documentos", async (req, res) => {
   //       attributes: ["descricao"],
   //     }],
   //   });
+});
+
+const upload = multer({
+  storage, // storage: storage
+});
+
+router.use("/pastas", express.static("pastas"));
+
+router.post("/upload", upload.array("file"), async (req, res) => {
+  console.log(req.files);
+  res.send({ result: res.body });
 });
 
 module.exports = router;
