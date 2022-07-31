@@ -1,36 +1,55 @@
-const express = require("express");
-const sequelize = require("../../database/sequelize.connection");
+const express = require('express')
+const multer = require('multer')
+const storage = require('../../config/multer.config')
+const sequelize = require('../../database/sequelize.connection')
 // const { DocumentoLei } = require("../../models/mutuario-lei.model");
 // const create = require("../../controllers/mutuario-lei/mutuario-lei.controller");
-const router = express.Router();
+const router = express.Router()
 // const { DocumentoLei } = require("../../models/mutuario-lei.model");
 // const TipoDeDocumento = require("../../models/tipos_documentos.model");
 
 // ------------------------------------ Buscar documento por id ------------------------------------
-router.post("/documentos", async (req, res) => {
-  const { id } = req.body.params;
+router.post('/documentos', async (req, res) => {
+	const { id } = req.body.params
 
-  //   const documentos = await DocumentoLei.findAll({ where: { mutuario_id: id } });
-  //   res.send(documentos);
+	//   const documentos = await DocumentoLei.findAll({ where: { mutuario_id: id } });
+	//   res.send(documentos);
 
-  const [results, metadata] = await sequelize.query(`select documentos_lei.id ,documentos_lei.dt_registro, documentos_lei.nome_arquivo, documentos_lei.status,
+	const [results, metadata] =
+		await sequelize.query(`select documentos_lei.id ,documentos_lei.dt_registro, documentos_lei.nome_arquivo, documentos_lei.status,
     documentos_lei.arquivo, documentos_lei.qtd_pag, documentos_lei.auditor, 
     documentos_lei.cod_pasta, tipos_doc_lei.descricao from documentos_lei inner join tipos_doc_lei
     on documentos_lei.tipo_doc_lei_id = tipos_doc_lei.id
-    where documentos_lei.mutuario_id = ${id}`);
+    where documentos_lei.mutuario_id = ${id}`)
 
-  res.send(results);
-  console.log(metadata);
+	res.send(results)
+	console.log(metadata)
 
-  //   const documentos = await DocumentoLei.findAll({
-  //     raw: true,
-  //     attributes,
-  //     include: [{
-  //       model: TipoDeDocumento,
-  //       required: true,
-  //       attributes: ["descricao"],
-  //     }],
-  //   });
-});
+	//   const documentos = await DocumentoLei.findAll({
+	//     raw: true,
+	//     attributes,
+	//     include: [{
+	//       model: TipoDeDocumento,
+	//       required: true,
+	//       attributes: ["descricao"],
+	//     }],
+	//   });
+})
 
-module.exports = router;
+const upload = multer({
+	storage // storage: storage
+})
+
+router.use('/pastas', express.static('pastas'))
+
+router.post('/upload', upload.array('file'), async (req, res) => {
+	console.log(req.files[0])
+	console.log(req.body)
+	res.send({ result: res.files })
+})
+
+router.post('/salvar-documento', async (req, res) => {
+	console.log(req.body)
+})
+
+module.exports = router

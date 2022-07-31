@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const getMutuarioById = async (id) => {
 	return axios
-		.post('/mutuariobyid', {
+		.post('/alldatamutuariobyid', {
 			params: {
 				id
 			}

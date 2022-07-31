@@ -9,7 +9,11 @@ const ExibirMutuario = ({ dados }) => {
 			<div className='container'>
 				<div className='row justify-content-center'>
 					<div className='mt-3 mb-2 col-4 text-center'>
-						<h1>{dados.result?.[0].nome}</h1>
+						<div className='row gap-2'>
+							<div className='col-md-10'>
+								<h1 className=''>{dados.result?.[0].nome}</h1>
+							</div>
+						</div>
 					</div>
 				</div>
 				<hr />

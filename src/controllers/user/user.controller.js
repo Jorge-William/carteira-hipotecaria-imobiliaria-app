@@ -13,7 +13,8 @@ console.log(secret);
 
 const create = async (req, res, next) => {
   const {
-    name, lastName, email, password, type,
+/* eslint-disable */
+    name, lastName, email, password, usuario_id, type,
   } = req.body;
   try {
     /**
@@ -25,6 +26,7 @@ const create = async (req, res, next) => {
       lastName,
       email,
       password,
+      usuario_id,
       type,
     });
     const passwordHashed = await bcrypt.hash(user.password, 8);

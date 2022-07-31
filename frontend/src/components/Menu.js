@@ -65,7 +65,7 @@ const Menu = ({ logout }) => {
 								>
 									<li>
 										<Link
-											to='/mutuario-sfh'
+											to='/mutuario/sfh'
 											className='dropdown-item'
 										>
 											SFH
@@ -76,7 +76,7 @@ const Menu = ({ logout }) => {
 									</li>
 									<li>
 										<Link
-											to='/mutuario-lei'
+											to='/mutuario/lei'
 											className='dropdown-item'
 										>
 											LEI

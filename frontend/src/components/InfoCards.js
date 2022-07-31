@@ -18,7 +18,7 @@ const InfoCards = () => {
 		]
 	})
 
-	console.log(infoMutuarios)
+	// console.log(infoMutuarios)
 	// console.log(infoMutuarios.data.lei[0].qtd_mutuarios_lei);
 
 	useEffect(() => {
