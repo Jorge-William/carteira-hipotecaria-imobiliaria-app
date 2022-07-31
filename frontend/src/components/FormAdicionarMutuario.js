@@ -278,13 +278,26 @@ const FormAdicionarMutuario = () => {
 					<div>
 						{/* -----------------------------------Fim form ------------------------------------ */}
 					</div>
+					<hr />
+					<div className='row mt-5'>
+						<div className='col'>
+							<button className='btn btn-secondary '>
+								<Link to={`/mutuario/lei`}>
+									<i className='bi bi-arrow-left'></i>Voltar
+								</Link>
+							</button>
+						</div>
+						<div className='col'>
+							<button
+								type='button'
+								className='btn btn-success float-end'
+							>
+								Salvar Mutuário
+								<i className='bi bi-save2 ms-2'></i>
+							</button>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div className='modal-footer mt-5'>
-				<button type='button' className='btn btn-success'>
-					Salvar Mutuário
-					<i className='bi bi-save2 ms-2'></i>
-				</button>
 			</div>
 		</div>
 	)
