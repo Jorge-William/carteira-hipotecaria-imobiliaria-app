@@ -4,7 +4,9 @@ import { useParams } from 'react-router-dom'
 import SelectInput from './SelectInput'
 import { useState, useEffect, useRef } from 'react'
 import Skeleton from 'react-loading-skeleton'
-import DialogoAddDocumento from './modal/DialogoAddDocumento.js'
+import Swal from 'sweetalert2'
+// import withReactContent from 'sweetalert2-react-content'
+
 import axios from 'axios'
 
 const FormAdicionarDocumento = ({ dados }) => {
@@ -25,7 +27,6 @@ const FormAdicionarDocumento = ({ dados }) => {
 		tipoDocId: ''
 	})
 	const [fileSelected, setFileSelected] = useState()
-	const [load, setLoad] = useState(false)
 
 	const callback = (value) => {
 		setDadosDocumento({ tipoDocId: value })
@@ -39,7 +40,78 @@ const FormAdicionarDocumento = ({ dados }) => {
 		})
 	}
 
-
+	const saveDoc = () => {
+		if (
+			fileSelected &&
+			dadosDocumento.tipoDocId !== '' &&
+			dadosDocumento.paginas !== '' &&
+			dadosDocumento.observacao !== ''
+		) {
+			Swal.fire({
+				title: 'Atenção',
+				text: 'Deseja salvar o documento no servidor?',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Cancelar',
+				confirmButtonText: 'Sim, salvar!',
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					// const dados = {
+					// 	mutuario: mutuarioData.nome,
+					// 	tipo: mutuarioData.tipo,
+					// 	rotulo: mutuarioData.rotulo,
+					// 	docId: dadosDocumento.tipoDocId,
+					// 	paginas: dadosDocumento.paginas,
+					// 	observacao: dadosDocumento.observacao,
+					// 	idMutuario: id
+					// }
+					const formData = new FormData()
+					formData.append('file', fileSelected)
+					formData.append('nome', mutuarioData.nome)
+					formData.append('tipo', mutuarioData.tipo)
+					formData.append('rotulo', mutuarioData.rotulo)
+					formData.append('docId', dadosDocumento.tipoDocId)
+					formData.append('paginas', dadosDocumento.paginas)
+					formData.append('observacao', dadosDocumento.observacao)
+					// console.log(formData.get('file'))
+					axios
+						.post('/upload', formData, {
+							headers: {
+								'Content-Type': 'multipart/form-data'
+							}
+						})
+						.then((response) => {
+							console.log(response)
+							if (response.statusText !== 'OK') {
+								throw new Error(response.statusText)
+							} else {
+								Swal.fire({
+									icon: 'success',
+									title: 'Documento salvo no sistema.'
+								})
+							}
+							return response
+						})
+						.catch((error) => {
+							Swal.fire({
+								icon: 'error',
+								title: 'Documento não pode ser salvo no sistema.'
+							})
+							Swal.showValidationMessage(`${error}`)
+						})
+				},
+				allowOutsideClick: () => !Swal.isLoading()
+			})
+		} else {
+			Swal.fire({
+				icon: 'warning',
+				title: 'Preencha todos os dados!',
+				text: 'Os campos: tipo de documento, arquivo e quantidade de páginas, devem ser preenchidos.'
+			})
+		}
+	}
 
 	useEffect(() => {
 		const result = dados.result
@@ -55,23 +127,21 @@ const FormAdicionarDocumento = ({ dados }) => {
 		setFileSelected(event.target.files[0])
 	}
 
-	const uploadDoc = async () => {
-		const formData = new FormData()
-		formData.append('file', fileSelected)
-		setLoad(true)
+	// const uploadDoc = async () => {
+	// 	const formData = new FormData()
+	// 	formData.append('file', fileSelected)
 
-		fetch('/upload', {
-			method: 'POST',
-			body: formData
-		})
-			.then((result) => {
-				console.log('Success: ' + result)
-				setLoad(false)
-			})
-			.catch((error) => {
-				console.log('Error: ' + error)
-			})
-	}
+	// 	fetch('/upload', {
+	// 		method: 'POST',
+	// 		body: formData
+	// 	})
+	// 		.then((result) => {
+	// 			console.log('Success: ' + result)
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log('Error: ' + error)
+	// 		})
+	// }
 
 	return (
 		<section className='mt-5'>
@@ -205,14 +275,10 @@ const FormAdicionarDocumento = ({ dados }) => {
 							className='btn btn-success mt-4'
 							data-bs-toggle='modal'
 							data-bs-target='#adicionar-documento'
+							onClick={saveDoc}
 						>
 							Salvar
 						</button>
-						<DialogoAddDocumento
-							pasta={mutuarioData.rotulo}
-							uploadDoc={uploadDoc}
-							load={load}
-						/>
 					</div>
 				</div>
 			</form>
