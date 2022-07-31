@@ -14,9 +14,9 @@ const Menu = ({ logout }) => {
 
 	return (
 		<section className='container'>
-			<nav class='navbar navbar-expand-lg fixed-top navbar-dark bg-dark'>
-				<div class='container'>
-					<Link class='navbar-brand' to='/dashboard'>
+			<nav className='navbar navbar-expand-lg fixed-top navbar-dark bg-dark'>
+				<div className='container'>
+					<Link className='navbar-brand' to='/dashboard'>
 						<img
 							style={{ width: 60 }}
 							src={logoClubeMilitar}
@@ -24,7 +24,7 @@ const Menu = ({ logout }) => {
 						/>
 					</Link>
 					<button
-						class='navbar-toggler'
+						className='navbar-toggler'
 						type='button'
 						data-bs-toggle='collapse'
 						data-bs-target='#navbarSupportedContent'
@@ -32,25 +32,25 @@ const Menu = ({ logout }) => {
 						aria-expanded='false'
 						aria-label='Toggle navigation'
 					>
-						<span class='navbar-toggler-icon'></span>
+						<span className='navbar-toggler-icon'></span>
 					</button>
 					<div
-						class='collapse navbar-collapse'
+						className='collapse navbar-collapse'
 						id='navbarSupportedContent'
 					>
-						<ul class='navbar-nav me-auto mb-2 mb-lg-0'>
-							<li class='nav-item'>
+						<ul className='navbar-nav me-auto mb-2 mb-lg-0'>
+							<li className='nav-item'>
 								<Link
 									to='/dashboard'
-									class='nav-link active'
+									className='nav-link active'
 									aria-current='page'
 								>
 									Home
 								</Link>
 							</li>
-							<li class='nav-item dropdown'>
+							<li className='nav-item dropdown'>
 								<a
-									class='nav-link dropdown-toggle'
+									className='nav-link dropdown-toggle'
 									href='/'
 									id='navbarDropdown'
 									role='button'
@@ -60,33 +60,33 @@ const Menu = ({ logout }) => {
 									Mutuário
 								</a>
 								<ul
-									class='dropdown-menu'
+									className='dropdown-menu'
 									aria-labelledby='navbarDropdown'
 								>
 									<li>
 										<Link
-											to='/mutuario-sfh'
-											class='dropdown-item'
+											to='/mutuario/sfh'
+											className='dropdown-item'
 										>
 											SFH
 										</Link>
 									</li>
 									<li>
-										<hr class='dropdown-divider' />
+										<hr className='dropdown-divider' />
 									</li>
 									<li>
 										<Link
-											to='/mutuario-lei'
-											class='dropdown-item'
+											to='/mutuario/lei'
+											className='dropdown-item'
 										>
 											LEI
 										</Link>
 									</li>
 								</ul>
 							</li>
-							<li class='nav-item dropdown'>
+							<li className='nav-item dropdown'>
 								<a
-									class='nav-link dropdown-toggle'
+									className='nav-link dropdown-toggle'
 									href='/'
 									id='navbarDropdown'
 									role='button'
@@ -96,34 +96,34 @@ const Menu = ({ logout }) => {
 									Pastas
 								</a>
 								<ul
-									class='dropdown-menu'
+									className='dropdown-menu'
 									aria-labelledby='navbarDropdown'
 								>
 									<li>
-										<a class='dropdown-item' href='/'>
+										<a className='dropdown-item' href='/'>
 											SFH
 										</a>
 									</li>
 									<li>
-										<hr class='dropdown-divider' />
+										<hr className='dropdown-divider' />
 									</li>
 									<li>
-										<a class='dropdown-item' href='/'>
+										<a className='dropdown-item' href='/'>
 											LEI
 										</a>
 									</li>
 								</ul>
 							</li>
 						</ul>
-						<form class='d-flex'>
+						<form className='d-flex'>
 							<input
-								class='form-control me-2'
+								className='form-control me-2'
 								type='search'
 								placeholder='Busca'
 								aria-label='Busca'
 							/>
 							<button
-								class='btn btn-outline-success'
+								className='btn btn-outline-success'
 								type='submit'
 							>
 								Buscar
@@ -137,7 +137,7 @@ const Menu = ({ logout }) => {
 			<div
 				className='modal fade'
 				id='exampleModal'
-				tabindex='-1'
+				tabIndex='-1'
 				aria-labelledby='exampleModalLabel'
 				aria-hidden='true'
 			>

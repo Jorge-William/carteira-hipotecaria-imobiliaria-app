@@ -7,9 +7,9 @@ import Pagination from './Pagination'
 import '../style/Pagination.scss'
 import '../style/TabelaMutuario.css'
 import TableFilter from '../components/TableFilter.js'
-import LinkMutuario from './LinkMutuario'
+import { Link } from 'react-router-dom'
 
-let PageSize = 20
+let PageSize = 15
 
 const TabelaMutuarioLei = () => {
 	const [mutLeiData, setMutLeiData] = useState([])
@@ -23,7 +23,7 @@ const TabelaMutuarioLei = () => {
 	useEffect(() => {
 		setTimeout(() => {
 			fetchMutuarios()
-		}, 1000)
+		}, 500)
 	}, [])
 
 	const currentTableData = useMemo(() => {
@@ -88,31 +88,9 @@ const TabelaMutuarioLei = () => {
 										className='link'
 										onClick={() => console.log(data.nome)}
 									> */}
-									<LinkMutuario
-										pasta={data.rotulo}
-										mutuario={data.nome}
-										values={[
-											data.id,
-											data.rotulo,
-											data.nome,
-											data.imoveis_leis[0].end,
-											data.imoveis_leis[0].numero,
-											data.imoveis_leis[0].complemento,
-											data.imoveis_leis[0].bairro,
-											data.imoveis_leis[0].cidade,
-											data.imoveis_leis[0].uf,
-											data.imoveis_leis[0].escritura,
-											data.imoveis_leis[0].hipoteca,
-											data.imoveis_leis[0].obs,
-											data.imoveis_leis[0].cep,
-											data.imoveis_leis[0].dt_liq,
-											data.imoveis_leis[0].cod_historico,
-											data.imoveis_leis[0].num_obra,
-											data.telefone
-										]}
-									/>
-
-									{/* </a> */}
+									<Link to={`/detalhes/${data.id}`}>
+										{data.nome}
+									</Link>
 								</td>
 								<td>{data.imoveis_leis[0].end}</td>
 								<td>{data.imoveis_leis[0].numero}</td>
@@ -122,16 +100,16 @@ const TabelaMutuarioLei = () => {
 								<td>{data.imoveis_leis[0].uf}</td>
 								<td>
 									{data.imoveis_leis[0].escritura === 1 ? (
-										<i class='ms-3 bi disponivel bi-file-earmark-text'></i>
+										<i className='ms-3 bi disponivel bi-file-earmark-text'></i>
 									) : (
-										<i class='ms-3 bi indisponivel bi-file-earmark-text'></i>
+										<i className='ms-3 bi indisponivel bi-file-earmark-text'></i>
 									)}
 								</td>
 								<td>
 									{data.imoveis_leis[0].hipoteca === 1 ? (
-										<i class='ms-2 bi disponivel bi-house'></i>
+										<i className='ms-2 bi disponivel bi-house'></i>
 									) : (
-										<i class='ms-2 bi indisponivel bi-house'></i>
+										<i className='ms-2 bi indisponivel bi-house'></i>
 									)}
 								</td>
 							</tr>

@@ -60,7 +60,7 @@ const LoginPage = ({ authenticate }) => {
 				<section className='col-6 borda-aside' id='aside-login'>
 					<div className='m-4 '>
 						<h1 id='side-info'>Efetuar Login</h1>
-						<h4 class='animate__jello'>
+						<h4 className='animate__jello'>
 							Seja bem vindo novamente!
 						</h4>
 						<p>
@@ -80,7 +80,7 @@ const LoginPage = ({ authenticate }) => {
 				<section className='col-6' id='form-section'>
 					{errorMessage && (
 						<div
-							class='alert alert-danger m-3 animate__animated animate__shakeY animate__delay-1s animate__repeat-3'
+							className='alert alert-danger m-3 animate__animated animate__shakeY animate__delay-1s animate__repeat-3'
 							role='alert'
 						>
 							E-mail ou senha incorretos. Insira suas informações
@@ -90,31 +90,31 @@ const LoginPage = ({ authenticate }) => {
 					)}
 
 					<form onSubmit={onClick} className='m-3'>
-						<div class='mb-3'>
+						<div className='mb-3'>
 							<label
-								for='exampleInputEmail1'
-								class='form-label label-color'
+								htmlFor='exampleInputEmail1'
+								className='form-label label-color'
 							>
 								Endereço de e-mail
 							</label>
 							<input
 								type='email'
-								class='form-control'
+								className='form-control'
 								id='exampleInputEmail1'
 								aria-describedby='emailHelp'
 								onChange={email.onChange}
 							/>
 						</div>
-						<div class='mb-3'>
+						<div className='mb-3'>
 							<label
-								for='exampleInputPassword1'
-								class='form-label label-color'
+								htmlFor='exampleInputPassword1'
+								className='form-label label-color'
 							>
 								Senha
 							</label>
 							<input
 								type='password'
-								class='form-control'
+								className='form-control'
 								id='exampleInputPassword1'
 								onChange={senha.onChange}
 							/>
@@ -133,7 +133,7 @@ const LoginPage = ({ authenticate }) => {
 							<button
 								disabled={isValid()}
 								type='submit'
-								class='btn btn-primary '
+								className='btn btn-primary '
 							>
 								Efetuar login
 							</button>

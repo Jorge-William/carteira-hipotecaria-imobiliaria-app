@@ -1,0 +1,59 @@
+#card-principal{
+    border: solid #63594d4d 1px;
+    height: 400px;
+    width: 600px;
+    border-radius: 15px;
+}
+
+.titulo{
+    font-size: 5em;
+    color: #63594d;
+}
+
+.numero{
+    font-size: 10em;
+    width: 350px;
+    height: 130px;
+
+}
+
+.numero-card-um{
+    font-size: 5em;
+    width: 130px;
+    height: 100px;
+
+}
+
+#icone-card-principal{
+    width: 130px;
+    font-size: 8em;
+    color: #6fb09e;
+
+}
+
+#icone-card-um{
+    width: 80px;
+    height: 100px;
+    font-size: 6em;
+
+}
+
+.titulos-card-um{
+    font-size: 1.5em;
+    color: #63594d;
+}
+
+#secundario-um{
+    border: solid #63594d4d 1px;
+    height: 195px;
+    width: 600px;
+    border-radius: 15px;
+}
+
+#secundario-dois{
+    border: solid #63594d4d 1px;
+    height: 195px;
+    width: 600px;
+    border-radius: 15px;
+}
+
