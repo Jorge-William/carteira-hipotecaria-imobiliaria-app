@@ -51,12 +51,17 @@ const Pagination = (props) => {
 			{paginationRange.map((pageNumber, key) => {
 				// Se o pageItem for um PONTO (DOT), renderize o caractere unicode DOTS
 				if (pageNumber === DOTS) {
-					return <li className='pagination-item dots'>&#8230;</li>
+					return (
+						<li key={key} className='pagination-item dots'>
+							&#8230;
+						</li>
+					)
 				}
 
 				// Renderize a amostra de página
 				return (
-					<li key={key}
+					<li
+						key={key}
 						className={classnames('pagination-item', {
 							selected: pageNumber === currentPage
 						})}

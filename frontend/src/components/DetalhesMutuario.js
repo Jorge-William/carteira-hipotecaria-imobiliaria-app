@@ -41,7 +41,7 @@ const DetalheMutuario = ({ id }) => {
 						data-bs-placement='top'
 						title='Editar Mutuário'
 					>
-						<i class='bi bi-person-lines-fill'></i>
+						<i className='bi bi-person-lines-fill'></i>
 					</button>
 				</div>
 				<div className='col-md'>
@@ -52,7 +52,7 @@ const DetalheMutuario = ({ id }) => {
 							data-bs-placement='top'
 							title='Adicionar documento'
 						>
-							<i class='bi bi-file-earmark-plus-fill'></i>
+							<i className='bi bi-file-earmark-plus-fill'></i>
 						</button>
 					</Link>
 				</div>

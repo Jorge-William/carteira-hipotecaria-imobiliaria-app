@@ -2,7 +2,7 @@ import renderSwitch from '../helpers/renderSwitch'
 import Skeleton from 'react-loading-skeleton'
 
 const AccordionDeDocumentos = ({ documentos }) => {
-	console.log(documentos)
+	// console.log(documentos)
 
 	return documentos.length === 0 ? (
 		<>
@@ -106,48 +106,48 @@ const AccordionDeDocumentos = ({ documentos }) => {
 								</div>
 								{/* // ------------------------------------------Modal-------------------------------------------------- */}
 								<div
-									class='modal fade'
+									className='modal fade'
 									id={`documento${key}`}
 									data-bs-backdrop='static'
 									data-bs-keyboard='false'
-									tabindex='-1'
+									tabIndex='-1'
 									aria-labelledby='staticBackdropLabel'
 									aria-hidden='true'
 								>
-									<div class='modal-dialog modal-dialog-centered'>
-										<div class='modal-content'>
-											<div class='modal-header'>
+									<div className='modal-dialog modal-dialog-centered'>
+										<div className='modal-content'>
+											<div className='modal-header'>
 												<h3
-													class='modal-title text-danger'
+													className='modal-title text-danger'
 													id='staticBackdropLabel'
 												>
 													Atenção!
 												</h3>
 												<button
 													type='button'
-													class='btn-close'
+													className='btn-close'
 													data-bs-dismiss='modal'
 													aria-label='Close'
 												></button>
 											</div>
-											<div class='modal-body'>
+											<div className='modal-body'>
 												<h3 className='text-secondary mb-4'>
 													Deseja realmente deletar o
 													documento?
 												</h3>
 												<h4>{item.descricao}</h4>
 											</div>
-											<div class='modal-footer'>
+											<div className='modal-footer'>
 												<button
 													type='button'
-													class='btn btn-success'
+													className='btn btn-success'
 													data-bs-dismiss='modal'
 												>
 													Cancelar
 												</button>
 												<button
 													type='button'
-													class='btn btn-danger'
+													className='btn btn-danger'
 												>
 													Sim deletar
 												</button>

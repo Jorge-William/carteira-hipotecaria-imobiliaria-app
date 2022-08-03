@@ -1,6 +1,6 @@
 import Autocomplete from './AutocompleteInput'
 import '../style/TableFilter.css'
-import AdicionarMutuarioLei from './modal/AdicionarMutuarioLei.modal'
+import { Link } from 'react-router-dom'
 
 const TableFilter = (data) => {
 	// console.log(data)
@@ -20,21 +20,19 @@ const TableFilter = (data) => {
 					</a>
 				</div>
 				<div id='botao-filtro' className='col-md-3 d-grid'>
-					<a
-						className='btn btn-outline-success'
-						href='#buscaPorPasta'
-						role='button'
-						aria-expanded='false'
-						aria-controls='buscaPorPasta'
-						data-bs-toggle='modal'
-						data-bs-target='#staticBackdrop-mutuario'
-					>
-						Adicionar um Mutuário
-						<i className='bi bi-person-plus-fill ms-2'></i>
-					</a>
+					<Link to={`/mutuario/adicionar`}>
+						<div
+							className='btn btn-outline-success'
+							data-bs-toggle='collapse'
+							role='button'
+							aria-expanded='false'
+						>
+							Adicionar um Mutuário
+							<i className='bi bi-person-plus-fill ms-2' />
+						</div>
+					</Link>
 				</div>
 			</div>
-			<AdicionarMutuarioLei />
 			<div className='collapse' id='buscaPorPasta'>
 				<div className='card card-body'>
 					<ul className='nav nav-tabs' id='myTab' role='tablist'>

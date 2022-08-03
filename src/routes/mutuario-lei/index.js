@@ -55,8 +55,55 @@ router.post("/cabecalhodocumento", async (req, res) => {
 });
 
 // ------------------------------------ Criar  ------------------------------------
-// router.post("/lei/mutuario/criar", create, async (req, res) => {
-//   res.status(200).send({ message: "Mutuario adicionado com sucesso." });
-// });
+router.post("/criar-mutuario-lei", async (req, res) => {
+  // console.log(req.body);
+
+  const {
+    nome, tipo, pasta, telefone,
+  } = req.body.mutuarioData;
+  // const {
+  //   dataLiq,
+  //   escritura,
+  //   hipoteca,
+  //   numObra,
+  //   codHist,
+  //   obs,
+  //   cep,
+  //   endereco,
+  //   numero,
+  //   compl,
+  //   bairro,
+  //   cidade,
+  //   uf,
+  // } = req.body.imovelData;
+
+  try {
+  // verificar se a pasta já existe
+    const buscaRotulo = await MutuarioLei.findOne({
+      where: { rotulo: `${req.body.mutuarioData.pasta}` },
+    });
+    console.log(buscaRotulo);
+
+    // Caso a pasta não exista execute a query
+    if (buscaRotulo === null) {
+      const mutuario = await MutuarioLei.create({
+        tipo: `${tipo}`,
+        rotulo: `${pasta.toUpperCase()}`,
+        nome: `${nome}`,
+        telefone: `${telefone}`,
+      });
+
+      // console.log({ mutuario });
+
+      res.send({ mutuarioCriado: true, mutuario });
+    } else {
+      res.send({
+        mutuarioCriado: false,
+      });
+    }
+  } catch (error) {
+    res.send({ Erro: `${error}` });
+  }
+});
 
 module.exports = router;

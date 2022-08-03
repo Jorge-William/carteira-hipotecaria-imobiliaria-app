@@ -19,7 +19,7 @@ const SelectInput = (props) => {
 
 	return (
 <>
-			<select class='form-select' aria-label='Default select example' onChange={(e) => props.callback(e.target.value) }>
+			<select className='form-select' aria-label='Default select example' onChange={(e) => props.callback(e.target.value) }>
 				<option selected>Selecione uma opção</option>
 				{tipoDocArray?.map((item, key) => {
 					return (
