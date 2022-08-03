@@ -1,6 +1,5 @@
 import Autocomplete from './AutocompleteInput'
 import '../style/TableFilter.css'
-import AdicionarMutuarioLei from './modal/AdicionarMutuarioLei.modal'
 import { Link } from 'react-router-dom'
 
 const TableFilter = (data) => {
@@ -34,7 +33,6 @@ const TableFilter = (data) => {
 					</Link>
 				</div>
 			</div>
-			<AdicionarMutuarioLei />
 			<div className='collapse' id='buscaPorPasta'>
 				<div className='card card-body'>
 					<ul className='nav nav-tabs' id='myTab' role='tablist'>

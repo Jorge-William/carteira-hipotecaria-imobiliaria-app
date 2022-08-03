@@ -28,7 +28,7 @@ const InfoCards = () => {
 		}
 		callServices()
 	}, [])
-	console.log(infoMutuarios)
+	// console.log(infoMutuarios)
 
 	const total =
 		infoMutuarios.metadataLei[0].qtd_mutuarios_lei +
@@ -75,7 +75,7 @@ const InfoCards = () => {
 								</div>
 								<div className='row gap-5 mt-3 d-inline-flex '>
 									<i
-										class='bi bi-person-badge  d-flex justify-content-center text-primary'
+										className='bi bi-person-badge  d-flex justify-content-center text-primary'
 										id='icone-card-um'
 									></i>
 									<p className='numero-card-um text-warning   d-flex justify-content-center '>
@@ -96,7 +96,7 @@ const InfoCards = () => {
 								</div>
 								<div className='row gap-5 mt-3 d-inline-flex '>
 									<i
-										class='bi bi-person-badge-fill  d-flex justify-content-center text-success'
+										className='bi bi-person-badge-fill  d-flex justify-content-center text-success'
 										id='icone-card-um'
 									></i>
 
@@ -142,7 +142,7 @@ const InfoCards = () => {
 								</div>
 								<div className='row gap-5 mt-3 d-inline-flex '>
 									<i
-										class='bi bi-file-earmark-excel d-flex justify-content-center text-danger'
+										className='bi bi-file-earmark-excel d-flex justify-content-center text-danger'
 										id='icone-card-um'
 									></i>
 
