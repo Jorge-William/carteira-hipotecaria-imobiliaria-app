@@ -17,8 +17,8 @@ const FormAdicionarMutuario = () => {
 	})
 	const [imovelData, setImovelData] = useState({
 		dataLiq: null,
-		escritura: '',
-		hipoteca: '',
+		escritura: null,
+		hipoteca: null,
 		numObra: null,
 		codHist: null,
 		obs: '',
@@ -61,20 +61,20 @@ const FormAdicionarMutuario = () => {
 				confirmButtonText: 'Salvar',
 				showLoaderOnConfirm: true,
 				preConfirm: () => {
-					return axios
-						.post('/criar-mutuario-lei', {
+					axios.post('/criar-mutuario-lei', {
 							mutuarioData,
 							imovelData
 						})
 						.then((response) => {
-							console.log(response)
-							if (!response.data.mutuarioCriado) {
-								throw new Error(
-									`Já existe uma pasta chamada: ${mutuarioData.pasta.toUpperCase()}`
-								)
+							console.log(response);
+							if(response.data.mutuarioCriado === true){
+								return Swal.fire('Mutuario Criado', '', 'success')
+							} else if(response.data.mutuarioCriado === false){
+								Swal.fire('Mutuario não foi criado','','error')
+								throw new Error('A pasta já existe!!')
+							} else if (response.data.Erro) {
+								throw new Error(response.data.Erro)
 							}
-
-							return response
 						})
 						.catch((error) => {
 							Swal.fire(
@@ -83,31 +83,31 @@ const FormAdicionarMutuario = () => {
 								'info'
 							)
 							Swal.showValidationMessage(
-								`Request failed: ${error}`
+								error
 							)
 						})
 				},
 				allowOutsideClick: () => !Swal.isLoading()
 			})
-				.then((result) => {
-					if (result.isConfirmed) {
-						Swal.fire({
-							icon: 'success',
-							title: 'O mutuário foi salvo no banco de dados'
-						})
-					} else if (result.D) {
-						Swal.fire({
-							icon: 'info',
-							title: 'As mudanças não foram salvas.'
-						})
-					}
-				})
-				.catch(() => {
-					Swal.fire({
-						icon: 'warning',
-						title: 'Não foi possível salvar o mutuário!'
-					})
-				})
+				// .then((result) => {
+				// 	if (result.isConfirmed) {
+				// 		Swal.fire({
+				// 			icon: 'success',
+				// 			title: 'O mutuário foi salvo no banco de dados'
+				// 		})
+				// 	} else if (result.D) {
+				// 		Swal.fire({
+				// 			icon: 'info',
+				// 			title: 'As mudanças não foram salvas.'
+				// 		})
+				// 	}
+				// })
+				// .catch(() => {
+				// 	Swal.fire({
+				// 		icon: 'warning',
+				// 		title: 'Não foi possível salvar o mutuário!'
+				// 	})
+				// })
 		}
 	}
 
@@ -142,9 +142,7 @@ const FormAdicionarMutuario = () => {
 								</label>
 								<input
 									type='text'
-									className='form-control '
-									id='exampleInputEmail1'
-									aria-describedby='emailHelp'
+									className='form-control'
 									name='nome'
 									onChange={handleChangeMutuario}
 								/>
@@ -166,8 +164,6 @@ const FormAdicionarMutuario = () => {
 								<input
 									type='text'
 									className='form-control'
-									id='exampleInputEmail1'
-									aria-describedby='emailHelp'
 									onChange={handleChangeMutuario}
 									name='tipo'
 									value='Lei'
@@ -184,8 +180,6 @@ const FormAdicionarMutuario = () => {
 									placeholder='exemplo: L0023'
 									type='text'
 									className='form-control'
-									id='exampleInputEmail1'
-									aria-describedby='emailHelp'
 									name='pasta'
 									onChange={handleChangeMutuario}
 									style={{ textTransform: 'uppercase' }}
@@ -229,8 +223,6 @@ const FormAdicionarMutuario = () => {
 									<input
 										type='date'
 										className='form-control'
-										id='exampleInputEmail1'
-										aria-describedby='emailHelp'
 										name='dataLiq'
 										onChange={handleChangeImovel}
 									/>
@@ -250,11 +242,12 @@ const FormAdicionarMutuario = () => {
 									>
 										<option
 											className='vermelho'
+											value='0'
 											defaultValue
 										>
 											Não
 										</option>
-										<option value='Sim'>Sim</option>
+										<option value='1'>Sim</option>
 									</select>
 								</div>
 								<div className='mb-3 col-md-1'>
@@ -272,11 +265,13 @@ const FormAdicionarMutuario = () => {
 									>
 										<option
 											className='vermelho'
+											value='0'
+
 											defaultValue
 										>
 											Não
 										</option>
-										<option value='Sim'>Sim</option>
+										<option value='1'>Sim</option>
 									</select>
 								</div>
 								<div className='mb-3 col-md-2'>

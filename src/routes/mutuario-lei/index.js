@@ -61,30 +61,36 @@ router.post("/criar-mutuario-lei", async (req, res) => {
   const {
     nome, tipo, pasta, telefone,
   } = req.body.mutuarioData;
-  // const {
-  //   dataLiq,
-  //   escritura,
-  //   hipoteca,
-  //   numObra,
-  //   codHist,
-  //   obs,
-  //   cep,
-  //   endereco,
-  //   numero,
-  //   compl,
-  //   bairro,
-  //   cidade,
-  //   uf,
-  // } = req.body.imovelData;
+
+  const {
+    dataLiq,
+    escritura,
+    hipoteca,
+    numObra,
+    codHist,
+    obs,
+    cep,
+    endereco,
+    numero,
+    compl,
+    bairro,
+    cidade,
+    uf,
+  } = req.body.imovelData;
 
   try {
-  // verificar se a pasta já existe
+    // verificar se a pasta já existe
     const buscaRotulo = await MutuarioLei.findOne({
       where: { rotulo: `${req.body.mutuarioData.pasta}` },
     });
-    console.log(buscaRotulo);
 
-    // Caso a pasta não exista execute a query
+    if (buscaRotulo) {
+      console.log("PASTA JÀ EXISTE");
+    } else {
+      console.log("O MUTUARIO SERÁ SALVO");
+    }
+
+    // Caso a pasta ainda não exista, execute a query
     if (buscaRotulo === null) {
       const mutuario = await MutuarioLei.create({
         tipo: `${tipo}`,
@@ -93,9 +99,24 @@ router.post("/criar-mutuario-lei", async (req, res) => {
         telefone: `${telefone}`,
       });
 
-      // console.log({ mutuario });
-
-      res.send({ mutuarioCriado: true, mutuario });
+      const imovel = await ImoveisLei.create({
+        dt_liq: `${dataLiq}`,
+        escritura,
+        hipoteca: `${hipoteca}`,
+        num_obra: `${numObra}`,
+        cod_historico: `${codHist}`,
+        obs: `${obs}`,
+        cep: `${cep}`,
+        end: `${endereco}`,
+        numero: `${numero}`,
+        complemento: `${compl}`,
+        bairro: `${bairro}`,
+        cidade: `${cidade}`,
+        uf: `${uf}`,
+        mutuario_id: `${mutuario.dataValues.id}`,
+      });
+      // console.log(mutuario.dataValues);
+      res.send({ mutuarioCriado: true, mutuario, imovel });
     } else {
       res.send({
         mutuarioCriado: false,
