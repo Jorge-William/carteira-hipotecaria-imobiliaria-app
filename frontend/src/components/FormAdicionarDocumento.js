@@ -177,7 +177,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 							<Skeleton count={1} />
 						) : (
 							<>
-								<label for='pasta' className='form-label'>
+								<label htmlFor='pasta' className='form-label'>
 									Pasta
 								</label>
 								<input
@@ -194,7 +194,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 							<Skeleton count={1} />
 						) : (
 							<>
-								<label for='mutuario' className='form-label'>
+								<label htmlFor='mutuario' className='form-label'>
 									Mutuário
 								</label>
 								<input
@@ -211,7 +211,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 				<hr />
 				<div className='row mt-3 mb-5'>
 					<div className='col-md-5 col-sm-12'>
-						<label for='select' className='form-label'>
+						<label htmlFor='select' className='form-label'>
 							Tipo do documento
 						</label>
 						{/* ----------------------- Select componente---------------------------- */}
@@ -222,7 +222,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 						{/* --------------------------------------------------------------------- */}
 					</div>
 					<div className='col-md-6 col-sm-12'>
-						<label for='formFile' className='form-label'>
+						<label htmlFor='formFile' className='form-label'>
 							Arquivo
 						</label>
 						<input
@@ -234,7 +234,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 						/>
 					</div>
 					<div className='col-md-1 col-sm-12'>
-						<label for='paginas' className='form-label'>
+						<label htmlFor='paginas' className='form-label'>
 							Páginas
 						</label>
 						<input
@@ -249,7 +249,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 				<div className='row'>
 					<div className=''>
 						<label
-							for='exampleFormControlTextarea1'
+							htmlFor='Observação'
 							className='form-label'
 						>
 							Observação
