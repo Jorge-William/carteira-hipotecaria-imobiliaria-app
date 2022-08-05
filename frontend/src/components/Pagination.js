@@ -6,7 +6,7 @@ const Pagination = (props) => {
 	const {
 		onPageChange,
 		totalCount,
-		siblingCount = 4,
+		siblingCount = 3,
 		currentPage,
 		pageSize,
 		className
@@ -48,15 +48,19 @@ const Pagination = (props) => {
 			>
 				<div className='arrow left' />
 			</li>
-			{paginationRange.map((pageNumber, key) => {
+			{paginationRange.map((pageNumber) => {
 				// Se o pageItem for um PONTO (DOT), renderize o caractere unicode DOTS
 				if (pageNumber === DOTS) {
-					return <li className='pagination-item dots'>&#8230;</li>
+					return (
+						<li  className='pagination-item dots'>
+							&#8230;
+						</li>
+					)
 				}
 
 				// Renderize a amostra de página
 				return (
-					<li key={key}
+					<li
 						className={classnames('pagination-item', {
 							selected: pageNumber === currentPage
 						})}

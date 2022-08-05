@@ -16,6 +16,8 @@ const MutuarioLei = sequelize.define("mutuarios_lei", {
   },
   rotulo: {
     type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
   },
   nome: {
     type: DataTypes.STRING,
