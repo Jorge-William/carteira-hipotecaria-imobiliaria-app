@@ -17,8 +17,8 @@ const FormAdicionarMutuario = () => {
 	})
 	const [imovelData, setImovelData] = useState({
 		dataLiq: null,
-		escritura: null,
-		hipoteca: null,
+		escritura: '0',
+		hipoteca: '0',
 		numObra: null,
 		codHist: null,
 		obs: '',
