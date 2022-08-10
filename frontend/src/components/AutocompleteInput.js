@@ -173,20 +173,73 @@ const Autocomplete = (props) => {
 											}
 											{/* </a> */}
 										</td>
-										<td>{filter.imoveis_leis[0].end}</td>
-										<td>{filter.imoveis_leis[0].numero}</td>
 										<td>
-											{filter.imoveis_leis[0].complemento}
-										</td>
-										<td>{filter.imoveis_leis[0].bairro}</td>
-										<td>{filter.imoveis_leis[0].cidade}</td>
-										<td>{filter.imoveis_leis[0].uf}</td>
-										<td>
-											{filter.imoveis_leis[0].escritura}
+											{filter.imoveis_leis.length ===
+											0 ? (
+												<p>-----</p>
+											) : (
+												filter.imoveis_leis[0].end
+											)}
 										</td>
 										<td>
-											{filter.imoveis_leis[0].hipoteca}
+											{filter.imoveis_leis.length ===
+											0 ? (
+												<p>-----</p>
+											) : (
+												filter.imoveis_leis[0].numero
+											)}
 										</td>
+										<td>
+											{filter.imoveis_leis.length ===
+											0 ? (
+												<p>-----</p>
+											) : (
+												filter.imoveis_leis[0]
+													.complemento
+											)}
+										</td>
+										<td>
+											{filter.imoveis_leis.length ===
+											0 ? (
+												<p>-----</p>
+											) : (
+												filter.imoveis_leis[0].bairro
+											)}
+										</td>
+										<td>
+											{filter.imoveis_leis.length ===
+											0 ? (
+												<p>-----</p>
+											) : (
+												filter.imoveis_leis[0].cidade
+											)}
+										</td>
+										<td>
+											{filter.imoveis_leis.length ===
+											0 ? (
+												<p>-----</p>
+											) : (
+												filter.imoveis_leis[0].uf
+											)}
+										</td>
+										<td>
+											{filter.imoveis_leis.length !== 0 &&
+												(filter.imoveis_leis[0]
+													.escritura === 1 ? (
+													<i className='ms-3 bi disponivel bi-file-earmark-text'></i>
+												) : (
+													<i className='ms-3 bi indisponivel bi-file-earmark-text'></i>
+												))}
+										</td>
+										<td>
+											{filter.imoveis_leis.length !== 0 &&
+												(filter.imoveis_leis[0]
+													.hipoteca === 1 ? (
+													<i className='ms-2 bi disponivel bi-house'></i>
+												) : (
+													<i className='ms-2 bi indisponivel bi-house'></i>
+												))}
+										</td>{' '}
 									</tr>
 								</tbody>
 							</table>
