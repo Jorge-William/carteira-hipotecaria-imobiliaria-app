@@ -15,7 +15,7 @@ const TabelaMutuarioLei = () => {
 	const [mutLeiData, setMutLeiData] = useState([])
 	const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
-	console.log(mutLeiData)
+	// console.log(mutLeiData)
 	const fetchMutuarios = () => {
 		getMutuariosLei().then((mutuario) => setMutLeiData(mutuario))
 		setLoading(false)

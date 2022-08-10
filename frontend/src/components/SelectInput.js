@@ -6,6 +6,7 @@ const SelectInput = (props) => {
 	const [tipoDocArray, setTipoDocArray] = useState([
 		{ id: '', descricao: '' }
 	])
+	// console.log(tipoDocArray);
 
 	useEffect(() => {
 		const handleState = async () => {

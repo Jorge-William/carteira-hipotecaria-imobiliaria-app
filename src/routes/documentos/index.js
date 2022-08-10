@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const fs = require("fs/promises");
 const storage = require("../../config/multer.config");
 const sequelize = require("../../database/sequelize.connection");
 // const { DocumentoLei } = require("../../models/mutuario-lei.model");
@@ -15,7 +16,7 @@ router.post("/documentos", async (req, res) => {
   //   const documentos = await DocumentoLei.findAll({ where: { mutuario_id: id } });
   //   res.send(documentos);
 
-  const [results, metadata] = await sequelize.query(`select documentos_lei.id ,documentos_lei.dt_registro,
+  const [results] =	await sequelize.query(`select documentos_lei.id ,documentos_lei.dt_registro,
     documentos_lei.nome_arquivo, documentos_lei.status,
     documentos_lei.arquivo, documentos_lei.qtd_pag, documentos_lei.auditor, 
     documentos_lei.cod_pasta, tipos_doc_lei.descricao from documentos_lei inner join tipos_doc_lei
@@ -23,7 +24,7 @@ router.post("/documentos", async (req, res) => {
     where documentos_lei.mutuario_id = ${id}`);
 
   res.send(results);
-  console.log(metadata);
+  // console.log(metadata);
 
   //   const documentos = await DocumentoLei.findAll({
   //     raw: true,
@@ -40,11 +41,10 @@ const upload = multer({
   storage, // storage: storage
 });
 
-router.use("/pastas", express.static("pastas"));
-
 router.post("/upload", upload.array("file"), async (req, res) => {
-//   console.log(req.files[0]);
-//   console.log(req.body);
+  // console.log(req.files[0]);
+  // console.log(req.body);
+
   res.send({ result: res.files });
 });
 

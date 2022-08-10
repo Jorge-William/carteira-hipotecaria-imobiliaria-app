@@ -27,7 +27,7 @@ router.get("/mutuariolei", async (req, res) => {
 router.post("/alldatamutuariobyid", async (req, res) => {
   const { id } = req.body.params;
 
-  const [result, metadata] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
+  const [result] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
   telefone, dt_liq, num_obra, cod_historico, obs, cep
   FROM testdb.mutuarios_lei a
   LEFT JOIN testdb.imoveis_lei b 
@@ -36,7 +36,7 @@ router.post("/alldatamutuariobyid", async (req, res) => {
 
   res.status(200).send({ result });
 
-  console.log(metadata);
+  // console.log(metadata);
 });
 
 // ------------------------------------- Mostrar mutuario simples por id ------------------------

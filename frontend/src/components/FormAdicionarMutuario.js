@@ -66,7 +66,7 @@ const FormAdicionarMutuario = () => {
 							imovelData
 						})
 						.then((response) => {
-							console.log(response);
+							// console.log(response);
 							if(response.data.mutuarioCriado === true){
 								return Swal.fire('Mutuario Criado', '', 'success')
 							} else if(response.data.mutuarioCriado === false){

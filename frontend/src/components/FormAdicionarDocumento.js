@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import SelectInput from './SelectInput'
 import { useState, useEffect, useRef } from 'react'
 import Skeleton from 'react-loading-skeleton'
@@ -15,7 +15,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 	 */
 	const { id } = useParams()
 	const filesElement = useRef(null)
-
+console.log(dados);
 	// const { values } = dados
 
 	const [mutuarioData, setMutuarioData] = useState({
@@ -24,13 +24,17 @@ const FormAdicionarDocumento = ({ dados }) => {
 		nome: ''
 	})
 	const [dadosDocumento, setDadosDocumento] = useState({
-		tipoDocId: ''
+		tipoDocId: '',
 	})
 	const [fileSelected, setFileSelected] = useState()
 
 	const callback = (value) => {
 		setDadosDocumento({ tipoDocId: value })
 	}
+
+	useState(() => {
+		console.log(dadosDocumento);
+	}, [dadosDocumento])
 
 	const handleChange = (event) => {
 		const value = event.target.value
@@ -39,7 +43,8 @@ const FormAdicionarDocumento = ({ dados }) => {
 			[event.target.name]: value
 		})
 	}
-
+	
+	const navigate = useNavigate()
 	const saveDoc = () => {
 		if (
 			fileSelected &&
@@ -68,13 +73,13 @@ const FormAdicionarDocumento = ({ dados }) => {
 					// 	idMutuario: id
 					// }
 					const formData = new FormData()
-					formData.append('file', fileSelected)
 					formData.append('nome', mutuarioData.nome)
 					formData.append('tipo', mutuarioData.tipo)
 					formData.append('rotulo', mutuarioData.rotulo)
 					formData.append('docId', dadosDocumento.tipoDocId)
 					formData.append('paginas', dadosDocumento.paginas)
 					formData.append('observacao', dadosDocumento.observacao)
+					formData.append('file', fileSelected)
 					// console.log(formData.get('file'))
 					axios
 						.post('/upload', formData, {
@@ -83,7 +88,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 							}
 						})
 						.then((response) => {
-							console.log(response)
+							// console.log(response)
 							if (response.statusText !== 'OK') {
 								throw new Error(response.statusText)
 							} else {
@@ -92,7 +97,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 									title: 'Documento salvo no sistema.'
 								})
 							}
-							return response
+							return navigate(`/detalhes/${id}`, { replace: true });
 						})
 						.catch((error) => {
 							Swal.fire({

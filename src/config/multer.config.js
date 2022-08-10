@@ -3,13 +3,12 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, path.resolve("temp"));
+    // console.log(req.body);
+    callback(null, path.resolve(`./pastas/lei/${req.body.rotulo}`));
   },
 
   filename: (req, file, callback) => {
-    const time = new Date().getTime();
-
-    callback(null, `${time}_${file.originalname}`);
+    callback(null, `${req.body.rotulo}${req.body.docId}.pdf`);
   },
 });
 
