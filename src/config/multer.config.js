@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
   },
 
   filename: (req, file, callback) => {
-    callback(null, `${req.body.rotulo}${req.body.docId}.pdf`);
+    callback(null, `${req.body.rotulo}${req.body.abrevTipoDoc}.pdf`);
   },
 });
 
