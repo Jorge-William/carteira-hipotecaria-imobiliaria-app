@@ -42,7 +42,7 @@ router.post("/documentos", async (req, res) => {
 const upload = multer({
   storage, // storage: storage
 });
-
+// Como está no banco => '/pastas/lei/L0980/L0980L128.pdf'
 // http://localhost:5001/documentos/L8889/L888980.pdf  Url para ler um arquivo
 router.use("/documentos", express.static("pastas/lei/"));
 

@@ -22,6 +22,7 @@ const AccordionDeDocumentos = ({ documentos }) => {
 				id='accordionFlushExample'
 			>
 				{documentos.map((item, key) => {
+					console.log(item)
 					return (
 						<div key={key} className='accordion-item'>
 							<h2
@@ -84,10 +85,15 @@ const AccordionDeDocumentos = ({ documentos }) => {
 													{renderSwitch(item.status)}
 												</td>
 												<td>
-													<button className='btn btn-success btn-sm'>
-														Abrir{' '}
-														<i className='bi bi-file-earmark-text'></i>
-													</button>
+													<a
+														target='blank'
+														href={`http://localhost:5001/documentos/${item.cod_pasta}/${item.nome_arquivo}.pdf `}
+													>
+														<button className='btn btn-success btn-sm'>
+															Abrir{' '}
+															<i className='bi bi-file-earmark-text'></i>
+														</button>
+													</a>
 												</td>
 												<td>
 													<p className='ms-1'>
