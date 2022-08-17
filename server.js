@@ -35,6 +35,8 @@ app.use(dashboard);
 
 const PORT = process.env.PORT || 5000;
 // eslint-disable-next-line no-console
-app.listen(PORT, () => console.log(`Sever is running on ${PORT}`));
+console.log(PORT);
+// eslint-disable-next-line no-console
+app.listen(PORT, () => console.log(`---------------------->> Sever is running on ${PORT} <-----------------------`));
 // // eslint-disable-next-line no-console
 // console.log();

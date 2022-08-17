@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import SelectInput from './SelectInput'
 import { useState, useEffect, useRef } from 'react'
 import Skeleton from 'react-loading-skeleton'
@@ -15,7 +15,11 @@ const FormAdicionarDocumento = ({ dados }) => {
 	 */
 	const { id } = useParams()
 	const filesElement = useRef(null)
+	// console.log(dados.tipoDoc);
 
+	// console.log(mutuarioData)
+	const arrayTipoDoc = dados.tipoDoc
+	// console.log(typeof arrayTipoDoc)
 	// const { values } = dados
 
 	const [mutuarioData, setMutuarioData] = useState({
@@ -23,23 +27,59 @@ const FormAdicionarDocumento = ({ dados }) => {
 		rotulo: '',
 		nome: ''
 	})
+
+	useEffect(() => {
+		const result = dados.result
+		const changeState = async () => {
+			await setMutuarioData(...result)
+		}
+
+		changeState()
+	}, [mutuarioData, dados.result])
+
 	const [dadosDocumento, setDadosDocumento] = useState({
 		tipoDocId: ''
 	})
 	const [fileSelected, setFileSelected] = useState()
 
+	// Extrai o id do usuário atual
+	const localStorageData = JSON.parse(localStorage.getItem('userData'))
+
+	const { usuario_id } = localStorageData
+
 	const callback = (value) => {
-		setDadosDocumento({ tipoDocId: value })
+		// console.log(typeof value)
+		const abreviacao = arrayTipoDoc.find((item) => {
+			const idConvertido = item.id
+			// console.log(typeof item.id)
+			if (idConvertido.toString() === value) {
+				return JSON.stringify(item)
+			} else {
+				return undefined
+			}
+		})
+		// console.log(abreviacao)
+		setDadosDocumento({
+			...dadosDocumento,
+			tipoDocId: value,
+			abreviacao
+		})
 	}
+
+	// useState(() => {
+	// 	console.log(dadosDocumento);
+	// }, [dadosDocumento])
 
 	const handleChange = (event) => {
 		const value = event.target.value
+
 		setDadosDocumento({
 			...dadosDocumento,
 			[event.target.name]: value
 		})
 	}
 
+	const navigate = useNavigate()
 	const saveDoc = () => {
 		if (
 			fileSelected &&
@@ -68,13 +108,19 @@ const FormAdicionarDocumento = ({ dados }) => {
 					// 	idMutuario: id
 					// }
 					const formData = new FormData()
-					formData.append('file', fileSelected)
 					formData.append('nome', mutuarioData.nome)
 					formData.append('tipo', mutuarioData.tipo)
 					formData.append('rotulo', mutuarioData.rotulo)
-					formData.append('docId', dadosDocumento.tipoDocId)
+					formData.append('tipoDocId', dadosDocumento.tipoDocId)
 					formData.append('paginas', dadosDocumento.paginas)
 					formData.append('observacao', dadosDocumento.observacao)
+					formData.append(
+						'abrevTipoDoc',
+						dadosDocumento.abreviacao.abreviacao
+					)
+					formData.append('operadorId', usuario_id)
+					formData.append('file', fileSelected)
+					formData.append('mutuarioId', id)
 					// console.log(formData.get('file'))
 					axios
 						.post('/upload', formData, {
@@ -83,7 +129,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 							}
 						})
 						.then((response) => {
-							console.log(response)
+							// console.log(response)
 							if (response.statusText !== 'OK') {
 								throw new Error(response.statusText)
 							} else {
@@ -92,7 +138,9 @@ const FormAdicionarDocumento = ({ dados }) => {
 									title: 'Documento salvo no sistema.'
 								})
 							}
-							return response
+							return navigate(`/detalhes/${id}`, {
+								replace: true
+							})
 						})
 						.catch((error) => {
 							Swal.fire({
@@ -112,16 +160,6 @@ const FormAdicionarDocumento = ({ dados }) => {
 			})
 		}
 	}
-
-	useEffect(() => {
-		const result = dados.result
-		const changeState = async () => {
-			await setMutuarioData(...result)
-		}
-
-		changeState()
-	}, [mutuarioData, dados.result])
-	// console.log(mutuarioData)
 
 	const fileHandler = (event) => {
 		setFileSelected(event.target.files[0])
@@ -194,7 +232,10 @@ const FormAdicionarDocumento = ({ dados }) => {
 							<Skeleton count={1} />
 						) : (
 							<>
-								<label htmlFor='mutuario' className='form-label'>
+								<label
+									htmlFor='mutuario'
+									className='form-label'
+								>
 									Mutuário
 								</label>
 								<input
@@ -248,10 +289,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 				</div>
 				<div className='row'>
 					<div className=''>
-						<label
-							htmlFor='Observação'
-							className='form-label'
-						>
+						<label htmlFor='Observação' className='form-label'>
 							Observação
 						</label>
 						<textarea

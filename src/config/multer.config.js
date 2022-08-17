@@ -1,16 +1,15 @@
-const multer = require('multer')
-const path = require('path')
+const multer = require("multer");
+const path = require("path");
 
 const storage = multer.diskStorage({
-	destination: (req, file, callback) => {
-		callback(null, path.resolve('pastas'))
-	},
+  destination: (req, file, callback) => {
+    // console.log(req.body);
+    callback(null, path.resolve(`./pastas/lei/${req.body.rotulo}`));
+  },
 
-	filename: (req, file, callback) => {
-		const time = new Date().getTime()
+  filename: (req, file, callback) => {
+    callback(null, `${req.body.rotulo}${req.body.abrevTipoDoc}.pdf`);
+  },
+});
 
-		callback(null, `${time}_${file.originalname}`)
-	}
-})
-
-module.exports = storage
+module.exports = storage;

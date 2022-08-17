@@ -15,7 +15,7 @@ const TabelaMutuarioLei = () => {
 	const [mutLeiData, setMutLeiData] = useState([])
 	const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
-
+	// console.log(mutLeiData)
 	const fetchMutuarios = () => {
 		getMutuariosLei().then((mutuario) => setMutLeiData(mutuario))
 		setLoading(false)
@@ -73,9 +73,9 @@ const TabelaMutuarioLei = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{currentTableData?.map((data) => {
+					{currentTableData?.map((data, key) => {
 						return (
-							<tr key={data.id}>
+							<tr key={key}>
 								<th scope='row'>{data.id}</th>
 								<td>{data.rotulo}</td>
 								{/*  Link nomes */}
@@ -92,26 +92,65 @@ const TabelaMutuarioLei = () => {
 										{data.nome}
 									</Link>
 								</td>
-								<td>{data.imoveis_leis[0].end}</td>
-								<td>{data.imoveis_leis[0].numero}</td>
-								<td>{data.imoveis_leis[0].complemento}</td>
-								<td>{data.imoveis_leis[0].bairro}</td>
-								<td>{data.imoveis_leis[0].cidade}</td>
-								<td>{data.imoveis_leis[0].uf}</td>
 								<td>
-									{data.imoveis_leis[0].escritura === 1 ? (
-										<i className='ms-3 bi disponivel bi-file-earmark-text'></i>
+									{data.imoveis_leis.length === 0 ? (
+										<p>-----</p>
 									) : (
-										<i className='ms-3 bi indisponivel bi-file-earmark-text'></i>
+										data.imoveis_leis[0].end
 									)}
 								</td>
 								<td>
-									{data.imoveis_leis[0].hipoteca === 1 ? (
-										<i className='ms-2 bi disponivel bi-house'></i>
+									{data.imoveis_leis.length === 0 ? (
+										<p>-----</p>
 									) : (
-										<i className='ms-2 bi indisponivel bi-house'></i>
+										data.imoveis_leis[0].numero
 									)}
 								</td>
+								<td>
+									{data.imoveis_leis.length === 0 ? (
+										<p>-----</p>
+									) : (
+										data.imoveis_leis[0].complemento
+									)}
+								</td>
+								<td>
+									{data.imoveis_leis.length === 0 ? (
+										<p>-----</p>
+									) : (
+										data.imoveis_leis[0].bairro
+									)}
+								</td>
+								<td>
+									{data.imoveis_leis.length === 0 ? (
+										<p>-----</p>
+									) : (
+										data.imoveis_leis[0].cidade
+									)}
+								</td>
+								<td>
+									{data.imoveis_leis.length === 0 ? (
+										<p>-----</p>
+									) : (
+										data.imoveis_leis[0].uf
+									)}
+								</td>
+								<td>
+									{data.imoveis_leis.length !== 0 &&
+										(data.imoveis_leis[0].escritura ===
+										1 ? (
+											<i className='ms-3 bi disponivel bi-file-earmark-text'></i>
+										) : (
+											<i className='ms-3 bi indisponivel bi-file-earmark-text'></i>
+										))}
+								</td>
+								<td>
+									{data.imoveis_leis.length !== 0 &&
+										(data.imoveis_leis[0].hipoteca === 1 ? (
+											<i className='ms-2 bi disponivel bi-house'></i>
+										) : (
+											<i className='ms-2 bi indisponivel bi-house'></i>
+										))}
+								</td>{' '}
 							</tr>
 						)
 					})}

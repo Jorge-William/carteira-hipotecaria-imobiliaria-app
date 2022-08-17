@@ -2,7 +2,7 @@ const DataTypes = require("sequelize");
 const sequelize = require("../database/sequelize.connection");
 // const ImoveisLei = require("./imovel-lei.model");
 
-const MutuarioLei = sequelize.define("mutuarios_lei", {
+const MutuariosLei = sequelize.define("mutuarios_lei", {
   id: {
     type: DataTypes.INTEGER,
     unique: true,
@@ -31,7 +31,7 @@ const MutuarioLei = sequelize.define("mutuarios_lei", {
   timestamps: false,
 });
 
-const DocumentoLei = sequelize.define("documentos_lei", {
+const DocumentosLei = sequelize.define("documentos_lei", {
   id: {
     type: DataTypes.INTEGER,
     unique: true,
@@ -62,6 +62,7 @@ const DocumentoLei = sequelize.define("documentos_lei", {
   },
   status: {
     type: DataTypes.TEXT,
+    defaultValue: "0",
   },
   obs: {
     type: DataTypes.TEXT,
@@ -74,9 +75,11 @@ const DocumentoLei = sequelize.define("documentos_lei", {
   },
   dt_auditoria: {
     type: DataTypes.DATE,
+    defaultValue: null,
   },
   auditor: {
     type: DataTypes.INTEGER,
+    defaultValue: null,
   },
 
 }, {
@@ -139,9 +142,14 @@ const ImoveisLei = sequelize.define("imoveis_lei", {
 
 // DocumentoLei.hasOne(MutuarioLei);
 
-MutuarioLei.hasMany(ImoveisLei, { foreignKey: "mutuario_id" });
-MutuarioLei.hasMany(DocumentoLei, { foreignKey: "mutuario_id" });
+MutuariosLei.hasMany(ImoveisLei, { foreignKey: "mutuario_id" });
+MutuariosLei.hasMany(DocumentosLei, { foreignKey: "mutuario_id" });
 
-sequelize.sync();
+sequelize.sync({ alter: true });
+// DocumentosLei.sync({ force: true });
 
-module.exports = { MutuarioLei, DocumentoLei, ImoveisLei };
+module.exports = {
+  MutuariosLei,
+  DocumentosLei,
+  ImoveisLei,
+};

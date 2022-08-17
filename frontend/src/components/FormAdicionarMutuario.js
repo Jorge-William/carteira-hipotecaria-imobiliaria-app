@@ -17,8 +17,8 @@ const FormAdicionarMutuario = () => {
 	})
 	const [imovelData, setImovelData] = useState({
 		dataLiq: null,
-		escritura: null,
-		hipoteca: null,
+		escritura: '0',
+		hipoteca: '0',
 		numObra: null,
 		codHist: null,
 		obs: '',
@@ -66,7 +66,7 @@ const FormAdicionarMutuario = () => {
 							imovelData
 						})
 						.then((response) => {
-							console.log(response);
+							// console.log(response);
 							if(response.data.mutuarioCriado === true){
 								return Swal.fire('Mutuario Criado', '', 'success')
 							} else if(response.data.mutuarioCriado === false){

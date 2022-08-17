@@ -5,11 +5,11 @@ const fs = require("fs/promises");
 const sequelize = require("../../database/sequelize.connection");
 
 const router = new express.Router();
-const { MutuarioLei, ImoveisLei } = require("../../models/mutuario-lei.model");
+const { MutuariosLei, ImoveisLei } = require("../../models/mutuario-lei.model");
 
 // ------------------------------------ Buscar ------------------------------------
 router.get("/mutuariolei", async (req, res) => {
-  const result = await MutuarioLei.findAll({
+  const result = await MutuariosLei.findAll({
     raw: false,
     include: [
       {
@@ -27,7 +27,7 @@ router.get("/mutuariolei", async (req, res) => {
 router.post("/alldatamutuariobyid", async (req, res) => {
   const { id } = req.body.params;
 
-  const [result, metadata] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
+  const [result] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
   telefone, dt_liq, num_obra, cod_historico, obs, cep
   FROM testdb.mutuarios_lei a
   LEFT JOIN testdb.imoveis_lei b 
@@ -36,7 +36,7 @@ router.post("/alldatamutuariobyid", async (req, res) => {
 
   res.status(200).send({ result });
 
-  console.log(metadata);
+  // console.log(metadata);
 });
 
 // ------------------------------------- Mostrar mutuario simples por id ------------------------
@@ -81,21 +81,22 @@ router.post("/criar-mutuario-lei", async (req, res) => {
 
   try {
     // verificar se a pasta já existe
-    const buscaRotulo = await MutuarioLei.findOne({
+    const buscaRotulo = await MutuariosLei.findOne({
       where: { rotulo: `${req.body.mutuarioData.pasta}` },
     });
 
     if (buscaRotulo) {
+      // eslint-disable-next-line no-console
       console.log("PASTA JÀ EXISTE");
     } else {
+      // eslint-disable-next-line no-console
       console.log("O MUTUARIO SERÁ SALVO");
     }
 
     // Caso a pasta ainda não exista, execute a query
     if (buscaRotulo === null) {
       const statusPasta = await fs.mkdir(`./pastas/lei/${pasta.toUpperCase()}`, { recursive: true });
-      console.log(statusPasta);
-      const mutuario = await MutuarioLei.create({
+      const mutuario = await MutuariosLei.create({
         tipo: `${tipo}`,
         rotulo: `${pasta.toUpperCase()}`,
         nome: `${nome}`,
