@@ -27,19 +27,25 @@ router.get("/mutuariolei", async (req, res) => {
 router.post("/alldatamutuariobyid", async (req, res) => {
   const { id } = req.body.params;
 
-  // DESENVOLVIMENTO
-  // FROM testdb.mutuarios_lei a
-  // LEFT JOIN testdb.imoveis_lei b
-  const [result] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
-  telefone, dt_liq, num_obra, cod_historico, obs, cep
-  FROM app_chi.mutuarios_lei a
-  LEFT JOIN app_chi.imoveis_lei b 
-  ON a.id = b.mutuario_id
-  where a.id = ${id};`);
-
-  res.status(200).send({ result });
-
-  // console.log(metadata);
+  if (process.env.NODE_ENV === "production") {
+    // PRODUÇÃO
+    const [result] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
+    telefone, dt_liq, num_obra, cod_historico, obs, cep
+    FROM app_chi.mutuarios_lei a
+    LEFT JOIN app_chi.imoveis_lei b 
+    ON a.id = b.mutuario_id
+    where a.id = ${id};`);
+    res.status(200).send({ result });
+  } else if (process.env.NODE_ENV === "development") {
+    // DESENVOLVIMENTO
+    const [result] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
+    telefone, dt_liq, num_obra, cod_historico, obs, cep
+    FROM testdb.mutuarios_lei a
+    LEFT JOIN testdb.imoveis_lei b 
+    ON a.id = b.mutuario_id
+    where a.id = ${id};`);
+    res.status(200).send({ result });
+  }
 });
 
 // ------------------------------------- Mostrar mutuario simples por id ------------------------

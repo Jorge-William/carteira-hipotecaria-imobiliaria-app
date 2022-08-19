@@ -87,7 +87,17 @@ const AccordionDeDocumentos = ({ documentos }) => {
 												<td>
 													<a
 														target='blank'
-														href={`http://localhost:5001/documentos/${item.cod_pasta}/${item.nome_arquivo}.pdf `}
+														href={
+															process.env
+																.NODE_ENV ===
+															'production'
+																? `http://10.100.1.156:5001/documentos/${item.cod_pasta}/${item.nome_arquivo}.pdf`
+																: process.env
+																		.NODE_ENV ===
+																  'development'
+																? `http://localhost:5001/documentos/${item.cod_pasta}/${item.nome_arquivo}.pdf`
+																: 'http://localhost:3000/dashboard'
+														}
 													>
 														<button className='btn btn-success btn-sm'>
 															Abrir{' '}
