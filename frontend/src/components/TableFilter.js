@@ -3,7 +3,10 @@ import '../style/TableFilter.css'
 import { Link } from 'react-router-dom'
 
 const TableFilter = (data) => {
-	// console.log(data)
+	const newArray = []
+	data.data.map((item) => newArray.push(item.imoveis_leis[0]))
+	const filtrado = newArray.filter((item) => item !== undefined)
+
 	return (
 		<section className='mb-5'>
 			<div className='row justify-content-center'>
@@ -64,6 +67,20 @@ const TableFilter = (data) => {
 								Busca por Nome
 							</button>
 						</li>
+						<li className='nav-item' role='presentation'>
+							<button
+								className='nav-link'
+								id='end-tab'
+								data-bs-toggle='tab'
+								data-bs-target='#end'
+								type='button'
+								role='tab'
+								aria-controls='end'
+								aria-selected='false'
+							>
+								Busca por Endereço
+							</button>
+						</li>
 					</ul>
 					<div className='tab-content' id='myTabContent'>
 						<div
@@ -112,6 +129,33 @@ const TableFilter = (data) => {
 											suggestions={Array.from(
 												Object.values(data.data),
 												(breed) => breed.nome
+											).filter((elem, index, self) => {
+												return (
+													index === self.indexOf(elem)
+												)
+											})}
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div
+							className='tab-pane fade'
+							id='end'
+							role='tabpanel'
+							aria-labelledby='end-tab'
+						>
+							<br />
+							<div className='card card-body'>
+								<div className='row '>
+									<div className='col-12'>
+										<Autocomplete
+											tipo={'end'}
+											placeholder={'Endereço'}
+											data={data.data}
+											suggestions={Array.from(
+												Object.values(filtrado),
+												(breed) => breed.end
 											).filter((elem, index, self) => {
 												return (
 													index === self.indexOf(elem)

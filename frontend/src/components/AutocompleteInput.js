@@ -8,9 +8,12 @@ const Autocomplete = (props) => {
 	const [isShow, setIsShow] = useState(false)
 	const [input, setInput] = useState('')
 	const [filter, setFilter] = useState(null)
+	// console.log(filter)
+	// console.log(filtered)
 
 	const onChange = (e) => {
 		const { suggestions } = props
+
 		const input = e.currentTarget.value
 		const newFilteredSuggestions = suggestions.filter(
 			(suggestion) =>
@@ -118,10 +121,16 @@ const Autocomplete = (props) => {
 									return item.rotulo === input
 								})
 							)
-						} else if ('nome') {
+						} else if (tipo === 'nome') {
 							setFilter(
 								data.find((item) => {
 									return item.nome === input
+								})
+							)
+						} else {
+							setFilter(
+								data.find((item) => {
+									return item.imoveis_leis[0].end === input
 								})
 							)
 						}
