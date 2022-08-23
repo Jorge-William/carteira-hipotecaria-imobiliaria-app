@@ -9,18 +9,13 @@ import Swal from 'sweetalert2'
 
 import axios from 'axios'
 
-const FormAdicionarDocumento = ({ dados }) => {
+const FormAdicionarDocumentoSfh = ({ dados }) => {
 	/**  O hook useParams serve para sabermos o id e voltar
 	 * exatamente para o mutuario que deu origem a inclusão do documento
 	 */
 	const { id } = useParams()
 	const filesElement = useRef(null)
-	// console.log(dados.tipoDoc);
-
-	// console.log(mutuarioData)
 	const arrayTipoDoc = dados.tipoDoc
-	// console.log(typeof arrayTipoDoc)
-	// const { values } = dados
 
 	const [mutuarioData, setMutuarioData] = useState({
 		tipo: '',
@@ -48,27 +43,22 @@ const FormAdicionarDocumento = ({ dados }) => {
 	const { usuario_id } = localStorageData
 
 	const callback = (value) => {
-		// console.log(typeof value)
 		const abreviacao = arrayTipoDoc.find((item) => {
 			const idConvertido = item.id
-			// console.log(typeof item.id)
+
 			if (idConvertido.toString() === value) {
 				return JSON.stringify(item)
 			} else {
 				return undefined
 			}
 		})
-		// console.log(abreviacao)
+
 		setDadosDocumento({
 			...dadosDocumento,
 			tipoDocId: value,
 			abreviacao
 		})
 	}
-
-	// useState(() => {
-	// 	console.log(dadosDocumento);
-	// }, [dadosDocumento])
 
 	const handleChange = (event) => {
 		const value = event.target.value
@@ -121,15 +111,13 @@ const FormAdicionarDocumento = ({ dados }) => {
 					formData.append('operadorId', usuario_id)
 					formData.append('file', fileSelected)
 					formData.append('mutuarioId', id)
-					// console.log(formData.get('file'))
 					axios
-						.post('/upload', formData, {
+						.post('/upload-sfh', formData, {
 							headers: {
 								'Content-Type': 'multipart/form-data'
 							}
 						})
 						.then((response) => {
-							// console.log(response)
 							if (response.statusText !== 'OK') {
 								throw new Error(response.statusText)
 							} else {
@@ -138,7 +126,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 									title: 'Documento salvo no sistema.'
 								})
 							}
-							return navigate(`/detalhes/${id}`, {
+							return navigate(`/detalhes-sfh/${id}`, {
 								replace: true
 							})
 						})
@@ -288,7 +276,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 				<div className='row mt-5'>
 					<div className='col d-flex gap-2 justify-content-between'>
 						<button className='btn btn-secondary mt-4'>
-							<Link to={`/detalhes/${id}`}>
+							<Link to={`/detalhes-sfh/${id}`}>
 								<i className='bi bi-arrow-left'></i>Voltar
 							</Link>
 						</button>
@@ -308,4 +296,4 @@ const FormAdicionarDocumento = ({ dados }) => {
 	)
 }
 
-export default FormAdicionarDocumento
+export default FormAdicionarDocumentoSfh

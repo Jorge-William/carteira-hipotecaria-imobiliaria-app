@@ -1,19 +1,18 @@
 const express = require("express");
-// const create = require("../../controllers/mutuario-lei/mutuario-lei.controller");
 const { QueryTypes } = require("sequelize");
 const fs = require("fs/promises");
 const sequelize = require("../../database/sequelize.connection");
 
 const router = new express.Router();
-const { MutuariosLei, ImoveisLei } = require("../../models/mutuario-lei.model");
+const { MutuariosSfh, ImoveisSfh } = require("../../models/mutuario-sfh.model");
 
 // ------------------------------------ Buscar ------------------------------------
-router.get("/mutuariolei", async (req, res) => {
-  const result = await MutuariosLei.findAll({
+router.get("/mutuariosfh", async (req, res) => {
+  const result = await MutuariosSfh.findAll({
     raw: false,
     include: [
       {
-        model: await ImoveisLei,
+        model: await ImoveisSfh,
         required: false,
       },
     ],
@@ -24,15 +23,15 @@ router.get("/mutuariolei", async (req, res) => {
 });
 
 // --------------------------- Motrar um mutuario com todos os dados  ---------------------------
-router.post("/alldatamutuariobyid", async (req, res) => {
+router.post("/alldatamutuario-sfh-byid", async (req, res) => {
   const { id } = req.body.params;
 
   if (process.env.NODE_ENV === "production") {
     // PRODUÇÃO
     const [result] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
-    FROM app_chi.mutuarios_lei a
-    LEFT JOIN app_chi.imoveis_lei b 
+    FROM app_chi.mutuarios_sfh a
+    LEFT JOIN app_chi.imoveis_sfh b 
     ON a.id = b.mutuario_id
     where a.id = ${id};`);
     res.status(200).send({ result });
@@ -40,8 +39,8 @@ router.post("/alldatamutuariobyid", async (req, res) => {
     // DESENVOLVIMENTO
     const [result] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
-    FROM testdb.mutuarios_lei a
-    LEFT JOIN testdb.imoveis_lei b 
+    FROM testdb.mutuarios_sfh a
+    LEFT JOIN testdb.imoveis_sfh b 
     ON a.id = b.mutuario_id
     where a.id = ${id};`);
     res.status(200).send({ result });
@@ -49,15 +48,15 @@ router.post("/alldatamutuariobyid", async (req, res) => {
 });
 
 // ------------------------------------- Mostrar mutuario simples por id ------------------------
-router.post("/cabecalhodocumento", async (req, res) => {
+router.post("/cabecalhodocumentosfh", async (req, res) => {
   const { id } = req.body.params;
 
   const result = await sequelize.query(
-    `select tipo, rotulo, nome from mutuarios_lei where id = ${id} `,
+    `select tipo, rotulo, nome from mutuarios_sfh where id = ${id} `,
     { type: QueryTypes.SELECT },
   );
   const tipoDoc = await sequelize.query(
-    "select id, abreviacao, descricao from tipos_doc_lei",
+    "select id, abrev, descricao from tipos_doc_sfh",
     { type: QueryTypes.SELECT },
   );
 
@@ -65,7 +64,7 @@ router.post("/cabecalhodocumento", async (req, res) => {
 });
 
 // ------------------------------------ Criar  ------------------------------------
-router.post("/criar-mutuario-lei", async (req, res) => {
+router.post("/criar-mutuario-sfh", async (req, res) => {
   // console.log(req.body);
 
   const {
@@ -90,7 +89,7 @@ router.post("/criar-mutuario-lei", async (req, res) => {
 
   try {
     // verificar se a pasta já existe
-    const buscaRotulo = await MutuariosLei.findOne({
+    const buscaRotulo = await MutuariosSfh.findOne({
       where: { rotulo: `${req.body.mutuarioData.pasta}` },
     });
 
@@ -104,15 +103,18 @@ router.post("/criar-mutuario-lei", async (req, res) => {
 
     // Caso a pasta ainda não exista, execute a query
     if (buscaRotulo === null) {
-      const statusPasta = await fs.mkdir(`./pastas/lei/${pasta.toUpperCase()}`, { recursive: true });
-      const mutuario = await MutuariosLei.create({
+      const statusPasta = await fs.mkdir(
+        `./pastas/sfh/${pasta.toUpperCase()}`,
+        { recursive: true },
+      );
+      const mutuario = await MutuariosSfh.create({
         tipo: `${tipo}`,
         rotulo: `${pasta.toUpperCase()}`,
         nome: `${nome}`,
         telefone: `${telefone}`,
       });
 
-      const imovel = await ImoveisLei.create({
+      const imovel = await ImoveisSfh.create({
         dt_liq: `${dataLiq}`,
         escritura,
         hipoteca: `${hipoteca}`,
@@ -131,7 +133,10 @@ router.post("/criar-mutuario-lei", async (req, res) => {
 
       // console.log(mutuario.dataValues);
       res.send({
-        mutuarioCriado: true, mutuario, imovel, statusPasta,
+        mutuarioCriado: true,
+        mutuario,
+        imovel,
+        statusPasta,
       });
     } else {
       res.send({

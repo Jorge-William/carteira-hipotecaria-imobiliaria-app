@@ -2,8 +2,11 @@ import Autocomplete from './AutocompleteInput'
 import '../style/TableFilter.css'
 import { Link } from 'react-router-dom'
 
-const TableFilter = (data) => {
-	// console.log(data)
+const TableFilterLei = (data) => {
+	const leiArray = []
+	data.data.map((item) => leiArray.push(item.imoveis_leis[0]))
+	const leiImoveis = leiArray.filter((item) => item !== undefined)
+
 	return (
 		<section className='mb-5'>
 			<div className='row justify-content-center'>
@@ -64,6 +67,20 @@ const TableFilter = (data) => {
 								Busca por Nome
 							</button>
 						</li>
+						<li className='nav-item' role='presentation'>
+							<button
+								className='nav-link'
+								id='end-tab'
+								data-bs-toggle='tab'
+								data-bs-target='#end'
+								type='button'
+								role='tab'
+								aria-controls='end'
+								aria-selected='false'
+							>
+								Busca por Endereço
+							</button>
+						</li>
 					</ul>
 					<div className='tab-content' id='myTabContent'>
 						<div
@@ -122,6 +139,33 @@ const TableFilter = (data) => {
 								</div>
 							</div>
 						</div>
+						<div
+							className='tab-pane fade'
+							id='end'
+							role='tabpanel'
+							aria-labelledby='end-tab'
+						>
+							<br />
+							<div className='card card-body'>
+								<div className='row '>
+									<div className='col-12'>
+										<Autocomplete
+											tipo={'end'}
+											placeholder={'Endereço'}
+											data={data.data}
+											suggestions={Array.from(
+												Object.values(leiImoveis),
+												(breed) => breed.end
+											).filter((elem, index, self) => {
+												return (
+													index === self.indexOf(elem)
+												)
+											})}
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<br />
@@ -131,4 +175,4 @@ const TableFilter = (data) => {
 	)
 }
 
-export default TableFilter
+export default TableFilterLei

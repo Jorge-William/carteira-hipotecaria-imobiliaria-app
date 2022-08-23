@@ -2,14 +2,12 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../style/Autocomplete.css'
 
-const Autocomplete = (props) => {
+const AutocompleteSfh = (props) => {
 	const [active, setActive] = useState(0)
 	const [filtered, setFiltered] = useState([])
 	const [isShow, setIsShow] = useState(false)
 	const [input, setInput] = useState('')
 	const [filter, setFilter] = useState(null)
-	// console.log(filter)
-	// console.log(filtered)
 
 	const onChange = (e) => {
 		const { suggestions } = props
@@ -79,16 +77,8 @@ const Autocomplete = (props) => {
 		}
 		return <></>
 	}
-	// const { data } = props
-	// const buscaMutuario = async (event) => {
-	// 	event.preventDefault()
-	// 	return console.log(await data.find((item) => item.rotulo === input))
-
-	// }
-	// console.log(Array.from(Object.values(data), (breed) => breed.rotulo))
 
 	const { placeholder, data, tipo } = props
-	console.log(data)
 	return (
 		<div className='row'>
 			<form
@@ -130,7 +120,7 @@ const Autocomplete = (props) => {
 						} else {
 							setFilter(
 								data.find((item) => {
-									return item.imoveis_leis[0].end === input
+									return item.imoveis_sfhs[0].end === input
 								})
 							)
 						}
@@ -175,7 +165,7 @@ const Autocomplete = (props) => {
 										> */}
 											{
 												<Link
-													to={`/detalhes/${filter.id}`}
+													to={`/detalhes-sfh/${filter.id}`}
 												>
 													{filter.nome}
 												</Link>
@@ -183,57 +173,57 @@ const Autocomplete = (props) => {
 											{/* </a> */}
 										</td>
 										<td>
-											{filter.imoveis_leis.length ===
+											{filter.imoveis_sfhs.length ===
 											0 ? (
 												<p>-----</p>
 											) : (
-												filter.imoveis_leis[0].end
+												filter.imoveis_sfhs[0].end
 											)}
 										</td>
 										<td>
-											{filter.imoveis_leis.length ===
+											{filter.imoveis_sfhs.length ===
 											0 ? (
 												<p>-----</p>
 											) : (
-												filter.imoveis_leis[0].numero
+												filter.imoveis_sfhs[0].numero
 											)}
 										</td>
 										<td>
-											{filter.imoveis_leis.length ===
+											{filter.imoveis_sfhs.length ===
 											0 ? (
 												<p>-----</p>
 											) : (
-												filter.imoveis_leis[0]
+												filter.imoveis_sfhs[0]
 													.complemento
 											)}
 										</td>
 										<td>
-											{filter.imoveis_leis.length ===
+											{filter.imoveis_sfhs.length ===
 											0 ? (
 												<p>-----</p>
 											) : (
-												filter.imoveis_leis[0].bairro
+												filter.imoveis_sfhs[0].bairro
 											)}
 										</td>
 										<td>
-											{filter.imoveis_leis.length ===
+											{filter.imoveis_sfhs.length ===
 											0 ? (
 												<p>-----</p>
 											) : (
-												filter.imoveis_leis[0].cidade
+												filter.imoveis_sfhs[0].cidade
 											)}
 										</td>
 										<td>
-											{filter.imoveis_leis.length ===
+											{filter.imoveis_sfhs.length ===
 											0 ? (
 												<p>-----</p>
 											) : (
-												filter.imoveis_leis[0].uf
+												filter.imoveis_sfhs[0].uf
 											)}
 										</td>
 										<td>
-											{filter.imoveis_leis.length !== 0 &&
-												(filter.imoveis_leis[0]
+											{filter.imoveis_sfhs.length !== 0 &&
+												(filter.imoveis_sfhs[0]
 													.escritura === 1 ? (
 													<i className='ms-3 bi disponivel bi-file-earmark-text'></i>
 												) : (
@@ -241,8 +231,8 @@ const Autocomplete = (props) => {
 												))}
 										</td>
 										<td>
-											{filter.imoveis_leis.length !== 0 &&
-												(filter.imoveis_leis[0]
+											{filter.imoveis_sfhs.length !== 0 &&
+												(filter.imoveis_sfhs[0]
 													.hipoteca === 1 ? (
 													<i className='ms-2 bi disponivel bi-house'></i>
 												) : (
@@ -265,4 +255,4 @@ const Autocomplete = (props) => {
 		</div>
 	)
 }
-export default Autocomplete
+export default AutocompleteSfh

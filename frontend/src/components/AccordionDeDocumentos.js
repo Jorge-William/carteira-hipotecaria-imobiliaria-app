@@ -2,8 +2,6 @@ import renderSwitch from '../helpers/renderSwitch'
 import Skeleton from 'react-loading-skeleton'
 
 const AccordionDeDocumentos = ({ documentos }) => {
-	// console.log(documentos)
-
 	return documentos.length === 0 ? (
 		<>
 			<Skeleton count={5} />
@@ -22,7 +20,6 @@ const AccordionDeDocumentos = ({ documentos }) => {
 				id='accordionFlushExample'
 			>
 				{documentos.map((item, key) => {
-					console.log(item)
 					return (
 						<div key={key} className='accordion-item'>
 							<h2
@@ -87,7 +84,17 @@ const AccordionDeDocumentos = ({ documentos }) => {
 												<td>
 													<a
 														target='blank'
-														href={`http://localhost:5001/documentos/${item.cod_pasta}/${item.nome_arquivo}.pdf `}
+														href={
+															process.env
+																.NODE_ENV ===
+															'production'
+																? `http://10.100.1.156:5001/documentos/${item.cod_pasta}/${item.nome_arquivo}.pdf`
+																: process.env
+																		.NODE_ENV ===
+																  'development'
+																? `http://localhost:5001/documentos/${item.cod_pasta}/${item.nome_arquivo}.pdf`
+																: 'http://localhost:3000/dashboard'
+														}
 													>
 														<button className='btn btn-success btn-sm'>
 															Abrir{' '}

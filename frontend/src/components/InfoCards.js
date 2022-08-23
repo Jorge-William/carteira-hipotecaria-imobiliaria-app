@@ -18,9 +18,6 @@ const InfoCards = () => {
 		]
 	})
 
-	// console.log(infoMutuarios)
-	// console.log(infoMutuarios.data.lei[0].qtd_mutuarios_lei);
-
 	useEffect(() => {
 		const callServices = async () => {
 			const result = await getInfoCards()
@@ -28,7 +25,6 @@ const InfoCards = () => {
 		}
 		callServices()
 	}, [])
-	// console.log(infoMutuarios)
 
 	const total =
 		infoMutuarios.metadataLei[0].qtd_mutuarios_lei +
