@@ -2,8 +2,6 @@ import renderSwitch from '../helpers/renderSwitch'
 import Skeleton from 'react-loading-skeleton'
 
 const AccordionDeDocumentos = ({ documentos }) => {
-	// console.log(documentos)
-
 	return documentos.length === 0 ? (
 		<>
 			<Skeleton count={5} />
@@ -22,7 +20,6 @@ const AccordionDeDocumentos = ({ documentos }) => {
 				id='accordionFlushExample'
 			>
 				{documentos.map((item, key) => {
-					console.log(item)
 					return (
 						<div key={key} className='accordion-item'>
 							<h2

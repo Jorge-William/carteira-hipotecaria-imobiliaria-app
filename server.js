@@ -3,7 +3,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const userRoutes = require("./src/routes/user/index");
 const mutuarioLeiRoutes = require("./src/routes/mutuario-lei/index");
+const mutuarioSfhRoutes = require("./src/routes/mutuario-sfh/index");
 const documentoLei = require("./src/routes/documento-lei/index");
+const documentoSfh = require("./src/routes/documentos-sfh/index");
 const documentos = require("./src/routes/documentos/index");
 const dashboard = require("./src/routes/dashboard/index");
 
@@ -28,7 +30,10 @@ if (process.env.NODE_ENV === "production") {
 // ------------------------   Registro das rotas ------------------------------
 app.use(userRoutes);
 app.use(mutuarioLeiRoutes);
+app.use(mutuarioSfhRoutes);
 app.use(documentoLei);
+app.use(documentoSfh);
+
 app.use(documentos);
 app.use(dashboard);
 // ----------------------------------------------------------------------------

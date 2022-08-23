@@ -1,21 +1,21 @@
-import getDocumentos from '../services/getDocumentos.service'
+import getDocumentosSfh from '../services/getDocumentosSfh.service'
 import { useState, useEffect } from 'react'
-import getMutuarioById from '../services/getMutuarioById.service'
+import getMutuarioSfhById from '../services/getMutuarioSfhById.service'
 import AccordionDeDocumentos from './AccordionDeDocumentos'
-import ExibirMutuario from './ExibirMutuario'
+import ExibirMutuarioSfh from './ExibirMutuarioSfh'
 import Skeleton from 'react-loading-skeleton'
 import '../style/DetalheMutuario.css'
 import { Link } from 'react-router-dom'
 
-const DetalheMutuario = ({ id }) => {
+const DetalheMutuarioSfh = ({ id }) => {
 	const [dados, setDados] = useState({})
 	const [documentos, setDocumentos] = useState([])
 
 	useEffect(() => {
 		const callServices = async () => {
 			// Posição 0 é o id do mutuário e a posição 17 é o tipo(L ou C)
-			const documentos = await getDocumentos(id)
-			const mutuario = await getMutuarioById(id)
+			const documentos = await getDocumentosSfh(id)
+			const mutuario = await getMutuarioSfhById(id)
 
 			setDocumentos(documentos)
 			setDados(mutuario)
@@ -39,7 +39,7 @@ const DetalheMutuario = ({ id }) => {
 					</button>
 				</div>
 				<div className='col-md'>
-					<Link to={`/mutuario/lei/adicionardocumento/${id}`}>
+					<Link to={`/mutuario/sfh/adicionardocumento/${id}`}>
 						<button
 							className='btn btn-outline-success crud-btn'
 							data-bs-toggle='tooltip'
@@ -51,10 +51,10 @@ const DetalheMutuario = ({ id }) => {
 					</Link>
 				</div>
 			</section>
-			<ExibirMutuario dados={dados} />
+			<ExibirMutuarioSfh dados={dados} />
 			<AccordionDeDocumentos documentos={documentos} />
 		</section>
 	)
 }
 
-export default DetalheMutuario
+export default DetalheMutuarioSfh

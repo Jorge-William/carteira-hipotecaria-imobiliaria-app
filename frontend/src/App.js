@@ -9,8 +9,11 @@ import Dashboard from './pages/Dashboard.page'
 import MutuarioLei from './pages/MutuarioLei.page'
 import MutuarioSfh from './pages/MutuarioSfh.page'
 import MutuarioLeiDetalhesPage from './pages/MutuarioLeiDetalhes.page'
+import MutuarioSfhDetalhesPage from './pages/MutuarioSfhDetalhes.page'
 import AdicionarDocumentoPage from './pages/AdicionarDocumento.page'
+import AdicionarDocumentoSfhPage from './pages/AdicionarDocumentoSfh.page'
 import AdicionarMutuarioLei from './pages/AdicionarMutuarioLei.page'
+import AdicionarMutuarioSfh from './pages/AdicionarMutuarioSfh.page'
 
 const App = () => {
 	const [auth, setAuth] = useState(null)
@@ -45,9 +48,18 @@ const App = () => {
 					<Route path='/mutuario/lei' element={<MutuarioLei />} />
 				)}
 				{auth && (
+					<Route path='/mutuario/sfh' element={<MutuarioSfh />} />
+				)}
+				{auth && (
 					<Route
 						path='/detalhes/:id'
 						element={<MutuarioLeiDetalhesPage />}
+					/>
+				)}
+				{auth && (
+					<Route
+						path='/detalhes-sfh/:id'
+						element={<MutuarioSfhDetalhesPage />}
 					/>
 				)}
 				{auth && (
@@ -57,12 +69,24 @@ const App = () => {
 					/>
 				)}
 				{auth && (
+					<Route
+						path='/mutuario/sfh/adicionardocumento/:id'
+						element={<AdicionarDocumentoSfhPage />}
+					/>
+				)}
+				{auth && (
 					<Route path='/mutuario/sfh' element={<MutuarioSfh />} />
 				)}
 				{auth && (
 					<Route
 						path='/mutuario/adicionar'
 						element={<AdicionarMutuarioLei />}
+					/>
+				)}
+				{auth && (
+					<Route
+						path='/mutuario-sfh/adicionar'
+						element={<AdicionarMutuarioSfh />}
 					/>
 				)}
 				<Route

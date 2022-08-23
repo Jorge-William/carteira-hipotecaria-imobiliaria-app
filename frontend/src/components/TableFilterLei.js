@@ -2,10 +2,10 @@ import Autocomplete from './AutocompleteInput'
 import '../style/TableFilter.css'
 import { Link } from 'react-router-dom'
 
-const TableFilter = (data) => {
-	const newArray = []
-	data.data.map((item) => newArray.push(item.imoveis_leis[0]))
-	const filtrado = newArray.filter((item) => item !== undefined)
+const TableFilterLei = (data) => {
+	const leiArray = []
+	data.data.map((item) => leiArray.push(item.imoveis_leis[0]))
+	const leiImoveis = leiArray.filter((item) => item !== undefined)
 
 	return (
 		<section className='mb-5'>
@@ -154,7 +154,7 @@ const TableFilter = (data) => {
 											placeholder={'Endereço'}
 											data={data.data}
 											suggestions={Array.from(
-												Object.values(filtrado),
+												Object.values(leiImoveis),
 												(breed) => breed.end
 											).filter((elem, index, self) => {
 												return (
@@ -175,4 +175,4 @@ const TableFilter = (data) => {
 	)
 }
 
-export default TableFilter
+export default TableFilterLei

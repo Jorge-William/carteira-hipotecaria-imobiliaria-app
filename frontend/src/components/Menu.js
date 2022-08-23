@@ -84,7 +84,7 @@ const Menu = ({ logout }) => {
 									</li>
 								</ul>
 							</li>
-							<li className='nav-item dropdown'>
+							{/* <li className='nav-item dropdown'>
 								<a
 									className='nav-link dropdown-toggle'
 									href='/'
@@ -113,9 +113,9 @@ const Menu = ({ logout }) => {
 										</a>
 									</li>
 								</ul>
-							</li>
+							</li> */}
 						</ul>
-						<form className='d-flex'>
+						{/* <form className='d-flex'>
 							<input
 								className='form-control me-2'
 								type='search'
@@ -128,7 +128,7 @@ const Menu = ({ logout }) => {
 							>
 								Buscar
 							</button>
-						</form>
+						</form> */}
 						<UserProfileIcon />
 					</div>
 				</div>

@@ -1,12 +1,12 @@
 import React from 'react'
-import getMutuariosLei from '../services/getMutuarios.service'
+import { getMutuariosLei } from '../services/getMutuarios.service'
 import { useEffect, useState, useMemo } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Pagination from './Pagination'
 import '../style/Pagination.scss'
 import '../style/TabelaMutuario.css'
-import TableFilter from '../components/TableFilter.js'
+import TableFilterLei from './TableFilterLei.js'
 import { Link } from 'react-router-dom'
 
 let PageSize = 15
@@ -15,7 +15,6 @@ const TabelaMutuarioLei = () => {
 	const [mutLeiData, setMutLeiData] = useState([])
 	const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
-	// console.log(mutLeiData)
 	const fetchMutuarios = () => {
 		getMutuariosLei().then((mutuario) => setMutLeiData(mutuario))
 		setLoading(false)
@@ -31,16 +30,110 @@ const TabelaMutuarioLei = () => {
 		const lastPageIndex = firstPageIndex + PageSize
 		return mutLeiData.slice(firstPageIndex, lastPageIndex)
 	}, [currentPage, mutLeiData])
-	// console.log(currentTableData)
-	// console.log('---------------------------------------')
-	// console.log(mutLeiData)
 
 	return isLoading ? (
-		<Skeleton count={20} />
+		<div>
+			<section>
+				<TableFilterLei data={mutLeiData} />
+			</section>
+			<table className='table'>
+				<thead>
+					<tr>
+						<th scope='col'>
+							<Skeleton count={1} height={25} />
+						</th>
+						<th scope='col'>
+							<Skeleton count={1} height={25} />
+						</th>
+						<th scope='col'>
+							<Skeleton height={25} width={50} />
+						</th>
+						<th scope='col'>
+							<Skeleton count={1} height={25} />
+						</th>
+						<th scope='col'>
+							<Skeleton count={1} height={25} />
+						</th>
+						<th scope='col'>
+							<Skeleton width={10} height={25} />
+						</th>
+						<th scope='col'>
+							<Skeleton count={1} height={25} />
+						</th>
+						<th scope='col'>
+							<Skeleton count={1} height={25} />
+						</th>
+						<th scope='col'>
+							<Skeleton count={1} height={25} />
+						</th>
+						<th scope='col'>
+							<Skeleton count={1} height={25} />
+						</th>
+
+						<th
+							scope='col'
+							data-bs-toggle='tooltip'
+							data-bs-placement='top'
+							title='Escritura'
+						>
+							<Skeleton count={1} height={25} />
+						</th>
+						<th
+							scope='col'
+							data-bs-toggle='tooltip'
+							data-bs-placement='top'
+							title='Hipoteca'
+						>
+							<Skeleton count={1} height={25} />
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope='row'>
+							<Skeleton count={15} height={25} />
+						</th>
+						<td>
+							<Skeleton count={15} height={25} />
+						</td>
+						<td>
+							<Skeleton count={15} height={25} />
+						</td>
+						<td>
+							<Skeleton count={15} height={25} />
+						</td>
+						<td>
+							<Skeleton count={15} height={25} />
+						</td>
+						<td>
+							<Skeleton count={15} height={25} />
+						</td>
+						<td>
+							<Skeleton count={15} height={25} />
+						</td>
+						<td>
+							<Skeleton count={15} height={25} />
+						</td>
+						<td>
+							<Skeleton count={15} height={25} />
+						</td>
+						<td>
+							<Skeleton count={15} height={25} />
+						</td>
+						<td>
+							<Skeleton count={15} height={25} />
+						</td>
+						<td>
+							<Skeleton count={15} height={25} />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	) : (
 		<div>
 			<section>
-				<TableFilter data={mutLeiData} />
+				<TableFilterLei data={mutLeiData} />
 			</section>
 			<table className='table table-striped table-bordered'>
 				<thead>
@@ -80,14 +173,6 @@ const TabelaMutuarioLei = () => {
 								<td>{data.rotulo}</td>
 								{/*  Link nomes */}
 								<td>
-									{/* ---------------------------------------- Modal -------------------------------------- */}
-									{/* <a
-										href='#'
-										data-bs-toggle='modal'
-										data-bs-target='#janelaMutuarioLei'
-										className='link'
-										onClick={() => console.log(data.nome)}
-									> */}
 									<Link to={`/detalhes/${data.id}`}>
 										{data.nome}
 									</Link>
