@@ -14,6 +14,7 @@ import AdicionarDocumentoPage from './pages/AdicionarDocumento.page'
 import AdicionarDocumentoSfhPage from './pages/AdicionarDocumentoSfh.page'
 import AdicionarMutuarioLei from './pages/AdicionarMutuarioLei.page'
 import AdicionarMutuarioSfh from './pages/AdicionarMutuarioSfh.page'
+import Auditoria from './pages/auditoria.page'
 
 const App = () => {
 	const [auth, setAuth] = useState(null)
@@ -89,6 +90,7 @@ const App = () => {
 						element={<AdicionarMutuarioSfh />}
 					/>
 				)}
+				{auth && <Route path='/auditoria' element={<Auditoria />} />}
 				<Route
 					path='*'
 					element={<Navigate to={auth ? '/dashboard' : '/login'} />}
