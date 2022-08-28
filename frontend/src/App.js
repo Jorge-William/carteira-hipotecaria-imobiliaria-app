@@ -14,7 +14,7 @@ import AdicionarDocumentoPage from './pages/AdicionarDocumento.page'
 import AdicionarDocumentoSfhPage from './pages/AdicionarDocumentoSfh.page'
 import AdicionarMutuarioLei from './pages/AdicionarMutuarioLei.page'
 import AdicionarMutuarioSfh from './pages/AdicionarMutuarioSfh.page'
-import Auditoria from './pages/auditoria.page'
+import Auditoria from './pages/Auditoria.page'
 
 const App = () => {
 	const [auth, setAuth] = useState(null)
