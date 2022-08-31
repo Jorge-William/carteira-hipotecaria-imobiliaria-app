@@ -1,4 +1,4 @@
-import getDocumentos from '../services/getDocumentos.service'
+import {getDocumentos } from '../services/getDocumentos.service'
 import { useState, useEffect } from 'react'
 import getMutuarioById from '../services/getMutuarioById.service'
 import AccordionDeDocumentos from './AccordionDeDocumentos'

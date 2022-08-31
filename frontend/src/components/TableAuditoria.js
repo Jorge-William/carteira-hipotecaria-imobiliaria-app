@@ -1,35 +1,58 @@
+import { useState, useEffect, useMemo } from 'react'
+import { getDocsNaoAuditados } from '../services/getDocumentos.service'
+import TableFilterAuditoria from './TableFilterAuditoria'
+import Pagination from './Pagination'
+
+let PageSize = 15
+
 export default function TableAuditoria() {
+	const [lista, setLista] = useState([])
+	const [isLoading, setLoading] = useState(true)
+	const [currentPage, setCurrentPage] = useState(1)
+
+	useEffect(() => {
+		setTimeout(() => {
+			getDocsNaoAuditados().then((dados) => setLista(dados))
+			setLoading(false)
+		}, 1000)
+	}, [])
+
+	const currentTableData = useMemo(() => {
+		const firstPageIndex = (currentPage - 1) * PageSize
+		const lastPageIndex = firstPageIndex + PageSize
+		return lista.slice(firstPageIndex, lastPageIndex)
+	}, [currentPage, lista])
+
 	return (
 		<section>
-			<table class='table'>
+			<TableFilterAuditoria data={lista} />
+			<table class='table table-hover align-middle'>
 				<thead>
 					<tr>
 						<th scope='col'>#</th>
-						<th scope='col'>First</th>
-						<th scope='col'>Last</th>
-						<th scope='col'>Handle</th>
+						<th scope='col'>Rotulo</th>
+						<th scope='col'>Nome</th>
+						<th scope='col'>Documentos</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<th scope='row'>1</th>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>@mdo</td>
-					</tr>
-					<tr>
-						<th scope='row'>2</th>
-						<td>Jacob</td>
-						<td>Thornton</td>
-						<td>@fat</td>
-					</tr>
-					<tr>
-						<th scope='row'>3</th>
-						<td colspan='2'>Larry the Bird</td>
-						<td>@twitter</td>
-					</tr>
+				<tbody className='text-secondary'>
+					{currentTableData?.map((dado, key) => (
+						<tr key={key}>
+							<th scope='row'>{dado.id}</th>
+							<td>{dado.rotulo}</td>
+							<td>{dado.nome}</td>
+							<td>{dado.nao_auditados}</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
+			<Pagination
+				className='pagination-bar justify-content-center mt-3'
+				currentPage={currentPage}
+				totalCount={lista.length}
+				pageSize={PageSize}
+				onPageChange={(page) => setCurrentPage(page)}
+			/>
 		</section>
 	)
 }

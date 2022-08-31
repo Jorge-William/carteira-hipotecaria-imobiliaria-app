@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const getDocumentos = async (id) => {
+export function getDocumentos(id) {
 	return axios
 		.post('/documentos', {
 			params: {
@@ -12,5 +12,9 @@ const getDocumentos = async (id) => {
 		})
 }
 
-
-export default  getDocumentos
+export async function getDocsNaoAuditados() {
+	return axios
+		.get('/documentos-nao-auditados')
+		.then((dados) => dados.data[0])
+		.catch((error) => console.error(error))
+}
