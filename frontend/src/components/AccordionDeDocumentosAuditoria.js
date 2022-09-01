@@ -87,8 +87,7 @@ export default function AccordionDeDocumentosAuditoria({ documentos }) {
 												<th scope='col'>Pasta</th>
 												<th scope='col'>auditor</th>
 												<th scope='col'>Status</th>
-												<th scope='col'>Arquivo</th>
-												<th>Ação</th>
+												<th scope='col'>Acões</th>
 											</tr>
 										</thead>
 										<tbody
@@ -107,7 +106,11 @@ export default function AccordionDeDocumentosAuditoria({ documentos }) {
 												<td>
 													{renderSwitch(item.status)}
 												</td>
-												<td>
+												<div
+													class='btn-group'
+													role='group'
+													aria-label='Basic example'
+												>
 													<a
 														target='blank'
 														href={
@@ -122,23 +125,33 @@ export default function AccordionDeDocumentosAuditoria({ documentos }) {
 																: 'http://localhost:3000/dashboard'
 														}
 													>
-														<button className='btn btn-success btn-sm'>
+														<button
+															type='button'
+															class='btn btn-primary'
+														>
 															Abrir{' '}
-															<i className='bi bi-file-earmark-text'></i>
+															<i className='bi bi-file-earmark-arrow-up'></i>
 														</button>
 													</a>
-												</td>
-												<td>
-													<p className='ms-1'>
+													{item.status === '0' && (
 														<button
-															className='btn btn-danger btn-sm'
-															data-bs-toggle='modal'
-															data-bs-target={`#documento${key}`}
+															type='button'
+															class='btn btn-success'
 														>
-															<i className='bi bi-trash'></i>
+															Auditar{' '}
+															<i className='bi bi-clipboard2-data'></i>
 														</button>
-													</p>
-												</td>
+													)}
+													<button
+														type='button'
+														className='btn btn-danger '
+														data-bs-toggle='modal'
+														data-bs-target={`#documento${key}`}
+													>
+														Deletar{' '}
+														<i className='bi bi-trash'></i>
+													</button>
+												</div>
 											</tr>
 										</tbody>
 									</table>
