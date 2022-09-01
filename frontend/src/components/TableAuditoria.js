@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { getDocsNaoAuditados } from '../services/getDocumentos.service'
 import TableFilterAuditoria from './TableFilterAuditoria'
 import Pagination from './Pagination'
+import { Link } from 'react-router-dom'
 
 let PageSize = 15
 
@@ -40,6 +41,11 @@ export default function TableAuditoria() {
 						<tr key={key}>
 							<th scope='row'>{dado.id}</th>
 							<td>{dado.rotulo}</td>
+							<td>
+								<Link to={`/detalhes-auditoria/${dado.id}`}>
+									{dado.nome}
+								</Link>
+							</td>
 							<td>{dado.nome}</td>
 							<td>{dado.nao_auditados}</td>
 						</tr>

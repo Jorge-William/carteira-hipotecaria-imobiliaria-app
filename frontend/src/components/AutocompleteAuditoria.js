@@ -88,7 +88,6 @@ const Autocomplete = (props) => {
 	// console.log(Array.from(Object.values(data), (breed) => breed.rotulo))
 
 	const { placeholder, data, tipo } = props
-	console.log(data)
 	return (
 		<div className='row'>
 			<form
@@ -161,7 +160,7 @@ const Autocomplete = (props) => {
 										> */}
 											{
 												<Link
-													to={`/detalhes/${filter.id}`}
+													to={`/detalhes-auditoria/${filter.id}`}
 												>
 													{filter.nome}
 												</Link>
