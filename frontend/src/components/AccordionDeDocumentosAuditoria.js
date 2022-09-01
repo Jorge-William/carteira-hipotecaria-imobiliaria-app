@@ -1,9 +1,9 @@
 import renderSwitch from '../helpers/renderSwitch'
 import Skeleton from 'react-loading-skeleton'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function AccordionDeDocumentosAuditoria({ documentos }) {
-	console.log(documentos)
 
 	const [option, setOption] = useState('0')
 	const [docsFiltrados, setDocsFiltrados] = useState([])
@@ -27,7 +27,7 @@ export default function AccordionDeDocumentosAuditoria({ documentos }) {
 				</div>
 				<div className='col-md-4 '>
 					<select
-						class='form-select'
+						className='form-select'
 						aria-label='Default select example'
 						onChange={(e) => setOption(e.target.value)}
 					>
@@ -107,7 +107,7 @@ export default function AccordionDeDocumentosAuditoria({ documentos }) {
 													{renderSwitch(item.status)}
 												</td>
 												<div
-													class='btn-group'
+													className='btn-group'
 													role='group'
 													aria-label='Basic example'
 												>
@@ -127,20 +127,24 @@ export default function AccordionDeDocumentosAuditoria({ documentos }) {
 													>
 														<button
 															type='button'
-															class='btn btn-primary'
+															className='btn btn-primary'
 														>
 															Abrir{' '}
 															<i className='bi bi-file-earmark-arrow-up'></i>
 														</button>
 													</a>
 													{item.status === '0' && (
-														<button
-															type='button'
-															class='btn btn-success'
+														<Link
+															to={`/auditando/${item.id}`}
 														>
-															Auditar{' '}
-															<i className='bi bi-clipboard2-data'></i>
-														</button>
+															<button
+																type='button'
+																className='btn btn-success'
+															>
+																Auditar{' '}
+																<i className='bi bi-clipboard2-data'></i>
+															</button>
+														</Link>
 													)}
 													<button
 														type='button'

@@ -7,7 +7,7 @@ export function getDocumentos(id) {
 				id
 			}
 		})
-		.then((result) => {
+		.then(result => {
 			return result.data
 		})
 }
@@ -17,4 +17,15 @@ export async function getDocsNaoAuditados() {
 		.get('/documentos-nao-auditados')
 		.then((dados) => dados.data[0])
 		.catch((error) => console.error(error))
+}
+
+export async function getDocAuditando(id) {
+	return axios
+	.post('/doc-auditando',{
+		params: {
+			id
+		}
+	}).then(result => {
+		return result.data.result
+	}).catch(error => console.error(error))
 }

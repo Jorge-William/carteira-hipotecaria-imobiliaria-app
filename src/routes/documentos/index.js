@@ -39,6 +39,14 @@ router.post("/documentos", async (req, res) => {
   //   });
 });
 
+router.post("/doc-auditando", async (req, res) => {
+  const { id } = req.body.params;
+
+  const [result] = await sequelize.query(`SELECT * FROM documentos_lei WHERE documentos_lei.id = ${id}`);
+  console.log(result);
+  res.send({ result });
+});
+
 const upload = multer({
   storage, // storage: storage
 });
@@ -49,7 +57,13 @@ router.use("/documentos", express.static("pastas/lei/"));
 router.post("/upload", upload.array("file"), async (req, res) => {
   // console.log(req.files[0]);
   const {
-    tipo, rotulo, tipoDocId, paginas, observacao, operadorId, mutuarioId,
+    tipo,
+    rotulo,
+    tipoDocId,
+    paginas,
+    observacao,
+    operadorId,
+    mutuarioId,
   } = req.body;
   const dataAgora = Date.now();
   const caminho = req.files[0].path;
@@ -66,7 +80,9 @@ router.post("/upload", upload.array("file"), async (req, res) => {
   // console.log(nomeDoArquivo);
 
   // caminho do arquivo - /pastas/lei/L8889/L8889L071.pdf
-  const caminhoDoArquivo = path.join(`/pastas/lei/${req.body.rotulo}/${arquivo}`);
+  const caminhoDoArquivo = path.join(
+    `/pastas/lei/${req.body.rotulo}/${arquivo}`,
+  );
 
   const documento = await DocumentosLei.create({
     dt_registro: dataAgora,
