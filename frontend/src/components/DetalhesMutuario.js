@@ -1,4 +1,4 @@
-import {getDocumentos } from '../services/getDocumentos.service'
+import { getDocumentos } from '../services/getDocumentos.service'
 import { useState, useEffect } from 'react'
 import getMutuarioById from '../services/getMutuarioById.service'
 import AccordionDeDocumentos from './AccordionDeDocumentos'
@@ -6,10 +6,12 @@ import ExibirMutuario from './ExibirMutuario'
 import Skeleton from 'react-loading-skeleton'
 import '../style/DetalheMutuario.css'
 import { Link } from 'react-router-dom'
+import { EditarMutuario } from './EditarMutuario'
 
 const DetalheMutuario = ({ id }) => {
 	const [dados, setDados] = useState({})
 	const [documentos, setDocumentos] = useState([])
+	const [mostrarEdicao, setMostrarEdicao] = useState(false)
 
 	useEffect(() => {
 		const callServices = async () => {
@@ -34,8 +36,17 @@ const DetalheMutuario = ({ id }) => {
 						data-bs-toggle='tooltip'
 						data-bs-placement='top'
 						title='Editar Mutuário'
+						onClick={() =>
+							mostrarEdicao
+								? setMostrarEdicao(false)
+								: setMostrarEdicao(true)
+						}
 					>
-						<i className='bi bi-person-lines-fill'></i>
+						{!mostrarEdicao ? (
+							<i className='bi bi-person-lines-fill'></i>
+						) : (
+							<i class='bi bi-person'></i>
+						)}
 					</button>
 				</div>
 				<div className='col-md'>
@@ -51,7 +62,11 @@ const DetalheMutuario = ({ id }) => {
 					</Link>
 				</div>
 			</section>
-			<ExibirMutuario dados={dados} />
+			{!mostrarEdicao ? (
+				<ExibirMutuario dados={dados} />
+			) : (
+				<EditarMutuario dadosMutuario={dados} />
+			)}
 			<AccordionDeDocumentos documentos={documentos} />
 		</section>
 	)
