@@ -135,9 +135,9 @@ const TabelaMutuarioLei = () => {
 			<section>
 				<TableFilterLei data={mutLeiData} />
 			</section>
-			<table className='table table-striped table-bordered'>
+			<table className='table  table-hover'>
 				<thead>
-					<tr>
+					<tr className='table-light'>
 						<th scope='col'>#</th>
 						<th scope='col'>Pasta</th>
 						<th scope='col'>Nome</th>
@@ -165,7 +165,7 @@ const TabelaMutuarioLei = () => {
 						</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody className=' text-secondary'>
 					{currentTableData?.map((data, key) => {
 						return (
 							<tr key={key}>

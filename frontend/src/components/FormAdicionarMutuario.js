@@ -16,15 +16,15 @@ const FormAdicionarMutuario = () => {
 		pasta: false
 	})
 	const [imovelData, setImovelData] = useState({
-		dataLiq: null,
+		dataLiq: '',
 		escritura: '0',
 		hipoteca: '0',
-		numObra: null,
-		codHist: null,
+		numObra: '',
+		codHist: '0',
 		obs: '',
-		cep: null,
+		cep: '',
 		endereco: '',
-		numero: null,
+		numero: '',
 		compl: '',
 		bairro: '',
 		cidade: '',
@@ -61,15 +61,24 @@ const FormAdicionarMutuario = () => {
 				confirmButtonText: 'Salvar',
 				showLoaderOnConfirm: true,
 				preConfirm: () => {
-					axios.post('/criar-mutuario-lei', {
+					axios
+						.post('/criar-mutuario-lei', {
 							mutuarioData,
 							imovelData
 						})
 						.then((response) => {
-							if(response.data.mutuarioCriado === true){
-								return Swal.fire('Mutuario Criado', '', 'success')
-							} else if(response.data.mutuarioCriado === false){
-								Swal.fire('Mutuario não foi criado','','error')
+							if (response.data.mutuarioCriado === true) {
+								return Swal.fire(
+									'Mutuario Criado',
+									'',
+									'success'
+								)
+							} else if (response.data.mutuarioCriado === false) {
+								Swal.fire(
+									'Mutuario não foi criado',
+									'',
+									'error'
+								)
 								throw new Error('A pasta já existe!!')
 							} else if (response.data.Erro) {
 								throw new Error(response.data.Erro)
@@ -81,32 +90,30 @@ const FormAdicionarMutuario = () => {
 								'',
 								'info'
 							)
-							Swal.showValidationMessage(
-								error
-							)
+							Swal.showValidationMessage(error)
 						})
 				},
 				allowOutsideClick: () => !Swal.isLoading()
 			})
-				// .then((result) => {
-				// 	if (result.isConfirmed) {
-				// 		Swal.fire({
-				// 			icon: 'success',
-				// 			title: 'O mutuário foi salvo no banco de dados'
-				// 		})
-				// 	} else if (result.D) {
-				// 		Swal.fire({
-				// 			icon: 'info',
-				// 			title: 'As mudanças não foram salvas.'
-				// 		})
-				// 	}
-				// })
-				// .catch(() => {
-				// 	Swal.fire({
-				// 		icon: 'warning',
-				// 		title: 'Não foi possível salvar o mutuário!'
-				// 	})
-				// })
+			// .then((result) => {
+			// 	if (result.isConfirmed) {
+			// 		Swal.fire({
+			// 			icon: 'success',
+			// 			title: 'O mutuário foi salvo no banco de dados'
+			// 		})
+			// 	} else if (result.D) {
+			// 		Swal.fire({
+			// 			icon: 'info',
+			// 			title: 'As mudanças não foram salvas.'
+			// 		})
+			// 	}
+			// })
+			// .catch(() => {
+			// 	Swal.fire({
+			// 		icon: 'warning',
+			// 		title: 'Não foi possível salvar o mutuário!'
+			// 	})
+			// })
 		}
 	}
 
@@ -265,7 +272,6 @@ const FormAdicionarMutuario = () => {
 										<option
 											className='vermelho'
 											value='0'
-
 											defaultValue
 										>
 											Não

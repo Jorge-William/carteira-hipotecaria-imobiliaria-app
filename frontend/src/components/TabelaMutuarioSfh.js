@@ -135,9 +135,9 @@ const TabelaMutuarioSfh = () => {
 			<section>
 				<TableFilterSfh data={mutSfhData} />
 			</section>
-			<table className='table table-striped table-bordered'>
+			<table className='table table-hover'>
 				<thead>
-					<tr>
+					<tr className='table-light'>
 						<th scope='col'>#</th>
 						<th scope='col'>Pasta</th>
 						<th scope='col'>Nome</th>

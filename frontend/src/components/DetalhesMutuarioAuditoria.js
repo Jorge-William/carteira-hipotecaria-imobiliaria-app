@@ -1,13 +1,12 @@
-import {getDocumentos } from '../services/getDocumentos.service'
+import { getDocumentos } from '../services/getDocumentos.service'
 import { useState, useEffect } from 'react'
 import getMutuarioById from '../services/getMutuarioById.service'
-import AccordionDeDocumentos from './AccordionDeDocumentos'
 import ExibirMutuario from './ExibirMutuario'
 import Skeleton from 'react-loading-skeleton'
 import '../style/DetalheMutuario.css'
-import { Link } from 'react-router-dom'
+import AccordionDeDocumentosAuditoria from './AccordionDeDocumentosAuditoria'
 
-const DetalheMutuario = ({ id }) => {
+export default function DetalhesMutuarioAuditoria({ id }) {
 	const [dados, setDados] = useState({})
 	const [documentos, setDocumentos] = useState([])
 
@@ -27,7 +26,7 @@ const DetalheMutuario = ({ id }) => {
 		<Skeleton count={10} />
 	) : (
 		<section className='mb-5'>
-			<section className='row d-inline-flex gap-1'>
+			{/* <section className='row d-inline-flex gap-1'>
 				<div className='col-md'>
 					<button
 						className='btn btn-outline-primary crud-btn'
@@ -50,11 +49,9 @@ const DetalheMutuario = ({ id }) => {
 						</button>
 					</Link>
 				</div>
-			</section>
+			</section> */}
 			<ExibirMutuario dados={dados} />
-			<AccordionDeDocumentos documentos={documentos} />
+			<AccordionDeDocumentosAuditoria documentos={documentos} />
 		</section>
 	)
 }
-
-export default DetalheMutuario

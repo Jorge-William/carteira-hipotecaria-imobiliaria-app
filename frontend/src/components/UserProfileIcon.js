@@ -43,12 +43,6 @@ const UserProfileIcon = () => {
 						Configurações
 					</a>
 				</li>
-				<li>
-					<a className='dropdown-item' href='/'>
-						Auditoria
-						<span className='badge bg-danger m-1'>4</span>
-					</a>
-				</li>
 				<li className='dropdown-divider'></li>
 				<li data-bs-toggle='modal' data-bs-target='#exampleModal'>
 					{/* <button
