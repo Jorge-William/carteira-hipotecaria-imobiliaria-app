@@ -1,17 +1,14 @@
 import { getDocumentos } from '../services/getDocumentos.service'
 import { useState, useEffect } from 'react'
 import getMutuarioById from '../services/getMutuarioById.service'
-import AccordionDeDocumentos from './AccordionDeDocumentos'
 import ExibirMutuario from './ExibirMutuario'
 import Skeleton from 'react-loading-skeleton'
 import '../style/DetalheMutuario.css'
-import { Link } from 'react-router-dom'
-import { EditarMutuario } from './EditarMutuario'
+import AccordionDeDocumentosAuditoria from './AccordionDeDocumentosAuditoria'
 
-const DetalheMutuario = ({ id }) => {
+export default function DetalhesMutuarioAuditoria({ id }) {
 	const [dados, setDados] = useState({})
 	const [documentos, setDocumentos] = useState([])
-	const [mostrarEdicao, setMostrarEdicao] = useState(false)
 
 	useEffect(() => {
 		const callServices = async () => {
@@ -29,24 +26,15 @@ const DetalheMutuario = ({ id }) => {
 		<Skeleton count={10} />
 	) : (
 		<section className='mb-5'>
-			<section className='row d-inline-flex gap-1'>
+			{/* <section className='row d-inline-flex gap-1'>
 				<div className='col-md'>
 					<button
 						className='btn btn-outline-primary crud-btn'
 						data-bs-toggle='tooltip'
 						data-bs-placement='top'
 						title='Editar Mutuário'
-						onClick={() =>
-							mostrarEdicao
-								? setMostrarEdicao(false)
-								: setMostrarEdicao(true)
-						}
 					>
-						{!mostrarEdicao ? (
-							<i className='bi bi-person-lines-fill'></i>
-						) : (
-							<i class='bi bi-person'></i>
-						)}
+						<i className='bi bi-person-lines-fill'></i>
 					</button>
 				</div>
 				<div className='col-md'>
@@ -61,15 +49,9 @@ const DetalheMutuario = ({ id }) => {
 						</button>
 					</Link>
 				</div>
-			</section>
-			{!mostrarEdicao ? (
-				<ExibirMutuario dados={dados} />
-			) : (
-				<EditarMutuario dadosMutuario={dados} />
-			)}
-			<AccordionDeDocumentos documentos={documentos} />
+			</section> */}
+			<ExibirMutuario dados={dados} />
+			<AccordionDeDocumentosAuditoria documentos={documentos} />
 		</section>
 	)
 }
-
-export default DetalheMutuario

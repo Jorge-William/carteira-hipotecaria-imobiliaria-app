@@ -1,137 +1,44 @@
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
-import Swal from 'sweetalert2'
+import { useState, useEffect } from 'react'
+import { SkeletonEditarMutuario } from './Skeleton.editarMutuario'
 import axios from 'axios'
-import 'animate.css'
 
-const FormAdicionarMutuario = () => {
-	const [mutuarioData, setMutuarioData] = useState({
-		nome: '',
-		tipo: 'L',
-		pasta: '',
-		telefone: ''
-	})
-	const [inputWarning, setInputWarning] = useState({
-		nome: false,
-		pasta: false
-	})
-	const [imovelData, setImovelData] = useState({
-		dataLiq: '',
-		escritura: '0',
-		hipoteca: '0',
-		numObra: '',
-		codHist: '0',
-		obs: '',
-		cep: '',
-		endereco: '',
-		numero: '',
-		compl: '',
-		bairro: '',
-		cidade: '',
-		uf: ''
-	})
+export function EditarMutuario({ dadosMutuario }) {
+	const [dados, setDados] = useState()
+	const [novosDados, setNovosDados] = useState()
 
-	const handleChangeMutuario = (event) => {
+	useEffect(() => {
+		setTimeout(() => {
+			setDados(dadosMutuario.result[0])
+		}, 2000)
+	}, [dados, dadosMutuario])
+
+	function handleChange(event) {
 		const value = event.target.value
-		setMutuarioData({
-			...mutuarioData,
-			[event.target.name]: value
-		})
-		setInputWarning(false)
-	}
 
-	const handleChangeImovel = (event) => {
-		const value = event.target.value
-		setImovelData({
-			...imovelData,
+		setNovosDados({
+			...novosDados,
 			[event.target.name]: value
 		})
 	}
 
-	const salvarMutuario = () => {
-		if (mutuarioData.nome === '') {
-			setInputWarning({ nome: true })
-		} else if (mutuarioData.pasta === '') {
-			setInputWarning({ pasta: true })
-		} else {
-			Swal.fire({
-				title: 'Deseja salvar o mutuario no banco de dados',
-				icon: 'question',
-				showCancelButton: true,
-				confirmButtonText: 'Salvar',
-				showLoaderOnConfirm: true,
-				preConfirm: () => {
-					axios
-						.post('/criar-mutuario-lei', {
-							mutuarioData,
-							imovelData
-						})
-						.then((response) => {
-							if (response.data.mutuarioCriado === true) {
-								return Swal.fire(
-									'Mutuario Criado',
-									'',
-									'success'
-								)
-							} else if (response.data.mutuarioCriado === false) {
-								Swal.fire(
-									'Mutuario não foi criado',
-									'',
-									'error'
-								)
-								throw new Error('A pasta já existe!!')
-							} else if (response.data.Erro) {
-								throw new Error(response.data.Erro)
-							}
-						})
-						.catch((error) => {
-							Swal.fire(
-								'Não foi possível salvar o mutuário.',
-								'',
-								'info'
-							)
-							Swal.showValidationMessage(error)
-						})
-				},
-				allowOutsideClick: () => !Swal.isLoading()
-			})
-			// .then((result) => {
-			// 	if (result.isConfirmed) {
-			// 		Swal.fire({
-			// 			icon: 'success',
-			// 			title: 'O mutuário foi salvo no banco de dados'
-			// 		})
-			// 	} else if (result.D) {
-			// 		Swal.fire({
-			// 			icon: 'info',
-			// 			title: 'As mudanças não foram salvas.'
-			// 		})
-			// 	}
-			// })
-			// .catch(() => {
-			// 	Swal.fire({
-			// 		icon: 'warning',
-			// 		title: 'Não foi possível salvar o mutuário!'
-			// 	})
-			// })
-		}
-	}
+    function handleClick(){
+        return axios
+        .post('/editar-mutuario', {
+            params: {
+                novosDados
+            }
+        })
+    }
 
-	return (
-		<div className=''>
-			<div>
-				<div className='row'>
-					<div className='col'>
-						<h1>Adicionar Mutuário</h1>
-					</div>
-					<div className='col'>
-						<button className='btn btn-secondary float-end'>
-							<Link to={`/mutuario/lei`}>
-								<i className='bi bi-arrow-left'></i>Voltar
-							</Link>
-						</button>
-					</div>
-				</div>
+	// const { nome, bairro, rotulo } = dados.result[0]
+	return !dados ? (
+		<SkeletonEditarMutuario />
+	) : (
+		<section className='mt-4'>
+			<div className='row d-flex justify-content-center'>
+				<h1 className='d-inline-flex justify-content-center'>
+					Editar Mutuário
+				</h1>
 			</div>
 			<div className='container '>
 				<div className='modal-body'>
@@ -150,15 +57,16 @@ const FormAdicionarMutuario = () => {
 									type='text'
 									className='form-control'
 									name='nome'
-									onChange={handleChangeMutuario}
+									placeholder={dados.nome}
+									onChange={handleChange}
 								/>
-								{inputWarning.nome && (
+								{/* {inputWarning.nome && (
 									<div className='animate__animated animate__shakeX'>
 										<small style={{ color: 'red' }}>
 											Obrigatório
 										</small>
 									</div>
-								)}
+								)} */}
 							</div>
 							<div className='mb-3 col-md-1'>
 								<label
@@ -170,7 +78,7 @@ const FormAdicionarMutuario = () => {
 								<input
 									type='text'
 									className='form-control'
-									onChange={handleChangeMutuario}
+									onChange={handleChange}
 									name='tipo'
 									value='Lei'
 								/>
@@ -183,20 +91,20 @@ const FormAdicionarMutuario = () => {
 									Pasta
 								</label>
 								<input
-									placeholder='exemplo: L0023'
 									type='text'
 									className='form-control'
 									name='pasta'
-									onChange={handleChangeMutuario}
+									placeholder={dados.rotulo}
+									onChange={handleChange}
 									style={{ textTransform: 'uppercase' }}
 								/>
-								{inputWarning.pasta && (
+								{/* {inputWarning.pasta && (
 									<div className='animate__animated animate__shakeX'>
 										<small style={{ color: 'red' }}>
 											Obrigatório
 										</small>
 									</div>
-								)}
+								)} */}
 							</div>
 							<div className='mb-3 col-md-3'>
 								<label
@@ -211,7 +119,8 @@ const FormAdicionarMutuario = () => {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='telefone'
-									onChange={handleChangeMutuario}
+									placeholder={dados.telefone}
+									onChange={handleChange}
 								/>
 							</div>
 						</div>
@@ -230,7 +139,8 @@ const FormAdicionarMutuario = () => {
 										type='date'
 										className='form-control'
 										name='dataLiq'
-										onChange={handleChangeImovel}
+										placeholder={dados.dataLiq}
+										onChange={handleChange}
 									/>
 								</div>
 								<div className='mb-3 col-md-1'>
@@ -240,21 +150,41 @@ const FormAdicionarMutuario = () => {
 									>
 										Escritura
 									</label>
-									<select
-										className='form-select'
-										aria-label='Default select example'
-										name='escritura'
-										onChange={handleChangeImovel}
-									>
-										<option
-											className='vermelho'
-											value='0'
-											defaultValue
+
+									{dados.escritura === '1' ? (
+										<select
+											className='form-select'
+											aria-label='Default select example'
+											name='escritura'
+											onChange={handleChange}
 										>
-											Não
-										</option>
-										<option value='1'>Sim</option>
-									</select>
+											<option value='1' defaultValue>
+												Sim
+											</option>
+											<option
+												className='vermelho'
+												value='0'
+											>
+												Não
+											</option>
+										</select>
+									) : (
+										<select
+											className='form-select'
+											aria-label='Default select example'
+											name='escritura'
+											onChange={handleChange}
+										>
+											<option
+												className='vermelho'
+												value='0'
+												defaultValue
+											>
+												Não
+											</option>
+											<option value='1'>Sim</option>
+										</select>
+									)}
 								</div>
 								<div className='mb-3 col-md-1'>
 									<label
@@ -267,7 +197,7 @@ const FormAdicionarMutuario = () => {
 										className='form-select'
 										aria-label='Default select example'
 										name='hipoteca'
-										onChange={handleChangeImovel}
+										onChange={handleChange}
 									>
 										<option
 											className='vermelho'
@@ -292,7 +222,8 @@ const FormAdicionarMutuario = () => {
 										id='exampleInputEmail1'
 										aria-describedby='emailHelp'
 										name='numObra'
-										onChange={handleChangeImovel}
+										placeholder={dados.num_obra}
+										onChange={handleChange}
 									/>
 								</div>
 								<div className='mb-3 col-md-2'>
@@ -307,7 +238,8 @@ const FormAdicionarMutuario = () => {
 										className='form-control'
 										id='exampleInputEmail1'
 										name='codHist'
-										onChange={handleChangeImovel}
+										placeholder={dados.cod_historico}
+										onChange={handleChange}
 									/>
 								</div>
 								<div className='mb-3 col-md-4'>
@@ -323,7 +255,8 @@ const FormAdicionarMutuario = () => {
 										id='exampleInputEmail1'
 										aria-describedby='emailHelp'
 										name='obs'
-										onChange={handleChangeImovel}
+										placeholder={dados.obs}
+										onChange={handleChange}
 									/>
 								</div>
 							</div>
@@ -342,7 +275,8 @@ const FormAdicionarMutuario = () => {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='cep'
-									onChange={handleChangeImovel}
+									placeholder={dados.cep}
+									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-3'>
@@ -358,7 +292,8 @@ const FormAdicionarMutuario = () => {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='endereco'
-									onChange={handleChangeImovel}
+									placeholder={dados.end}
+									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-1'>
@@ -374,10 +309,11 @@ const FormAdicionarMutuario = () => {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='numero'
-									onChange={handleChangeImovel}
+									placeholder={dados.numero}
+									onChange={handleChange}
 								/>
 							</div>
-							<div className='mb-3 col-md-1'>
+							<div className='mb-3 col-md-2'>
 								<label
 									htmlFor='exampleInputEmail1'
 									className='form-label'
@@ -390,7 +326,8 @@ const FormAdicionarMutuario = () => {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='compl'
-									onChange={handleChangeImovel}
+									placeholder={dados.complemento}
+									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-2'>
@@ -406,7 +343,8 @@ const FormAdicionarMutuario = () => {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='bairro'
-									onChange={handleChangeImovel}
+									placeholder={dados.bairro}
+									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-2'>
@@ -422,7 +360,8 @@ const FormAdicionarMutuario = () => {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='cidade'
-									onChange={handleChangeImovel}
+									placeholder={dados.cidade}
+									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-1'>
@@ -438,7 +377,8 @@ const FormAdicionarMutuario = () => {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='uf'
-									onChange={handleChangeImovel}
+									placeholder={dados.uf}
+									onChange={handleChange}
 								/>
 							</div>
 						</div>
@@ -448,28 +388,26 @@ const FormAdicionarMutuario = () => {
 					</div>
 					<hr />
 					<div className='row mt-5'>
-						<div className='col'>
+						{/* <div className='col'>
 							<button className='btn btn-secondary '>
 								<Link to={`/mutuario/lei`}>
 									<i className='bi bi-arrow-left'></i>Voltar
 								</Link>
 							</button>
-						</div>
+						</div> */}
 						<div className='col'>
 							<button
 								type='button'
 								className='btn btn-success float-end'
-								onClick={salvarMutuario}
+								onClick={handleClick}
 							>
-								Salvar Mutuário
+								Salvar Alterações
 								<i className='bi bi-save2 ms-2'></i>
 							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	)
 }
-
-export default FormAdicionarMutuario

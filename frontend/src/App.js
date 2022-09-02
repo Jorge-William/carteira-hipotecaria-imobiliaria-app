@@ -14,6 +14,9 @@ import AdicionarDocumentoPage from './pages/AdicionarDocumento.page'
 import AdicionarDocumentoSfhPage from './pages/AdicionarDocumentoSfh.page'
 import AdicionarMutuarioLei from './pages/AdicionarMutuarioLei.page'
 import AdicionarMutuarioSfh from './pages/AdicionarMutuarioSfh.page'
+import Auditoria from './pages/Auditoria.page'
+import { DetalhesAuditoria } from './pages/DetalhesAuditoria.page'
+import { AuditandoDoc } from './pages/AuditandoDoc.page'
 
 const App = () => {
 	const [auth, setAuth] = useState(null)
@@ -64,6 +67,15 @@ const App = () => {
 				)}
 				{auth && (
 					<Route
+						path='/detalhes-auditoria/:id'
+						element={<DetalhesAuditoria />}
+					/>
+				)}
+				{auth && (
+					<Route path='/auditando/:id' element={<AuditandoDoc />} />
+				)}
+				{auth && (
+					<Route
 						path='/mutuario/lei/adicionardocumento/:id'
 						element={<AdicionarDocumentoPage />}
 					/>
@@ -89,6 +101,7 @@ const App = () => {
 						element={<AdicionarMutuarioSfh />}
 					/>
 				)}
+				{auth && <Route path='/auditoria' element={<Auditoria />} />}
 				<Route
 					path='*'
 					element={<Navigate to={auth ? '/dashboard' : '/login'} />}
