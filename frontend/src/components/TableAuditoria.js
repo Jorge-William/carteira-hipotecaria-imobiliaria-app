@@ -46,7 +46,6 @@ export default function TableAuditoria() {
 									{dado.nome}
 								</Link>
 							</td>
-							<td>{dado.nome}</td>
 							<td>{dado.nao_auditados}</td>
 						</tr>
 					))}

@@ -18,7 +18,7 @@ router.post("/documentos", async (req, res) => {
   //   const documentos = await DocumentoLei.findAll({ where: { mutuario_id: id } });
   //   res.send(documentos);
 
-  const [results] = await sequelize.query(`select documentos_lei.id ,documentos_lei.dt_registro,
+  const [results] =		await sequelize.query(`select documentos_lei.id ,documentos_lei.dt_registro,
     documentos_lei.nome_arquivo, documentos_lei.status,
     documentos_lei.arquivo, documentos_lei.qtd_pag, documentos_lei.auditor, 
     documentos_lei.cod_pasta, tipos_doc_lei.descricao from documentos_lei inner join tipos_doc_lei
@@ -42,7 +42,11 @@ router.post("/documentos", async (req, res) => {
 router.post("/doc-auditando", async (req, res) => {
   const { id } = req.body.params;
 
-  const [result] = await sequelize.query(`SELECT * FROM documentos_lei WHERE documentos_lei.id = ${id}`);
+  const [result] =		await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome
+  FROM documentos_lei a 
+  LEFT JOIN tipos_doc_lei b ON a.tipo_doc_lei_id = b.id 
+  LEFT JOIN mutuarios_lei c ON a.mutuario_id = c.id  
+  WHERE a.id = ${id}`);
   console.log(result);
   res.send({ result });
 });
