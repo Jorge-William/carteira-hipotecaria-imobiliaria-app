@@ -1,14 +1,34 @@
 import { useState, useEffect } from 'react'
 import { SkeletonEditarMutuario } from './Skeleton.editarMutuario'
+import axios from 'axios'
 
 export function EditarMutuario({ dadosMutuario }) {
 	const [dados, setDados] = useState()
+	const [novosDados, setNovosDados] = useState()
 
 	useEffect(() => {
 		setTimeout(() => {
-			setDados(dadosMutuario)
+			setDados(dadosMutuario.result[0])
 		}, 2000)
 	}, [dados, dadosMutuario])
+
+	function handleChange(event) {
+		const value = event.target.value
+
+		setNovosDados({
+			...novosDados,
+			[event.target.name]: value
+		})
+	}
+
+    function handleClick(){
+        return axios
+        .post('/editar-mutuario', {
+            params: {
+                novosDados
+            }
+        })
+    }
 
 	// const { nome, bairro, rotulo } = dados.result[0]
 	return !dados ? (
@@ -37,8 +57,8 @@ export function EditarMutuario({ dadosMutuario }) {
 									type='text'
 									className='form-control'
 									name='nome'
-									placeholder={dados.result[0].nome}
-									// onChange={handleChangeMutuario}
+									placeholder={dados.nome}
+									onChange={handleChange}
 								/>
 								{/* {inputWarning.nome && (
 									<div className='animate__animated animate__shakeX'>
@@ -58,7 +78,7 @@ export function EditarMutuario({ dadosMutuario }) {
 								<input
 									type='text'
 									className='form-control'
-									// onChange={handleChangeMutuario}
+									onChange={handleChange}
 									name='tipo'
 									value='Lei'
 								/>
@@ -74,8 +94,8 @@ export function EditarMutuario({ dadosMutuario }) {
 									type='text'
 									className='form-control'
 									name='pasta'
-									placeholder={dados.result[0].rotulo}
-									// onChange={handleChangeMutuario}
+									placeholder={dados.rotulo}
+									onChange={handleChange}
 									style={{ textTransform: 'uppercase' }}
 								/>
 								{/* {inputWarning.pasta && (
@@ -99,8 +119,8 @@ export function EditarMutuario({ dadosMutuario }) {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='telefone'
-									placeholder={dados.result[0].telefone}
-									// onChange={handleChangeMutuario}
+									placeholder={dados.telefone}
+									onChange={handleChange}
 								/>
 							</div>
 						</div>
@@ -119,8 +139,8 @@ export function EditarMutuario({ dadosMutuario }) {
 										type='date'
 										className='form-control'
 										name='dataLiq'
-										placeholder={dados.result[0].dataLiq}
-										// onChange={handleChangeImovel}
+										placeholder={dados.dataLiq}
+										onChange={handleChange}
 									/>
 								</div>
 								<div className='mb-3 col-md-1'>
@@ -130,21 +150,41 @@ export function EditarMutuario({ dadosMutuario }) {
 									>
 										Escritura
 									</label>
-									<select
-										className='form-select'
-										aria-label='Default select example'
-										name='escritura'
-										// onChange={handleChangeImovel}
-									>
-										<option
-											className='vermelho'
-											value='0'
-											defaultValue
+
+									{dados.escritura === '1' ? (
+										<select
+											className='form-select'
+											aria-label='Default select example'
+											name='escritura'
+											onChange={handleChange}
 										>
-											Não
-										</option>
-										<option value='1'>Sim</option>
-									</select>
+											<option value='1' defaultValue>
+												Sim
+											</option>
+											<option
+												className='vermelho'
+												value='0'
+											>
+												Não
+											</option>
+										</select>
+									) : (
+										<select
+											className='form-select'
+											aria-label='Default select example'
+											name='escritura'
+											onChange={handleChange}
+										>
+											<option
+												className='vermelho'
+												value='0'
+												defaultValue
+											>
+												Não
+											</option>
+											<option value='1'>Sim</option>
+										</select>
+									)}
 								</div>
 								<div className='mb-3 col-md-1'>
 									<label
@@ -157,7 +197,7 @@ export function EditarMutuario({ dadosMutuario }) {
 										className='form-select'
 										aria-label='Default select example'
 										name='hipoteca'
-										// onChange={handleChangeImovel}
+										onChange={handleChange}
 									>
 										<option
 											className='vermelho'
@@ -182,8 +222,8 @@ export function EditarMutuario({ dadosMutuario }) {
 										id='exampleInputEmail1'
 										aria-describedby='emailHelp'
 										name='numObra'
-										placeholder={dados.result[0].num_obra}
-										// onChange={handleChangeImovel}
+										placeholder={dados.num_obra}
+										onChange={handleChange}
 									/>
 								</div>
 								<div className='mb-3 col-md-2'>
@@ -198,10 +238,8 @@ export function EditarMutuario({ dadosMutuario }) {
 										className='form-control'
 										id='exampleInputEmail1'
 										name='codHist'
-										placeholder={
-											dados.result[0].cod_historico
-										}
-										// onChange={handleChangeImovel}
+										placeholder={dados.cod_historico}
+										onChange={handleChange}
 									/>
 								</div>
 								<div className='mb-3 col-md-4'>
@@ -217,8 +255,8 @@ export function EditarMutuario({ dadosMutuario }) {
 										id='exampleInputEmail1'
 										aria-describedby='emailHelp'
 										name='obs'
-										placeholder={dados.result[0].obs}
-										// onChange={handleChangeImovel}
+										placeholder={dados.obs}
+										onChange={handleChange}
 									/>
 								</div>
 							</div>
@@ -237,8 +275,8 @@ export function EditarMutuario({ dadosMutuario }) {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='cep'
-									placeholder={dados.result[0].cep}
-									// onChange={handleChangeImovel}
+									placeholder={dados.cep}
+									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-3'>
@@ -254,8 +292,8 @@ export function EditarMutuario({ dadosMutuario }) {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='endereco'
-									placeholder={dados.result[0].end}
-									// onChange={handleChangeImovel}
+									placeholder={dados.end}
+									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-1'>
@@ -271,11 +309,11 @@ export function EditarMutuario({ dadosMutuario }) {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='numero'
-									placeholder={dados.result[0].numero}
-									// onChange={handleChangeImovel}
+									placeholder={dados.numero}
+									onChange={handleChange}
 								/>
 							</div>
-							<div className='mb-3 col-md-1'>
+							<div className='mb-3 col-md-2'>
 								<label
 									htmlFor='exampleInputEmail1'
 									className='form-label'
@@ -288,8 +326,8 @@ export function EditarMutuario({ dadosMutuario }) {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='compl'
-									placeholder={dados.result[0].complemento}
-									// onChange={handleChangeImovel}
+									placeholder={dados.complemento}
+									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-2'>
@@ -305,8 +343,8 @@ export function EditarMutuario({ dadosMutuario }) {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='bairro'
-									placeholder={dados.result[0].bairro}
-									// onChange={handleChangeImovel}
+									placeholder={dados.bairro}
+									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-2'>
@@ -322,8 +360,8 @@ export function EditarMutuario({ dadosMutuario }) {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='cidade'
-									placeholder={dados.result[0].cidade}
-									// onChange={handleChangeImovel}
+									placeholder={dados.cidade}
+									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-1'>
@@ -339,8 +377,8 @@ export function EditarMutuario({ dadosMutuario }) {
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='uf'
-									placeholder={dados.result[0].uf}
-									// onChange={handleChangeImovel}
+									placeholder={dados.uf}
+									onChange={handleChange}
 								/>
 							</div>
 						</div>
@@ -361,7 +399,7 @@ export function EditarMutuario({ dadosMutuario }) {
 							<button
 								type='button'
 								className='btn btn-success float-end'
-								// onClick={}
+								onClick={handleClick}
 							>
 								Salvar Alterações
 								<i className='bi bi-save2 ms-2'></i>
