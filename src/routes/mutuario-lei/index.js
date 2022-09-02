@@ -30,7 +30,8 @@ router.post("/alldatamutuariobyid", async (req, res) => {
   if (process.env.NODE_ENV === "production") {
     // PRODUÇÃO
     // eslint-disable-next-line
-		const [result] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
+		const [result] =
+			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
     FROM app_chi.mutuarios_lei a
     LEFT JOIN app_chi.imoveis_lei b 
@@ -40,7 +41,8 @@ router.post("/alldatamutuariobyid", async (req, res) => {
   } else if (process.env.NODE_ENV === "development") {
     // DESENVOLVIMENTO
     // eslint-disable-next-line
-    const [result] = await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
+		const [result] =
+			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
     FROM testdb.mutuarios_lei a
     LEFT JOIN testdb.imoveis_lei b 
@@ -154,12 +156,24 @@ router.post("/criar-mutuario-lei", async (req, res) => {
 // ------------------------------------ Criar  ------------------------------------
 router.get("/documentos-nao-auditados", async (req, res) => {
   // eslint-disable-next-line
-  const docsNaoAuditados = await sequelize.query(`SELECT mutuarios_lei.id, mutuarios_lei.rotulo,
+	const docsNaoAuditados =
+		await sequelize.query(`SELECT mutuarios_lei.id, mutuarios_lei.rotulo,
   mutuarios_lei.nome, COUNT(documentos_lei.status = 0)  AS nao_auditados  FROM mutuarios_lei, 
   documentos_lei WHERE documentos_lei.status != 3 AND mutuarios_lei.id = documentos_lei.mutuario_id  
   GROUP  BY mutuarios_lei.id ORDER BY id;`);
 
   res.status(200).send(docsNaoAuditados);
+});
+
+// ------------------------------------ Editar  ------------------------------------
+router.post("/editar-mutuario", async (req, res) => {
+  console.log(req.body.params);
+
+  // const [result] = await sequelize.query(`
+
+  // `);
+
+  // res.send({ result });
 });
 
 module.exports = router;
