@@ -1,4 +1,4 @@
-import FormAdicionarMutuarioSfh from '../components/FormAdicionarMutuario'
+import FormAdicionarMutuarioSfh from '../components/FormAdicionarMutuarioSfh'
 
 const AdicionarMutuarioLei = () => {
 	return <FormAdicionarMutuarioSfh />

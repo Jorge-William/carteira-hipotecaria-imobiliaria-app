@@ -1,15 +1,16 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { getDocAuditando } from '../services/getDocumentos.service'
-export function AuditandoDoc() {
+import { getDocAuditandoSfh } from '../services/getDocumentosSfh.service'
+export function AuditandoDocSfh() {
 	const { id } = useParams()
 	const [docData, setDocData] = useState()
 	const [isLoading, setIsloading] = useState(true)
 
-	// console.log(id)
+	console.log(docData)
 	useEffect(() => {
 		const callServices = async () => {
-			const response = await getDocAuditando(id)
+			const response = await getDocAuditandoSfh(id)
+
 			const data = response[0]
 			setDocData(data)
 		}

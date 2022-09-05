@@ -17,6 +17,8 @@ import AdicionarMutuarioSfh from './pages/AdicionarMutuarioSfh.page'
 import Auditoria from './pages/Auditoria.page'
 import { DetalhesAuditoria } from './pages/DetalhesAuditoria.page'
 import { AuditandoDoc } from './pages/AuditandoDoc.page'
+import {AuditandoDocSfh  }from './pages/AuditandoDocSfh.page'
+import {DetalhesAuditoriaSfh} from './pages/DetalhesAuditoriaSfh.page'
 
 const App = () => {
 	const [auth, setAuth] = useState(null)
@@ -72,7 +74,16 @@ const App = () => {
 					/>
 				)}
 				{auth && (
+					<Route
+						path='/detalhes-auditoria-sfh/:id'
+						element={<DetalhesAuditoriaSfh />}
+					/>
+				)}
+				{auth && (
 					<Route path='/auditando/:id' element={<AuditandoDoc />} />
+				)}
+				{auth && (
+					<Route path='/auditando-sfh/:id' element={<AuditandoDocSfh />} />
 				)}
 				{auth && (
 					<Route
