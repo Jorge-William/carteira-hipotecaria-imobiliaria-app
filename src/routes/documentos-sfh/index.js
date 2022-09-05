@@ -18,7 +18,7 @@ router.post("/documentosSfh", async (req, res) => {
   //   const documentos = await DocumentoLei.findAll({ where: { mutuario_id: id } });
   //   res.send(documentos);
 
-  const [results] = await sequelize.query(`select documentos_sfh.id ,documentos_sfh.dt_registro,
+  const [results] =		await sequelize.query(`select documentos_sfh.id ,documentos_sfh.dt_registro,
     documentos_sfh.nome_arquivo, documentos_sfh.status,
     documentos_sfh.arquivo, documentos_sfh.qtd_pag, documentos_sfh.auditor, 
     documentos_sfh.cod_pasta, tipos_doc_sfh.descricao from documentos_sfh inner join tipos_doc_sfh
@@ -49,7 +49,13 @@ router.use("/documentos", express.static("pastas/sfh/"));
 router.post("/upload-sfh", upload.array("file"), async (req, res) => {
   console.log(req.body);
   const {
-    tipo, rotulo, tipoDocId, paginas, observacao, operadorId, mutuarioId,
+    tipo,
+    rotulo,
+    tipoDocId,
+    paginas,
+    observacao,
+    operadorId,
+    mutuarioId,
   } = req.body;
   const dataAgora = Date.now();
   const caminho = req.files[0].path;
@@ -66,7 +72,9 @@ router.post("/upload-sfh", upload.array("file"), async (req, res) => {
   // console.log(nomeDoArquivo);
 
   // caminho do arquivo - /pastas/sfh/C8889/L8889L071.pdf
-  const caminhoDoArquivo = path.join(`/pastas/sfh/${req.body.rotulo}/${arquivo}`);
+  const caminhoDoArquivo = path.join(
+    `/pastas/sfh/${req.body.rotulo}/${arquivo}`,
+  );
 
   const documento = await DocumentosSfh.create({
     dt_registro: dataAgora,
@@ -90,10 +98,12 @@ router.post("/upload-sfh", upload.array("file"), async (req, res) => {
 
 router.get("/documentos-nao-auditados-sfh", async (req, res) => {
   // eslint-disable-next-line
-	const docsNaoAuditados = await sequelize.query(`SELECT mutuarios_sfh.id, mutuarios_sfh.rotulo,
+	const docsNaoAuditados =
+		await sequelize.query(`SELECT mutuarios_sfh.id, mutuarios_sfh.rotulo,
   mutuarios_sfh.nome, COUNT(documentos_sfh.status = 0)  AS nao_auditados  FROM mutuarios_sfh, 
   documentos_sfh WHERE documentos_sfh.status != 3 AND mutuarios_sfh.id = documentos_sfh.mutuario_id  
-  GROUP  BY mutuarios_sfh.id ORDER BY id;`);
+  GROUP  BY mutuarios_sfh.id, mutuarios_sfh.id, mutuarios_sfh.rotulo,
+  mutuarios_sfh.nome ORDER BY id;`);
 
   res.status(200).send(docsNaoAuditados);
 });
@@ -101,12 +111,11 @@ router.get("/documentos-nao-auditados-sfh", async (req, res) => {
 router.post("/doc-auditando-sfh", async (req, res) => {
   const { id } = req.body.params;
 
-  const [result] = await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome
+  const [result] =		await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome
   FROM documentos_sfh a 
   LEFT JOIN tipos_doc_sfh b ON a.tipo_doc_id = b.id 
   LEFT JOIN mutuarios_sfh c ON a.mutuario_id = c.id  
   WHERE a.id = ${id}`);
-  console.log(result);
   res.send({ result });
 });
 
