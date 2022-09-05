@@ -153,18 +153,6 @@ router.post("/criar-mutuario-lei", async (req, res) => {
   }
 });
 
-// ------------------------------------ Criar  ------------------------------------
-router.get("/documentos-nao-auditados", async (req, res) => {
-  // eslint-disable-next-line
-	const docsNaoAuditados =
-		await sequelize.query(`SELECT mutuarios_lei.id, mutuarios_lei.rotulo,
-  mutuarios_lei.nome, COUNT(documentos_lei.status = 0)  AS nao_auditados  FROM mutuarios_lei, 
-  documentos_lei WHERE documentos_lei.status != 3 AND mutuarios_lei.id = documentos_lei.mutuario_id  
-  GROUP  BY mutuarios_lei.id ORDER BY id;`);
-
-  res.status(200).send(docsNaoAuditados);
-});
-
 // ------------------------------------ Editar  ------------------------------------
 router.post("/editar-mutuario", async (req, res) => {
   console.log(req.body.params);

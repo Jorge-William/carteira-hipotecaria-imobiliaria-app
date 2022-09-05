@@ -88,4 +88,26 @@ router.post("/upload-sfh", upload.array("file"), async (req, res) => {
   res.send({ result: documento });
 });
 
+router.get("/documentos-nao-auditados-sfh", async (req, res) => {
+  // eslint-disable-next-line
+	const docsNaoAuditados = await sequelize.query(`SELECT mutuarios_sfh.id, mutuarios_sfh.rotulo,
+  mutuarios_sfh.nome, COUNT(documentos_sfh.status = 0)  AS nao_auditados  FROM mutuarios_sfh, 
+  documentos_sfh WHERE documentos_sfh.status != 3 AND mutuarios_sfh.id = documentos_sfh.mutuario_id  
+  GROUP  BY mutuarios_sfh.id ORDER BY id;`);
+
+  res.status(200).send(docsNaoAuditados);
+});
+
+router.post("/doc-auditando-sfh", async (req, res) => {
+  const { id } = req.body.params;
+
+  const [result] = await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome
+  FROM documentos_sfh a 
+  LEFT JOIN tipos_doc_sfh b ON a.tipo_doc_id = b.id 
+  LEFT JOIN mutuarios_sfh c ON a.mutuario_id = c.id  
+  WHERE a.id = ${id}`);
+  console.log(result);
+  res.send({ result });
+});
+
 module.exports = router;

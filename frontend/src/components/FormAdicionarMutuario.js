@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import 'animate.css'
 
 const FormAdicionarMutuario = () => {
+	const navigate = useNavigate()
 	const [mutuarioData, setMutuarioData] = useState({
 		nome: '',
 		tipo: 'L',
@@ -68,11 +69,10 @@ const FormAdicionarMutuario = () => {
 						})
 						.then((response) => {
 							if (response.data.mutuarioCriado === true) {
-								return Swal.fire(
-									'Mutuario Criado',
-									'',
-									'success'
-								)
+								Swal.fire('Mutuario Criado', '', 'success')
+								return navigate('/mutuario/sfh', {
+									replace: true
+								})
 							} else if (response.data.mutuarioCriado === false) {
 								Swal.fire(
 									'Mutuario não foi criado',
@@ -122,7 +122,7 @@ const FormAdicionarMutuario = () => {
 			<div>
 				<div className='row'>
 					<div className='col'>
-						<h1>Adicionar Mutuário</h1>
+						<h1>Adicionar Mutuário - LEI</h1>
 					</div>
 					<div className='col'>
 						<button className='btn btn-secondary float-end'>

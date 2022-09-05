@@ -1,16 +1,15 @@
-import AutocompleteSfh from './AutocompleteInputSfh'
+import Autocomplete from './AutocompleteAuditoria'
 import '../style/TableFilter.css'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
-const TableFilterSfh = (data) => {
-	const sfhArray = []
-	data.data.map((item) => sfhArray.push(item.imoveis_sfhs[0]))
-	const sfhImoveis = sfhArray.filter((item) => item !== undefined)
+const TableFilterAuditoriaSfh = (data) => {
+	// const leiArray = []
+	// data.data.map((item) => leiArray.push(item.imoveis_leis[0]))
 
 	return (
 		<section className='mb-5'>
 			<div className='row justify-content-center'>
-				<div id='botao-filtro' className='col-md-3 d-grid'>
+				<div id='botao-filtro' className='col-md'>
 					<a
 						className='btn btn-outline-primary'
 						data-bs-toggle='collapse'
@@ -21,19 +20,6 @@ const TableFilterSfh = (data) => {
 					>
 						Buscar um mutuário
 					</a>
-				</div>
-				<div id='botao-filtro' className='col-md-3 d-grid'>
-					<Link to={`/mutuario-sfh/adicionar`}>
-						<div
-							className='btn btn-outline-success'
-							data-bs-toggle='collapse'
-							role='button'
-							aria-expanded='false'
-						>
-							Adicionar um Mutuário
-							<i className='bi bi-person-plus-fill ms-2' />
-						</div>
-					</Link>
 				</div>
 			</div>
 			<div className='collapse' id='buscaPorPasta'>
@@ -67,20 +53,6 @@ const TableFilterSfh = (data) => {
 								Busca por Nome
 							</button>
 						</li>
-						<li className='nav-item' role='presentation'>
-							<button
-								className='nav-link'
-								id='end-tab'
-								data-bs-toggle='tab'
-								data-bs-target='#end'
-								type='button'
-								role='tab'
-								aria-controls='end'
-								aria-selected='false'
-							>
-								Busca por Endereço
-							</button>
-						</li>
 					</ul>
 					<div className='tab-content' id='myTabContent'>
 						<div
@@ -93,10 +65,10 @@ const TableFilterSfh = (data) => {
 							<div className='card card-body'>
 								<div className='row '>
 									<div className='col-md-12'>
-										<AutocompleteSfh
+										<Autocomplete
 											tipo={'rotulo'}
 											placeholder={
-												'Código de Pasta - ex. L0001'
+												'Código de Pasta - ex. C0001'
 											}
 											data={data.data}
 											suggestions={Array.from(
@@ -122,40 +94,13 @@ const TableFilterSfh = (data) => {
 							<div className='card card-body'>
 								<div className='row '>
 									<div className='col-12'>
-										<AutocompleteSfh
+										<Autocomplete
 											tipo={'nome'}
 											placeholder={'Nome do mutuário'}
 											data={data.data}
 											suggestions={Array.from(
 												Object.values(data.data),
 												(breed) => breed.nome
-											).filter((elem, index, self) => {
-												return (
-													index === self.indexOf(elem)
-												)
-											})}
-										/>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div
-							className='tab-pane fade'
-							id='end'
-							role='tabpanel'
-							aria-labelledby='end-tab'
-						>
-							<br />
-							<div className='card card-body'>
-								<div className='row '>
-									<div className='col-12'>
-										<AutocompleteSfh
-											tipo={'end'}
-											placeholder={'Endereço'}
-											data={data.data}
-											suggestions={Array.from(
-												Object.values(sfhImoveis),
-												(breed) => breed.end
 											).filter((elem, index, self) => {
 												return (
 													index === self.indexOf(elem)
@@ -175,4 +120,4 @@ const TableFilterSfh = (data) => {
 	)
 }
 
-export default TableFilterSfh
+export default TableFilterAuditoriaSfh

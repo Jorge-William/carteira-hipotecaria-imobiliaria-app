@@ -35,6 +35,7 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 	const [dadosDocumento, setDadosDocumento] = useState({
 		tipoDocId: ''
 	})
+
 	const [fileSelected, setFileSelected] = useState()
 
 	// Extrai o id do usuário atual
@@ -59,6 +60,7 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 			abreviacao
 		})
 	}
+	console.log(dadosDocumento)
 
 	const handleChange = (event) => {
 		const value = event.target.value
@@ -106,7 +108,7 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 					formData.append('observacao', dadosDocumento.observacao)
 					formData.append(
 						'abrevTipoDoc',
-						dadosDocumento.abreviacao.abreviacao
+						dadosDocumento.abreviacao.abrev
 					)
 					formData.append('operadorId', usuario_id)
 					formData.append('file', fileSelected)

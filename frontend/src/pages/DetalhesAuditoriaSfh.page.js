@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import DetalhesMutuarioAuditoria from '../components/DetalhesMutuarioAuditoria'
+import DetalhesMutuarioAuditoriaSfh from '../components/DetalhesMutuarioAuditoriaSfh'
 import '../style/BtnVoltar.css'
 
-export function DetalhesAuditoria() {
+export function DetalhesAuditoriaSfh() {
 	const { id } = useParams()
 	return (
 		<div className='pb-5'>
@@ -22,7 +22,7 @@ export function DetalhesAuditoria() {
 			{
 				//---------------------------- Componente ---------------------
 			}
-			<DetalhesMutuarioAuditoria id={id} />
+			<DetalhesMutuarioAuditoriaSfh id={id} />
 			{
 				//---------------------------- Componente fim ---------------------
 			}

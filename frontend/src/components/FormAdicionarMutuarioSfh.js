@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import 'animate.css'
 
 const FormAdicionarMutuario = () => {
+	const navigate = useNavigate()
+
 	const [mutuarioData, setMutuarioData] = useState({
 		nome: '',
 		tipo: 'C',
@@ -62,17 +64,20 @@ const FormAdicionarMutuario = () => {
 				showLoaderOnConfirm: true,
 				preConfirm: () => {
 					axios
-						.post('/criar-mutuario-lei', {
+						.post('/criar-mutuario-sfh', {
 							mutuarioData,
 							imovelData
 						})
 						.then((response) => {
 							if (response.data.mutuarioCriado === true) {
-								return Swal.fire(
-									'Mutuario Criado',
-									'',
-									'success'
-								)
+								Swal.fire({
+									title: 'Mutuario Criado',
+									icon: 'success',
+									showCancelButton: false
+								})
+								return navigate('/mutuario/sfh', {
+									replace: true
+								})
 							} else if (response.data.mutuarioCriado === false) {
 								Swal.fire(
 									'Mutuario não foi criado',
@@ -122,11 +127,11 @@ const FormAdicionarMutuario = () => {
 			<div>
 				<div className='row'>
 					<div className='col'>
-						<h1>Adicionar Mutuário</h1>
+						<h1>Adicionar Mutuário - SFH</h1>
 					</div>
 					<div className='col'>
 						<button className='btn btn-secondary float-end'>
-							<Link to={`/mutuario/lei`}>
+							<Link to={`/mutuario/sfh`}>
 								<i className='bi bi-arrow-left'></i>Voltar
 							</Link>
 						</button>
@@ -172,7 +177,7 @@ const FormAdicionarMutuario = () => {
 									className='form-control'
 									onChange={handleChangeMutuario}
 									name='tipo'
-									value='Lei'
+									value='Sfh'
 								/>
 							</div>
 							<div className='mb-3 col-md-2'>
@@ -183,7 +188,7 @@ const FormAdicionarMutuario = () => {
 									Pasta
 								</label>
 								<input
-									placeholder='exemplo: L0023'
+									placeholder='exemplo: C0010'
 									type='text'
 									className='form-control'
 									name='pasta'
@@ -450,7 +455,7 @@ const FormAdicionarMutuario = () => {
 					<div className='row mt-5'>
 						<div className='col'>
 							<button className='btn btn-secondary '>
-								<Link to={`/mutuario/lei`}>
+								<Link to={`/mutuario/sfh`}>
 									<i className='bi bi-arrow-left'></i>Voltar
 								</Link>
 							</button>
