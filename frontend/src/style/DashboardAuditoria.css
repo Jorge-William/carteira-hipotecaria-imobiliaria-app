@@ -1,0 +1,20 @@
+.card-dashboard{
+    border-radius: 15px;
+    border: solid 3px #655a4e4d;
+    width: 140px;
+    height: 100px;
+    font-size: 3em;
+    color: rgb(53, 55, 57);
+    justify-content: center;
+    text-align: center;
+    text-justify:auto;
+}
+
+.card-dashboard:hover{
+    border-color: rgb(47, 47, 47);
+}
+
+div.card-dashboard>p{
+    color: rgb(94, 116, 116);
+    font-weight: 500;
+}
