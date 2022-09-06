@@ -34,7 +34,7 @@ console.log(lista);
 						<th scope='col'>#</th>
 						<th scope='col'>Rotulo</th>
 						<th scope='col'>Nome</th>
-						<th scope='col'>Documentos</th>
+						<th scope='col'>Não auditados</th>
 					</tr>
 				</thead>
 				<tbody className='text-secondary'>

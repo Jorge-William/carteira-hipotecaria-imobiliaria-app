@@ -119,4 +119,11 @@ router.post("/doc-auditando-sfh", async (req, res) => {
   res.send({ result });
 });
 
+router.get("/dashboard-sfh", async (req, res) => {
+  const [result] = await sequelize.query(`SELECT count(status) AS naoAuditados
+  FROM documentos_sfh  WHERE status = 0;`);
+
+  res.send({ result });
+});
+
 module.exports = router;
