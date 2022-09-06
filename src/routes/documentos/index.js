@@ -119,4 +119,12 @@ router.post("/upload", upload.array("file"), async (req, res) => {
   res.send({ result: documento });
 });
 
+router.get("/dashboard-lei", async (req, res) => {
+  const [result] = await sequelize.query(`SELECT  COUNT(status) AS naoAuditados
+  FROM documentos_lei 
+  WHERE status = 0`);
+
+  res.send({ result });
+});
+
 module.exports = router;
