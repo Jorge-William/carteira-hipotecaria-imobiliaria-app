@@ -20,10 +20,12 @@ export function AuditandoDocSfh() {
 	}, [id])
 
 	const listToCheck = [
-		'Quantidade de páginas',
-		'Natureza do documento',
+		'Natureza da documentação',
 		'Legibilidade',
-		'Falta páginas'
+		'Quantidade de páginas',
+		'Nome do Mutuario',
+		'Ordem das páginas',
+		'Alinhamento do documento'
 	]
 	return docData !== undefined ? (
 		<section>
@@ -56,6 +58,9 @@ export function AuditandoDocSfh() {
 				<div className='col-sm-12 col-md-6 mb-5'>
 					<h3 className='mb-4'>Check-list</h3>
 					<hr />
+					<small className='text-secondary'>
+						Marque os itens que estão ok
+					</small>
 
 					{listToCheck.map((item, key) => (
 						<div key={key} class='form-check'>
@@ -85,7 +90,7 @@ export function AuditandoDocSfh() {
 							type='text-area'
 							class='form-control'
 							id='exampleFormControlInput1'
-							placeholder='Descrição'
+							placeholder='Exemplo: Faltou escanear o verso do documento xyz'
 						/>
 					</div>
 				</div>

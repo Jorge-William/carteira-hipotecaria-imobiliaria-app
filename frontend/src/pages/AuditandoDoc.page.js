@@ -19,10 +19,12 @@ export function AuditandoDoc() {
 	}, [id])
 
 	const listToCheck = [
-		'Quantidade de páginas',
-		'Natureza do documento',
+		'Natureza da documentação',
 		'Legibilidade',
-		'Falta páginas'
+		'Quantidade de páginas',
+		'Nome do Mutuario',
+		'Ordem das páginas',
+		'Alinhamento do documento'
 	]
 	return docData !== undefined ? (
 		<section>
@@ -84,7 +86,7 @@ export function AuditandoDoc() {
 							type='text-area'
 							class='form-control'
 							id='exampleFormControlInput1'
-							placeholder='Descrição'
+							placeholder='Exemplo: Faltou escanear o verso do documento xyz'
 						/>
 					</div>
 				</div>

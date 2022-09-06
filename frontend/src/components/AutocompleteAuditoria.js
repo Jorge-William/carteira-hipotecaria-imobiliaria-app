@@ -158,13 +158,19 @@ const Autocomplete = (props) => {
 											data-bs-target='#exampleModal2'
 											// onClick={() => setLiberaModal()}
 										> */}
-											{
+											{tipo === 'lei' ? (
 												<Link
 													to={`/detalhes-auditoria/${filter.id}`}
 												>
 													{filter.nome}
 												</Link>
-											}
+											) : (
+												<Link
+													to={`/detalhes-auditoria-sfh/${filter.id}`}
+												>
+													{filter.nome}
+												</Link>
+											)}
 											{/* </a> */}
 										</td>
 									</tr>
