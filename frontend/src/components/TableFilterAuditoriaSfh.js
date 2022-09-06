@@ -30,10 +30,10 @@ const TableFilterAuditoriaSfh = (data) => {
 								className='nav-link active'
 								id='home-tab'
 								data-bs-toggle='tab'
-								data-bs-target='#home'
+								data-bs-target='#homeSfh'
 								type='button'
 								role='tab'
-								aria-controls='home'
+								aria-controls='homeSfh'
 								aria-selected='true'
 							>
 								Busca por pasta
@@ -44,7 +44,7 @@ const TableFilterAuditoriaSfh = (data) => {
 								className='nav-link'
 								id='profile-tab'
 								data-bs-toggle='tab'
-								data-bs-target='#profile'
+								data-bs-target='#profileSfh'
 								type='button'
 								role='tab'
 								aria-controls='profile'
@@ -57,7 +57,7 @@ const TableFilterAuditoriaSfh = (data) => {
 					<div className='tab-content' id='myTabContent'>
 						<div
 							className='tab-pane fade show active'
-							id='home'
+							id='homeSfh'
 							role='tabpanel'
 							aria-labelledby='home-tab'
 						>
@@ -86,14 +86,14 @@ const TableFilterAuditoriaSfh = (data) => {
 						</div>
 						<div
 							className='tab-pane fade'
-							id='profile'
+							id='profileSfh'
 							role='tabpanel'
 							aria-labelledby='profile-tab'
 						>
 							<br />
 							<div className='card card-body'>
 								<div className='row '>
-									<div className='col-12'>
+									<div className='col-md-12'>
 										<Autocomplete
 											tipo={'nome'}
 											placeholder={'Nome do mutuário'}

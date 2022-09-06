@@ -31,7 +31,7 @@ export function DashboardAuditoria({ tipo }) {
 
 	return (
 		<section>
-			<h3>Estatística LEI</h3>
+			<h3>Estatística {tipo}</h3>
 			<div className='mt-5 row d-flex gap-3 justify-content-center'>
 				<div className='p-2 card-dashboard col-xs-2 col-md-2 col-sm-6'>
 					<h5>Total</h5>
