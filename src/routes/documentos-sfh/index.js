@@ -111,7 +111,7 @@ router.get("/documentos-nao-auditados-sfh", async (req, res) => {
 router.post("/doc-auditando-sfh", async (req, res) => {
   const { id } = req.body.params;
 
-  const [result] =		await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome
+  const [result] =		await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome, mutuario_id, a.id as id_documento
   FROM documentos_sfh a 
   LEFT JOIN tipos_doc_sfh b ON a.tipo_doc_id = b.id 
   LEFT JOIN mutuarios_sfh c ON a.mutuario_id = c.id  
@@ -120,14 +120,14 @@ router.post("/doc-auditando-sfh", async (req, res) => {
 });
 
 router.get("/dashboard-sfh", async (req, res) => {
-  const [naoAuditados] = await sequelize.query(`SELECT count(status) AS naoAuditados
+  const [naoAuditados] =		await sequelize.query(`SELECT count(status) AS naoAuditados
   FROM documentos_sfh  WHERE status = 0;`);
 
-  const [auditados] = await sequelize.query(`SELECT  COUNT(status) AS auditados
+  const [auditados] =		await sequelize.query(`SELECT  COUNT(status) AS auditados
   FROM documentos_sfh
   WHERE status = 3`);
 
-  const [pendentes] = await sequelize.query(`SELECT  COUNT(status) AS pendentes
+  const [pendentes] =		await sequelize.query(`SELECT  COUNT(status) AS pendentes
   FROM documentos_sfh
   WHERE status != 3 AND status != 0`);
 
@@ -140,7 +140,10 @@ router.get("/dashboard-sfh", async (req, res) => {
   const [docTotal] = total;
 
   res.send({
-    docsNaoAuditados, docsAuditados, docPendentes, docTotal,
+    docsNaoAuditados,
+    docsAuditados,
+    docPendentes,
+    docTotal,
   });
 });
 

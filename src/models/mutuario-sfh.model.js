@@ -149,17 +149,80 @@ const ImoveisSfh = sequelize.define(
   },
 );
 
+const AuditoriaSfh = sequelize.define(
+  "auditoria_sfh",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      unique: true,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    cod_pasta: {
+      type: DataTypes.TEXT,
+    },
+    nome_mutuario: {
+      type: DataTypes.STRING,
+    },
+    ordem_pag: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    natureza_doc: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    alinhamento: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    legibilidade: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    qtd_pag: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    scan_verso: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    obs: {
+      type: DataTypes.TEXT,
+      defaultValue: "-",
+      allowNull: true,
+    },
+    auditado_por: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    tipo_documento: {
+      type: DataTypes.TEXT,
+    },
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+  },
+);
+
 // DocumentoLei.hasOne(MutuarioLei);
 
 MutuariosSfh.hasMany(ImoveisSfh, { foreignKey: "mutuario_id" });
 MutuariosSfh.hasMany(DocumentosSfh, { foreignKey: "mutuario_id" });
+DocumentosSfh.hasOne(AuditoriaSfh, { foreignKey: "doc_id" });
+// AuditoriaSfh.hasOne(DocumentosSfh, { foreignKey: "auditoria_id" });
 
 // sequelize.sync({ alter: true });
 // sequelize.sync();
 // DocumentosSfh.sync({ force: true });
+// AuditoriaSfh.sync({ alter: true });
 
 module.exports = {
   MutuariosSfh,
   DocumentosSfh,
   ImoveisSfh,
+  AuditoriaSfh,
 };

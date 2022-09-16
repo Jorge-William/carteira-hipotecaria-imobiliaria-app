@@ -149,17 +149,80 @@ const ImoveisLei = sequelize.define(
   },
 );
 
+const AuditoriaLei = sequelize.define(
+  "auditoria_lei",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      unique: true,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    cod_pasta: {
+      type: DataTypes.TEXT,
+    },
+    nome_mutuario: {
+      type: DataTypes.STRING,
+    },
+    ordem_pag: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    natureza_doc: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    alinhamento: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    legibilidade: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    qtd_pag: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    scan_verso: {
+      type: DataTypes.TEXT,
+      defaultValue: "pendente",
+    },
+    obs: {
+      type: DataTypes.TEXT,
+      defaultValue: "-",
+      allowNull: true,
+    },
+    auditado_por: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    tipo_documento: {
+      type: DataTypes.TEXT,
+    },
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+  },
+);
+
 // DocumentoLei.hasOne(MutuarioLei);
 
 MutuariosLei.hasMany(ImoveisLei, { foreignKey: "mutuario_id" });
 MutuariosLei.hasMany(DocumentosLei, { foreignKey: "mutuario_id" });
+DocumentosLei.hasOne(AuditoriaLei, { foreignKey: "doc_id" });
 
 // sequelize.sync({ alter: true });
-sequelize.sync();
+// AuditoriaLei.sync({ alter: true });
+
+// sequelize.sync();
 // DocumentosLei.sync({ force: true });
 
 module.exports = {
   MutuariosLei,
   DocumentosLei,
   ImoveisLei,
+  AuditoriaLei,
 };
