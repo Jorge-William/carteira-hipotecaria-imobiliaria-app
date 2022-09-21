@@ -1,7 +1,63 @@
 import renderSwitch from '../helpers/renderSwitch'
 import Skeleton from 'react-loading-skeleton'
+import Swal from 'sweetalert2'
+import axios from 'axios'
 
 const AccordionDeDocumentos = ({ documentos }) => {
+
+const userInfo = JSON.parse(localStorage.getItem('userData'))
+
+const {id} = userInfo
+
+
+
+	const handleClick = (tipoDoc, pasta, idDoc, idUser) => {
+		Swal.fire({
+			title: 'Atenção',
+			input: 'password',
+			inputAttributes: {
+				autocapitalize: 'off'
+			},
+			icon: 'warning',
+			text: `Digite a senha de usuário para confirmar a deleção do documento: ${tipoDoc}.`,
+			showCancelButton: true,
+			confirmButtonText: 'Confirmar',
+			cancelButtonText: 'Cancelar',
+			showLoaderOnConfirm: true,
+			preConfirm: (senha) => {
+				return axios
+					.post('/deletar-documento', {
+						params: {
+							tipoDoc,
+							pasta,
+							idDoc,
+							senha,
+							idUser
+						}
+					})
+					.then((response) => {
+					console.log(response);
+						if (response.data.status) {
+							return response
+						}
+							throw new Error(response.data.mensagem)
+					})
+					.catch((error) => {
+						Swal.showValidationMessage(error)
+					})
+			},
+			allowOutsideClick: () => !Swal.isLoading()
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire({
+					icon: 'success',
+					title: 'Sucesso',
+					text: 'O documento foi deletado com sucesso.'
+				})
+			}
+		})
+	}
+
 	return documentos.length === 0 ? (
 		<>
 			<Skeleton count={5} />
@@ -108,6 +164,14 @@ const AccordionDeDocumentos = ({ documentos }) => {
 															className='btn btn-danger btn-sm'
 															data-bs-toggle='modal'
 															data-bs-target={`#documento${key}`}
+															onClick={() =>
+																handleClick(
+																	item.descricao,
+																	item.cod_pasta,
+																	item.id,
+																	id
+																)
+															}
 														>
 															<i className='bi bi-trash'></i>
 														</button>
@@ -116,57 +180,6 @@ const AccordionDeDocumentos = ({ documentos }) => {
 											</tr>
 										</tbody>
 									</table>
-								</div>
-								{/* // ------------------------------------------Modal-------------------------------------------------- */}
-								<div
-									className='modal fade'
-									id={`documento${key}`}
-									data-bs-backdrop='static'
-									data-bs-keyboard='false'
-									tabIndex='-1'
-									aria-labelledby='staticBackdropLabel'
-									aria-hidden='true'
-								>
-									<div className='modal-dialog modal-dialog-centered'>
-										<div className='modal-content'>
-											<div className='modal-header'>
-												<h3
-													className='modal-title text-danger'
-													id='staticBackdropLabel'
-												>
-													Atenção!
-												</h3>
-												<button
-													type='button'
-													className='btn-close'
-													data-bs-dismiss='modal'
-													aria-label='Close'
-												></button>
-											</div>
-											<div className='modal-body'>
-												<h3 className='text-secondary mb-4'>
-													Deseja realmente deletar o
-													documento?
-												</h3>
-												<h4>{item.descricao}</h4>
-											</div>
-											<div className='modal-footer'>
-												<button
-													type='button'
-													className='btn btn-success'
-													data-bs-dismiss='modal'
-												>
-													Cancelar
-												</button>
-												<button
-													type='button'
-													className='btn btn-danger'
-												>
-													Sim deletar
-												</button>
-											</div>
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>

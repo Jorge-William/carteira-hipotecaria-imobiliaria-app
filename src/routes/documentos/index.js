@@ -1,9 +1,12 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
+const bcrypt = require("bcryptjs");
 const storage = require("../../config/multer.config");
 const sequelize = require("../../database/sequelize.connection");
 const { DocumentosLei } = require("../../models/mutuario-lei.model");
+const { DocumentosSfh } = require("../../models/mutuario-sfh.model");
+const User = require("../../models/user.model");
 
 // const { DocumentoLei } = require("../../models/mutuario-lei.model");
 // const create = require("../../controllers/mutuario-lei/mutuario-lei.controller");
@@ -120,15 +123,15 @@ router.post("/upload", upload.array("file"), async (req, res) => {
 });
 
 router.get("/dashboard-lei", async (req, res) => {
-  const [naoAuditados] = await sequelize.query(`SELECT  COUNT(status) AS naoAuditados
+  const [naoAuditados] =		await sequelize.query(`SELECT  COUNT(status) AS naoAuditados
   FROM documentos_lei 
   WHERE status = 0`);
 
-  const [auditados] = await sequelize.query(`SELECT  COUNT(status) AS auditados
+  const [auditados] =		await sequelize.query(`SELECT  COUNT(status) AS auditados
   FROM documentos_lei 
   WHERE status = 3`);
 
-  const [pendentes] = await sequelize.query(`SELECT  COUNT(status) AS pendentes
+  const [pendentes] =		await sequelize.query(`SELECT  COUNT(status) AS pendentes
   FROM documentos_lei
   WHERE status != 3 AND status != 0`);
 
@@ -141,8 +144,56 @@ router.get("/dashboard-lei", async (req, res) => {
   const [docTotal] = total;
 
   res.send({
-    docsNaoAuditados, docsAuditados, docPendentes, docTotal,
+    docsNaoAuditados,
+    docsAuditados,
+    docPendentes,
+    docTotal,
   });
+});
+
+router.post("/deletar-documento", async (req, res) => {
+  const {
+    tipoDoc,
+    pasta,
+    idDoc,
+    senha,
+    idUser,
+  } = req.body.params;
+
+  try {
+    const usuario = await User.findByPk(idUser);
+
+    const { password } = usuario.dataValues;
+
+    const passwordIsValid = await bcrypt.compare(senha, password);
+    // Caso o password seja validado
+    if (passwordIsValid) {
+      // Verifica o tipo de documento L = LEI ou C = SFH
+      const tipo = Array.from(pasta)[0];
+
+      if (tipo === "L") {
+        const documentoLei = await DocumentosLei.destroy({
+          where: {
+            id: idDoc,
+          },
+        });
+        if (documentoLei === 1) {
+          res.status(200).send({ status: true });
+        }
+      } else {
+        const documentoSfh = await DocumentosSfh.destroy({
+          where: {
+            id: idDoc,
+          },
+        });
+        if (documentoSfh === 1) {
+          res.status(200).send({ status: true });
+        }
+      }
+    }
+  } catch (e) {
+    console.error(e);
+  }
 });
 
 module.exports = router;
