@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 
-const AccordionDeDocumentos = ({ documentos }) => {
+const AccordionDeDocumentos = ({ documentos, callServices}) => {
 
 const userInfo = JSON.parse(localStorage.getItem('userData'))
 
@@ -38,6 +38,7 @@ const {id} = userInfo
 					.then((response) => {
 					console.log(response);
 						if (response.data.status) {
+							callServices()
 							return response
 						}
 							throw new Error(response.data.mensagem)

@@ -7,6 +7,7 @@ const sequelize = require("../../database/sequelize.connection");
 const { DocumentosLei } = require("../../models/mutuario-lei.model");
 const { DocumentosSfh } = require("../../models/mutuario-sfh.model");
 const User = require("../../models/user.model");
+const Log = require("../../models/log.model");
 
 // const { DocumentoLei } = require("../../models/mutuario-lei.model");
 // const create = require("../../controllers/mutuario-lei/mutuario-lei.controller");
@@ -178,6 +179,14 @@ router.post("/deletar-documento", async (req, res) => {
           },
         });
         if (documentoLei === 1) {
+          const log = await Log.create({
+            data: Date.now(),
+            usuario: idUser,
+            tabela: `${tipo}`,
+            operacao: `O documento ${tipoDoc}, de ID: ${idDoc}, foi deletado.`,
+          });
+
+          console.log(log);
           res.status(200).send({ status: true });
         }
       } else {
@@ -187,6 +196,14 @@ router.post("/deletar-documento", async (req, res) => {
           },
         });
         if (documentoSfh === 1) {
+          const log = await Log.create({
+            data: Date.now(),
+            usuario: idUser,
+            tabela: `${tipo}`,
+            operacao: `O documento ${tipoDoc}, de ID: ${idDoc}, foi deletado.`,
+          });
+          console.log(log);
+
           res.status(200).send({ status: true });
         }
       }
