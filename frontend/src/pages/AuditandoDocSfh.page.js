@@ -1,30 +1,103 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getDocAuditandoSfh } from '../services/getDocumentosSfh.service'
+import Swal from 'sweetalert2'
+import axios from 'axios'
+
 export function AuditandoDocSfh() {
 	const { id } = useParams()
 	const [docData, setDocData] = useState()
-	const [isLoading, setIsloading] = useState(true)
+	// const [isLoading, setIsloading] = useState(true)
+	const [observacao, setObservacao] = useState("-")
+	// console.log(docData)
+	const [checklist, setChecklist] = useState([
+		{ id: 1, prop: 'Natureza do documento', status: false },
+		{ id: 2, prop: 'Legibilidade', status: false },
+		{ id: 3, prop: 'Quantidade de paginas', status: false },
+		{ id: 4, prop: 'Nome do mutuario', status: false },
+		{ id: 5, prop: 'Ordem páginas', status: false },
+		{ id: 6, prop: 'Alinhamento do documento', status: false },
+		{ id: 7, prop: 'Informações do Verso', status: false }
+	])
 
-	console.log(docData)
+	// const filtraAudicao = (checklist) => {
+	// 	const itensOk = checklist.filter((item) => {
+	// 		return item.status === true
+	// 	})
+	// 	return console.log(itensOk)
+	// }
+
 	useEffect(() => {
 		const callServices = async () => {
 			const response = await getDocAuditandoSfh(id)
 
 			const data = response[0]
+			// console.log(data)
 			setDocData(data)
 		}
 
 		callServices()
-		setIsloading(false)
+		// setIsloading(false)
 	}, [id])
 
-	const listToCheck = [
-		'Quantidade de páginas',
-		'Natureza do documento',
-		'Legibilidade',
-		'Falta páginas'
-	]
+	const onCheck = (id) => {
+		setChecklist(
+			checklist.map((item) =>
+				item.id === id ? { ...item, status: !item.status } : item
+			)
+		)
+	}
+
+	const handleClick = () => {
+		Swal.fire({
+			title: 'Atenção!',
+			text: 'Deseja salvar a audição?',
+			icon: 'question',
+			showCancelButton: true,
+			cancelButtonText: 'Cancelar',
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Sim, salvar!',
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return axios
+					.post('/audicao-sfh', {
+						params: {
+							docData,
+							observacao,
+							checklist
+						}
+					})
+					.then((response) => {
+						if (response.statusText === 'OK') {
+							return Swal.fire({
+								icon: 'success',
+								title: 'Tudo certo!',
+								text: 'A audição foi salva com sucesso!',
+								// footer: '<a href="">Why do I have this issue?</a>'
+							})
+						}
+						throw new Error(response.statusText)
+					})
+					.catch((error) => {
+						Swal.showValidationMessage(
+							`A requisição falhou: ${error}`
+						)
+					})
+			},
+			allowOutsideClick: () => !Swal.isLoading()
+		})
+	}
+
+	const handleChange = (event) => {
+		const value = event.target.value
+
+		setObservacao({
+			...observacao,
+			[event.target.name]: value
+		})
+	}
+
 	return docData !== undefined ? (
 		<section>
 			<h1 className='mb-5'>Auditando documento</h1>
@@ -56,27 +129,33 @@ export function AuditandoDocSfh() {
 				<div className='col-sm-12 col-md-6 mb-5'>
 					<h3 className='mb-4'>Check-list</h3>
 					<hr />
+					<small className='text-secondary'>
+						Marque os itens que estão ok
+					</small>
 
-					{listToCheck.map((item, key) => (
+					{checklist.map((item, key) => (
 						<div key={key} class='form-check'>
 							<input
+								name={item}
+								key={key}
 								class='form-check-input'
 								type='checkbox'
-								value=''
 								id='flexCheckDefault'
+								checked={item.status}
+								onChange={() => onCheck(item.id)}
 							/>
 							<label
 								class='form-check-label'
-								for='flexCheckDefault'
+								htmlFor='flexCheckDefault'
 							>
-								{item}
+								{item.prop}
 							</label>
 						</div>
 					))}
 					<br />
 					<div class='mb-3'>
 						<label
-							for='exampleFormControlInput1'
+							htmlFor='exampleFormControlInput1'
 							class='form-label'
 						>
 							Outros:
@@ -85,14 +164,20 @@ export function AuditandoDocSfh() {
 							type='text-area'
 							class='form-control'
 							id='exampleFormControlInput1'
-							placeholder='Descrição'
+							placeholder='Exemplo: Faltou escanear o verso do documento xyz'
+							onChange={handleChange}
+							name='observacao'
 						/>
 					</div>
 				</div>
 			</div>
 			<div className='row mb-5 d-flex justify-content-center'>
 				<div className='col-md-2 d-flex justify-content-center'>
-					<button type='button' className='btn btn-success mb-5'>
+					<button
+						type='button'
+						className='btn btn-success mb-5'
+						onClick={handleClick}
+					>
 						Salvar audição
 					</button>
 				</div>

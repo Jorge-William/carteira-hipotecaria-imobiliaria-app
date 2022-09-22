@@ -5,20 +5,33 @@ import axios from 'axios'
 
 export function DashboardAuditoria({ tipo }) {
 	const [tipoMutuario, setTipoMutuario] = useState('')
-	const [dados, setDados] = useState('')
-
+	const [dados, setDados] = useState({
+        "docsNaoAuditados": {
+          "naoAuditados": 0
+        },
+        "docsAuditados": {
+          "auditados": 0
+        },
+        "docPendentes": {
+          "pendentes": 0
+        },
+        "docTotal": {
+          "total": 0
+        }
+      })
+console.log(dados);
 	const getEstatisticas = (tipo) => {
 		if (tipo === 'lei') {
 			return axios.get('/dashboard-lei').then((response) => {
                 return response.data
             }).then((response) =>{
-				setDados(response.result[0])
+				setDados(response)
             })
 		}
 		return axios.get('/dashboard-sfh').then((response) => {
             return response.data
         }).then((response) =>{
-            setDados(response.result[0])
+            setDados(response)
         
 		})
 	}
@@ -29,6 +42,7 @@ export function DashboardAuditoria({ tipo }) {
 		getEstatisticas(tipo).then()
 	}, [tipoMutuario, tipo])
 
+    
 	return (
 		<section>
 			<h3>Estatística {tipo}</h3>
@@ -37,7 +51,7 @@ export function DashboardAuditoria({ tipo }) {
 					<h5>Total</h5>
 					<p>
 						<AnimatedNumber
-							value={2233}
+							value={dados.docTotal.total}
 							formatValue={(total) => total.toFixed()}
 						/>
 					</p>
@@ -46,7 +60,7 @@ export function DashboardAuditoria({ tipo }) {
 					<h5>Pendentes</h5>
 					<p>
 						<AnimatedNumber
-							value={3445}
+							value={dados.docPendentes.pendentes}
 							formatValue={(total) => total.toFixed()}
 						/>
 					</p>
@@ -55,7 +69,7 @@ export function DashboardAuditoria({ tipo }) {
 					<h5>Não auditados</h5>
 					<p>
 						<AnimatedNumber
-							value={dados.naoAuditados}
+							value={dados.docsNaoAuditados.naoAuditados}
 							formatValue={(total) => total.toFixed()}
 						/>
 					</p>
@@ -64,7 +78,7 @@ export function DashboardAuditoria({ tipo }) {
 					<h5>Auditados</h5>
 					<p>
 						<AnimatedNumber
-							value={6887}
+							value={dados.docsAuditados.auditados}
 							formatValue={(total) => total.toFixed()}
 						/>
 					</p>

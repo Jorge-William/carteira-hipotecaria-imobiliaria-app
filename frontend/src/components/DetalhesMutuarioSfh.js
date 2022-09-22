@@ -1,5 +1,5 @@
 import getDocumentosSfh from '../services/getDocumentosSfh.service'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import getMutuarioSfhById from '../services/getMutuarioSfhById.service'
 import AccordionDeDocumentos from './AccordionDeDocumentos'
 import ExibirMutuarioSfh from './ExibirMutuarioSfh'
@@ -11,17 +11,21 @@ const DetalheMutuarioSfh = ({ id }) => {
 	const [dados, setDados] = useState({})
 	const [documentos, setDocumentos] = useState([])
 
-	useEffect(() => {
-		const callServices = async () => {
-			// Posição 0 é o id do mutuário e a posição 17 é o tipo(L ou C)
-			const documentos = await getDocumentosSfh(id)
-			const mutuario = await getMutuarioSfhById(id)
 
-			setDocumentos(documentos)
-			setDados(mutuario)
-		}
-		callServices()
+	const callServices = useCallback( async () => {
+		// Posição 0 é o id do mutuário e a posição 17 é o tipo(L ou C)
+		const documentos = await getDocumentosSfh(id)
+		const mutuario = await getMutuarioSfhById(id)
+		console.log('Estão me chamando!');
+		setDocumentos(documentos)
+		setDados(mutuario)
 	}, [id])
+
+	useEffect(() => {
+		callServices()
+	}, [id, callServices])
+
+
 
 	return !dados ? (
 		<Skeleton count={10} />
@@ -52,7 +56,7 @@ const DetalheMutuarioSfh = ({ id }) => {
 				</div>
 			</section>
 			<ExibirMutuarioSfh dados={dados} />
-			<AccordionDeDocumentos documentos={documentos} />
+			<AccordionDeDocumentos documentos={documentos} callServices={() => callServices()}/>
 		</section>
 	)
 }

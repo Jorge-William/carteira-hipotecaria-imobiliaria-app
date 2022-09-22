@@ -8,6 +8,8 @@ const documentoLei = require("./src/routes/documento-lei/index");
 const documentoSfh = require("./src/routes/documentos-sfh/index");
 const documentos = require("./src/routes/documentos/index");
 const dashboard = require("./src/routes/dashboard/index");
+const audicaoSfh = require("./src/routes/audicao-sfh/index");
+const audicaoLei = require("./src/routes/audicao-lei/index");
 
 const app = express();
 require("dotenv").config();
@@ -33,7 +35,8 @@ app.use(mutuarioLeiRoutes);
 app.use(mutuarioSfhRoutes);
 app.use(documentoLei);
 app.use(documentoSfh);
-
+app.use(audicaoSfh);
+app.use(audicaoLei);
 app.use(documentos);
 app.use(dashboard);
 // ----------------------------------------------------------------------------
