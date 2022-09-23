@@ -146,70 +146,10 @@ export default function AccordionDeDocumentosAuditoriaSfh({ documentos }) {
 															</button>
 														</Link>
 													)}
-													<button
-														type='button'
-														className='btn btn-danger '
-														data-bs-toggle='modal'
-														data-bs-target={`#documento${key}`}
-													>
-														Deletar{' '}
-														<i className='bi bi-trash'></i>
-													</button>
 												</div>
 											</tr>
 										</tbody>
 									</table>
-								</div>
-								{/* // ------------------------------------------Modal-------------------------------------------------- */}
-								<div
-									className='modal fade'
-									id={`documento${key}`}
-									data-bs-backdrop='static'
-									data-bs-keyboard='false'
-									tabIndex='-1'
-									aria-labelledby='staticBackdropLabel'
-									aria-hidden='true'
-								>
-									<div className='modal-dialog modal-dialog-centered'>
-										<div className='modal-content'>
-											<div className='modal-header'>
-												<h3
-													className='modal-title text-danger'
-													id='staticBackdropLabel'
-												>
-													Atenção!
-												</h3>
-												<button
-													type='button'
-													className='btn-close'
-													data-bs-dismiss='modal'
-													aria-label='Close'
-												></button>
-											</div>
-											<div className='modal-body'>
-												<h5 className='text-secondary mb-4'>
-													Deseja realmente deletar o
-													documento?
-												</h5>
-												<p>{item.descricao}</p>
-											</div>
-											<div className='modal-footer'>
-												<button
-													type='button'
-													className='btn btn-success'
-													data-bs-dismiss='modal'
-												>
-													Cancelar
-												</button>
-												<button
-													type='button'
-													className='btn btn-danger'
-												>
-													Sim deletar
-												</button>
-											</div>
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>
