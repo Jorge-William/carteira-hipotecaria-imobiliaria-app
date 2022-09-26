@@ -9,9 +9,7 @@ const userInfo = JSON.parse(localStorage.getItem('userData'))
 
 const {id} = userInfo
 
-
-
-	const handleClick = (tipoDoc, pasta, idDoc, idUser) => {
+	const handleClick = (tipoDoc, pasta, idDoc, idUser, arquivo) => {
 		Swal.fire({
 			title: 'Atenção',
 			input: 'password',
@@ -32,7 +30,9 @@ const {id} = userInfo
 							pasta,
 							idDoc,
 							senha,
-							idUser
+							idUser,
+							arquivo
+
 						}
 					})
 					.then((response) => {
@@ -41,10 +41,10 @@ const {id} = userInfo
 							callServices()
 							return response
 						}
-							throw new Error(response.data.mensagem)
+							throw new Error(response.data.status)
 					})
 					.catch((error) => {
-						Swal.showValidationMessage(error)
+						Swal.showValidationMessage(`${error} - Senha inválida!`)
 					})
 			},
 			allowOutsideClick: () => !Swal.isLoading()
@@ -170,7 +170,8 @@ const {id} = userInfo
 																	item.descricao,
 																	item.cod_pasta,
 																	item.id,
-																	id
+																	id,
+																	item.arquivo
 																)
 															}
 														>
