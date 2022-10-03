@@ -46,7 +46,7 @@ router.post("/documentos", async (req, res) => {
 
 router.post("/doc-auditando", async (req, res) => {
   const { id } = req.body.params;
-  const [result] = await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome
+  const [result] = await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome, mutuario_id, a.id as id_documento
   FROM documentos_lei a 
   LEFT JOIN tipos_doc_lei b ON a.tipo_doc_lei_id = b.id 
   LEFT JOIN mutuarios_lei c ON a.mutuario_id = c.id  

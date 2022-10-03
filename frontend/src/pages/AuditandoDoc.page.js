@@ -1,15 +1,21 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { getDocAuditandoSfh } from '../services/getDocumentosSfh.service'
+import { getDocAuditando } from '../services/getDocumentos.service'
+import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 
 export function AuditandoDoc() {
 	const { id } = useParams()
 	const [docData, setDocData] = useState()
+	console.log(docData)
+	const navigate = useNavigate()
 	// const [isLoading, setIsloading] = useState(true)
 	const [observacao, setObservacao] = useState('')
 	// console.log(docData)
+	let userInfo = null
+	userInfo = JSON.parse(localStorage.getItem('userData'))
+	const { usuario_id } = userInfo
 	const [checklist, setChecklist] = useState([
 		{ id: 1, prop: 'Natureza do documento', status: false },
 		{ id: 2, prop: 'Legibilidade', status: false },
@@ -29,7 +35,8 @@ export function AuditandoDoc() {
 
 	useEffect(() => {
 		const callServices = async () => {
-			const response = await getDocAuditandoSfh(id)
+			const response = await getDocAuditando(id)
+			console.log(`Resposta ${response}`);
 
 			const data = response[0]
 			// console.log(data)
@@ -65,16 +72,20 @@ export function AuditandoDoc() {
 						params: {
 							docData,
 							observacao,
-							checklist
+							checklist,
+							usuario_id
 						}
 					})
 					.then((response) => {
 						if (response.statusText === 'OK') {
-							return Swal.fire({
+							Swal.fire({
 								icon: 'success',
 								title: 'Tudo certo!',
 								text: 'A audição foi salva com sucesso!',
 								// footer: '<a href="">Why do I have this issue?</a>'
+							})
+							return navigate(`/detalhes-auditoria/${docData.mutuario_id}`, {
+								replace: true
 							})
 						}
 						throw new Error(response.statusText)
