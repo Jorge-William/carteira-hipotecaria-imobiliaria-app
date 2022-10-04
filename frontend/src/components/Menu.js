@@ -11,9 +11,9 @@ const Menu = ({ logout }) => {
 		logout()
 		AuthService.logout()
 	}
-	let userName = null
-	userName = JSON.parse(localStorage.getItem('userData'))
-	const { type } = userName
+	// let userInfo = null
+	// userInfo = JSON.parse(localStorage.getItem('userData'))
+	// const { type } = userInfo
 
 	return (
 		<section className='container'>
@@ -87,16 +87,7 @@ const Menu = ({ logout }) => {
 									</li>
 								</ul>
 							</li>
-							{type === 'administrador' && (
-								<li>
-									<Link
-										className='nav-link active'
-										to='/auditoria'
-									>
-										Auditoria
-									</Link>
-								</li>
-							)}
+							
 							{/* <li className='nav-item dropdown'>
 								<a
 									className='nav-link dropdown-toggle'

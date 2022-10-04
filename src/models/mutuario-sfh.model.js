@@ -195,8 +195,11 @@ const AuditoriaSfh = sequelize.define(
       allowNull: true,
     },
     auditado_por: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.TEXT,
       allowNull: false,
+    },
+    dt_auditoria: {
+      type: DataTypes.DATE,
     },
     tipo_documento: {
       type: DataTypes.TEXT,
@@ -218,7 +221,7 @@ DocumentosSfh.hasOne(AuditoriaSfh, { foreignKey: "doc_id" });
 // sequelize.sync({ alter: true });
 // sequelize.sync();
 // DocumentosSfh.sync({ force: true });
-// AuditoriaSfh.sync({ alter: true });
+AuditoriaSfh.sync({ alter: true });
 
 module.exports = {
   MutuariosSfh,

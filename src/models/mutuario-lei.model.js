@@ -198,6 +198,9 @@ const AuditoriaLei = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    dt_auditoria: {
+      type: DataTypes.DATE,
+    },
     tipo_documento: {
       type: DataTypes.TEXT,
     },
@@ -215,7 +218,7 @@ MutuariosLei.hasMany(DocumentosLei, { foreignKey: "mutuario_id" });
 DocumentosLei.hasOne(AuditoriaLei, { foreignKey: "doc_id" });
 
 // sequelize.sync({ alter: true });
-// AuditoriaLei.sync({ alter: true });
+// AuditoriaLei.sync({ force: true });
 
 // sequelize.sync();
 // DocumentosLei.sync({ force: true });
