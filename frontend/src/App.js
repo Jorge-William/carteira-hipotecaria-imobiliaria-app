@@ -33,6 +33,7 @@ const App = () => {
 		localStorage.setItem('user', auth)
 	}, [auth])
 
+
 	return (
 		<main className='container'>
 			{auth && <Menu logout={() => setAuth(false)} />}

@@ -46,7 +46,7 @@ router.post("/documentos", async (req, res) => {
 
 router.post("/doc-auditando", async (req, res) => {
   const { id } = req.body.params;
-  const [result] = await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome
+  const [result] = await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome, mutuario_id, a.id as id_documento
   FROM documentos_lei a 
   LEFT JOIN tipos_doc_lei b ON a.tipo_doc_lei_id = b.id 
   LEFT JOIN mutuarios_lei c ON a.mutuario_id = c.id  
@@ -59,7 +59,7 @@ router.get("/documentos-nao-auditados", async (req, res) => {
   // eslint-disable-next-line
 	const docsNaoAuditados = await sequelize.query(`SELECT mutuarios_lei.id, mutuarios_lei.rotulo,
   mutuarios_lei.nome, COUNT(documentos_lei.status = 0)  AS nao_auditados  FROM mutuarios_lei, 
-  documentos_lei WHERE documentos_lei.status != 3 AND mutuarios_lei.id = documentos_lei.mutuario_id  
+  documentos_lei WHERE documentos_lei.status != 3 AND documentos_lei.status != 10 AND mutuarios_lei.id = documentos_lei.mutuario_id  
   GROUP  BY mutuarios_lei.id, mutuarios_lei.id, mutuarios_lei.rotulo,
   mutuarios_lei.nome ORDER BY id;`);
 

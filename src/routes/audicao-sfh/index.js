@@ -1,5 +1,5 @@
 const express = require("express");
-const sequelize = require("../../database/sequelize.connection");
+const log = require("../../models/log.model");
 // const sequelize = require("../../database/sequelize.connection");
 const {
   AuditoriaSfh,
@@ -7,19 +7,23 @@ const {
 } = require("../../models/mutuario-sfh.model");
 
 const router = express.Router();
-
+// eslint-disable-next-line
 router.post("/audicao-sfh", async (req, res) => {
   const {
     // eslint-disable-next-line
 		id_documento,
+    // eslint-disable-next-line
     cod_pasta,
-    nome,
     descricao,
   } = req.body.params.docData;
+  console.log(req.body.params.docData);
 
   const { observacao } = req.body.params.observacao;
 
   const checkList = req.body.params.checklist;
+  // eslint-disable-next-line
+  const { usuario_id } = req.body.params;
+
   //   console.log(checkList[0].status);
 
   try {
@@ -37,19 +41,57 @@ router.post("/audicao-sfh", async (req, res) => {
         scan_verso: `${checkList[6].status}`,
         obs: `${observacao}`,
         legibilidade: `${checkList[1].status}`,
-        auditado_por: 123,
+        // eslint-disable-next-line
+        auditado_por: usuario_id,
         tipo_documento: `${descricao}`,
+        dt_auditoria: Date.now(),
       },
     );
 
-    const documento = await DocumentosSfh.update(
-      { status: "10" },
-      { where: { id: id_documento } },
-    );
+    const checks = [
+      checkList[0].status,
+      checkList[1].status,
+      checkList[2].status,
+      checkList[3].status,
+      checkList[4].status,
+      checkList[5].status,
+      checkList[6].status,
+    ];
 
-    console.log(documento);
+    const trueValue = checks.filter((item) => item === true);
+
+    console.log(audicao);
+    if (trueValue.length === 7) {
+      const documento = await DocumentosSfh.update(
+        // Atualizar código do auditor na tabela documento após auditoria
+        // eslint-disable-next-line
+        { status: "3", auditor: usuario_id, dt_auditoria: Date.now()},
+        // eslint-disable-next-line
+        { where: { id: id_documento } },
+      );
+      await log.create({
+        // eslint-disable-next-line
+        data: Date.now(), usuario: usuario_id, tabela: "C", operacao: `O documento ${descricao}, com ID: ${id_documento} foi auditado sem pendências.`,
+      });
+      console.log(documento);
+    } else {
+      await log.create({
+        // eslint-disable-next-line
+        data: Date.now(), usuario: usuario_id, tabela: "C", operacao: `O documento ${descricao}, com ID: ${id_documento} foi auditado com pendências para acerto.`,
+      });
+      const documento = await DocumentosSfh.update(
+        // Atualizar código do auditor na tabela documento após auditoria
+        // eslint-disable-next-line
+        { status: "10", auditor: usuario_id, dt_auditoria: Date.now() },
+        // eslint-disable-next-line
+        { where: { id: id_documento } },
+      );
+
+      console.log(documento);
+    }
 
     if (audicao) {
+      audicao.save();
       // eslint-disable-next-line
 			return res.send({ mensagem: 'Audição salva com sucesso!!!' })
     }

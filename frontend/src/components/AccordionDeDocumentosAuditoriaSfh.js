@@ -32,10 +32,10 @@ export default function AccordionDeDocumentosAuditoriaSfh({ documentos }) {
 						onChange={(e) => setOption(e.target.value)}
 					>
 						<option selected value='0'>
-							Status do documento
+							Documentos não auditados
 						</option>
-						<option value='0'>Ainda não auditado</option>
-						<option value='3'>Documentos Ok</option>
+						<option value='10'>Auditados com pendências</option>
+						<option value='3'>Documentos Certificados pelo auditor</option>
 					</select>
 				</div>
 			</div>
@@ -133,7 +133,7 @@ export default function AccordionDeDocumentosAuditoriaSfh({ documentos }) {
 															<i className='bi bi-file-earmark-arrow-up'></i>
 														</button>
 													</a>
-													{item.status === '0' && (
+													{item.status !== '3' && item.status !== '10' && (
 														<Link
 															to={`/auditando-sfh/${item.id}`}
 														>
@@ -145,7 +145,7 @@ export default function AccordionDeDocumentosAuditoriaSfh({ documentos }) {
 																<i className='bi bi-clipboard2-data'></i>
 															</button>
 														</Link>
-													)}
+													) }
 												</div>
 											</tr>
 										</tbody>

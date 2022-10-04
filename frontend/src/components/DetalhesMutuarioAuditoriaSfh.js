@@ -9,7 +9,7 @@ import AccordionDeDocumentosAuditoriaSfh from './AccordionDeDocumentosAuditoriaS
 export default function DetalhesMutuarioAuditoriaSfh({ id }) {
 	const [dados, setDados] = useState({})
 	const [documentos, setDocumentos] = useState([])
-	console.log(id);
+
 	useEffect(() => {
 		const callServices = async () => {
 			// Posição 0 é o id do mutuário e a posição 17 é o tipo(L ou C)
