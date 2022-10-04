@@ -1,6 +1,7 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../style/UserProfileIcon.css'
+import { Link } from 'react-router-dom'
 // import AuthService from '../services/auth.service'
 
 const UserProfileIcon = () => {
@@ -38,11 +39,16 @@ const UserProfileIcon = () => {
 						</a>
 					</li>
 				)}
-				<li>
+				{type === 'administrador' && (
+					<Link className='nav-link' to='/auditoria' style={{color: 'black'}}>
+						Auditoria
+					</Link>
+				)}
+				{/* <li>
 					<a className='dropdown-item' href='/'>
 						Configurações
 					</a>
-				</li>
+				</li> */}
 				<li className='dropdown-divider'></li>
 				<li data-bs-toggle='modal' data-bs-target='#exampleModal'>
 					{/* <button

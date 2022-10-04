@@ -6,10 +6,12 @@ import ExibirMutuarioSfh from './ExibirMutuarioSfh'
 import Skeleton from 'react-loading-skeleton'
 import '../style/DetalheMutuario.css'
 import { Link } from 'react-router-dom'
+import { EditarMutuario } from './EditarMutuario'
 
 const DetalheMutuarioSfh = ({ id }) => {
 	const [dados, setDados] = useState({})
 	const [documentos, setDocumentos] = useState([])
+	const [mostrarEdicao, setMostrarEdicao] = useState(false)
 
 
 	const callServices = useCallback( async () => {
@@ -25,8 +27,6 @@ const DetalheMutuarioSfh = ({ id }) => {
 		callServices()
 	}, [id, callServices])
 
-
-
 	return !dados ? (
 		<Skeleton count={10} />
 	) : (
@@ -38,12 +38,21 @@ const DetalheMutuarioSfh = ({ id }) => {
 						data-bs-toggle='tooltip'
 						data-bs-placement='top'
 						title='Editar Mutuário'
+						onClick={() =>
+							mostrarEdicao
+								? setMostrarEdicao(false)
+								: setMostrarEdicao(true)
+						}
 					>
-						<i className='bi bi-person-lines-fill'></i>
+						{!mostrarEdicao ? (
+							<i className='bi bi-person-lines-fill'></i>
+						) : (
+							<i class='bi bi-person'></i>
+						)}
 					</button>
 				</div>
 				<div className='col-md'>
-					<Link to={`/mutuario/sfh/adicionardocumento/${id}`}>
+				<Link to={`/mutuario/sfh/adicionardocumento/${id}`}>
 						<button
 							className='btn btn-outline-success crud-btn'
 							data-bs-toggle='tooltip'
@@ -55,8 +64,12 @@ const DetalheMutuarioSfh = ({ id }) => {
 					</Link>
 				</div>
 			</section>
-			<ExibirMutuarioSfh dados={dados} />
-			<AccordionDeDocumentos documentos={documentos} callServices={() => callServices()}/>
+			{!mostrarEdicao ? (
+				<ExibirMutuarioSfh dados={dados} />
+			) : (
+				<EditarMutuario dadosMutuario={dados} />
+			)}
+			<AccordionDeDocumentos documentos={documentos} callServices={() => callServices()} />
 		</section>
 	)
 }

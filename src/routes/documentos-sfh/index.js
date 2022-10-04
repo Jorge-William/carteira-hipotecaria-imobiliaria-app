@@ -100,7 +100,7 @@ router.get("/documentos-nao-auditados-sfh", async (req, res) => {
   // eslint-disable-next-line
 	const docsNaoAuditados = await sequelize.query(`SELECT mutuarios_sfh.id, mutuarios_sfh.rotulo,
   mutuarios_sfh.nome, COUNT(documentos_sfh.status = 0)  AS nao_auditados  FROM mutuarios_sfh, 
-  documentos_sfh WHERE documentos_sfh.status != 3 AND mutuarios_sfh.id = documentos_sfh.mutuario_id  
+  documentos_sfh WHERE documentos_sfh.status != 3 AND documentos_sfh.status != 10 AND mutuarios_sfh.id = documentos_sfh.mutuario_id  
   GROUP  BY mutuarios_sfh.id, mutuarios_sfh.id, mutuarios_sfh.rotulo,
   mutuarios_sfh.nome ORDER BY id;`);
 
