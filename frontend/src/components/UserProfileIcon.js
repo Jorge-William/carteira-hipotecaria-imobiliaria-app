@@ -35,7 +35,7 @@ const UserProfileIcon = () => {
 				{type === 'administrador' && (
 					<li>
 						<Link className='dropdown-item' to='/usuarios'>
-							Usuários
+							Gerenciar operadores
 						</Link>
 					</li>
 				)}
