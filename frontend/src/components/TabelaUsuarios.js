@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react'
 
 const TabelaUsuarios = ({ infoUser }) => {
-	console.log(infoUser)
-
 	const [user, setUser] = useState([])
-	console.log(user)
+	console.log(typeof user)
 
 	useEffect(() => {
 		setUser(infoUser)
 	}, [infoUser, user])
+	const usuarios = [user]
 
-	return !infoUser ? (
+	return !user ? (
 		<p>Loading</p>
 	) : (
 		<table class='table'>
@@ -24,7 +23,7 @@ const TabelaUsuarios = ({ infoUser }) => {
 				</tr>
 			</thead>
 			<tbody>
-				{/* {user.map((user) => {
+				{usuarios.map((user) => {
 					return (
 						<tr>
 							<th scope='row'>{user.id}</th>
@@ -32,9 +31,29 @@ const TabelaUsuarios = ({ infoUser }) => {
 							<td>{user.lastname}</td>
 							<td>{user.email}</td>
 							<td>{user.type}</td>
+							<td>
+								<button
+									className='btn btn-success btn-sm'
+									// onClick={() =>
+
+									// }
+								>
+									<i class='bi bi-pencil-fill'></i>
+								</button>
+							</td>
+							<td>
+								<button
+									className='btn btn-danger btn-sm'
+									// onClick={() =>
+
+									// }
+								>
+									<i className='bi bi-trash'></i>
+								</button>
+							</td>
 						</tr>
 					)
-				})} */}
+				})}
 			</tbody>
 		</table>
 	)

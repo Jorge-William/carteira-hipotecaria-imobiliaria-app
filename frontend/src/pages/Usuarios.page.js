@@ -24,9 +24,8 @@ const Usuarios = () => {
 		}
 
 		fetchData()
-	})
+	}, [])
 
-	console.log(userData)
 	return (
 		<main>
 			<h1>Usuários</h1>
