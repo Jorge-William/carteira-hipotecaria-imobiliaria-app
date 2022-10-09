@@ -1,5 +1,7 @@
 const express = require("express");
-const auth = require("../../middleware/auth.middleware");
+
+require("dotenv").config();
+// const auth = require("../../middleware/auth.middleware");
 const {
   login,
   create,
@@ -54,24 +56,42 @@ router.get("/usuarios", async (req, res) => {
   try {
     const Usuarios = await Usuario.findAll();
 
-    console.log(Usuarios[0].dataValues);
-    const {
-      name, id, lastname, email, usuario_id, type,
-    } = Usuarios[0].dataValues;
+    const listaUsuarios = Usuarios.map((usuario) => usuario.dataValues);
+
+    console.log(Usuarios);
 
     res.send({
-      name, id, lastname, email, usuario_id, type,
+      listaUsuarios,
     });
   } catch (error) {
     res.status(500).send({ message: "algo deu errado com a requisição!" });
   }
 });
 
+// -------------------------------- Delete User ----------------------------------
+
+router.delete("/deletar-usuario/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const usuario = await Usuario.destroy({
+      where: {
+        id,
+      },
+    });
+
+    res.send({ usuario });
+  } catch (error) {
+    res.status(500).send({
+      mensagem: "Algo de errado com a operação do lado do servidor!",
+    });
+  }
+});
+
 // -------------------------------- Create User ----------------------------------
-router.post("/admin/create", auth, create, async (req, res) => {
-  const { name, lastName, type } = req.user.dataValues;
-  const result = { name, lastName, type };
-  res.status(200).send({ message: "Usuário criado com sucesso!", result });
+router.post("/criar-usuario", create, async (req, res) => {
+  console.log("Testando");
+  res.status(200).send({ message: "Usuário criado com sucesso!" });
 });
 // -------------------------------------------------------------------------------
 
