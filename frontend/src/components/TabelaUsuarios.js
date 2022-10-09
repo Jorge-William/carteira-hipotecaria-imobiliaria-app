@@ -1,13 +1,50 @@
+import axios from 'axios'
 import { useState, useEffect } from 'react'
+import Swal from 'sweetalert2'
 
 const TabelaUsuarios = ({ infoUser }) => {
 	const [user, setUser] = useState([])
-	console.log(typeof user)
 
 	useEffect(() => {
 		setUser(infoUser)
 	}, [infoUser, user])
+
+	// pois map so rola com arrays...
 	const usuarios = [user]
+	console.log(usuarios[0].listaUsuarios)
+	const deletarOperador = (id, name) => {
+		Swal.fire({
+			icon: 'warning',
+			title: 'Atenção',
+			text: `Deseja realmente deletar o operador ${name}?`,
+			showCancelButton: true,
+			cancelButtonText: 'Cancelar',
+			confirmButtonText: 'Sim deletar',
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return axios
+					.delete(`/deletar-usuario/${id}`)
+					.then((response) => {
+						console.log(response);
+						if (!response.statusText === 'OK') {
+							throw new Error(response.statusText)
+						}
+						return response
+					})
+					.catch((error) => {
+						Swal.showValidationMessage(`Request failed: ${error}`)
+					})
+			},
+			allowOutsideClick: () => !Swal.isLoading()
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire({
+					icon: 'success',
+					title: 'Operador deletado'
+				})
+			}
+		})
+	}
 
 	return !user ? (
 		<p>Loading</p>
@@ -23,12 +60,12 @@ const TabelaUsuarios = ({ infoUser }) => {
 				</tr>
 			</thead>
 			<tbody>
-				{usuarios.map((user) => {
+				{usuarios[0].listaUsuarios?.map((user) => {
 					return (
 						<tr>
 							<th scope='row'>{user.id}</th>
 							<td>{user.name}</td>
-							<td>{user.lastname}</td>
+							<td>{user.lastName}</td>
 							<td>{user.email}</td>
 							<td>{user.type}</td>
 							<td>
@@ -44,9 +81,9 @@ const TabelaUsuarios = ({ infoUser }) => {
 							<td>
 								<button
 									className='btn btn-danger btn-sm'
-									// onClick={() =>
-
-									// }
+									onClick={() =>
+										deletarOperador(user.id, user.name)
+									}
 								>
 									<i className='bi bi-trash'></i>
 								</button>
