@@ -26,7 +26,7 @@ const User = sequelize.define("operadores", {
     allowNull: false,
   },
   usuario_id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   type: {
@@ -48,6 +48,6 @@ const User = sequelize.define("operadores", {
   timestamps: false,
 });
 
-User.sync();
+User.sync({ alter: true });
 
 module.exports = User;
