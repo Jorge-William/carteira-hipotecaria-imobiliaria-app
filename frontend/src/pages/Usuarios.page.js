@@ -1,4 +1,5 @@
 import TabelaUsuarios from '../components/TabelaUsuarios'
+import ButtonAdicionarOperador from '../components/ButtonAdicionarOperador'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -29,6 +30,7 @@ const Usuarios = () => {
 	return (
 		<main>
 			<h1>Usuários</h1>
+			<ButtonAdicionarOperador />
 			<TabelaUsuarios infoUser={userData} />
 		</main>
 	)
