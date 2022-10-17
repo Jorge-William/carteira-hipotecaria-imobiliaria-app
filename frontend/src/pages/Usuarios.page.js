@@ -5,6 +5,7 @@ import axios from 'axios'
 
 const Usuarios = () => {
 	const [userData, setUserData] = useState([])
+	const [reloadTabela, setReloadTabela] = useState({reload: false})
 
 	useEffect(() => {
 		const fetchData = () => {
@@ -25,13 +26,17 @@ const Usuarios = () => {
 		}
 
 		fetchData()
-	}, [])
+	}, [reloadTabela])
+
+	const setLoad = () => {
+		setReloadTabela({reload: true} )
+	}
 
 	return (
 		<main>
 			<h1>Usuários</h1>
-			<ButtonAdicionarOperador />
-			<TabelaUsuarios infoUser={userData} />
+			<ButtonAdicionarOperador callback={() => setLoad()} />
+			<TabelaUsuarios infoUser={userData} callback={() => setLoad()}/>
 		</main>
 	)
 }

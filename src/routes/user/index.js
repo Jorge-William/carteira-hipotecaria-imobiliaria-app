@@ -1,6 +1,6 @@
-const express = require("express");
-
 require("dotenv").config();
+const express = require("express");
+const Log = require("../../models/log.model");
 // const auth = require("../../middleware/auth.middleware");
 const {
   login,
@@ -58,7 +58,7 @@ router.get("/usuarios", async (req, res) => {
 
     const listaUsuarios = Usuarios.map((usuario) => usuario.dataValues);
 
-    console.log(Usuarios);
+    // console.log(Usuarios);
 
     res.send({
       listaUsuarios,
@@ -68,17 +68,96 @@ router.get("/usuarios", async (req, res) => {
   }
 });
 
+// -------------------------------- Fetch usuarios por id -------------------------------
+
+router.post("/usuario-modal", async (req, res) => {
+  try {
+    const usuario = await Usuario.findAll({
+      where: {
+        id: req.body.params.id,
+      },
+    });
+    const {
+      email, name, id, lastName, type,
+    } = usuario[0];
+
+    res.send({
+      email,
+      name,
+      id,
+      lastName,
+      type,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+router.put("/salvar-edicao", async (req, res) => {
+  console.log(req);
+
+  const {
+    email, name, id, lastName, type,
+  } = req.body.novosDados;
+
+  try {
+    const usuario = await Usuario.update(
+      {
+        email,
+        name,
+        id,
+        lastName,
+        type,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
+
+    if (usuario) {
+      await Log.create({
+        // eslint-disable-next-line
+				data: Date.now(),
+        // eslint-disable-next-line
+        usuario: usuario_id,
+        tabela: "Usuarios",
+        operacao: `O usuário ${name} ${lastName} de id: ${id} foi editado.`,
+      });
+    }
+
+    res.send({
+      usuario,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 // -------------------------------- Delete User ----------------------------------
 
-router.delete("/deletar-usuario/:id", async (req, res) => {
-  const { id } = req.params;
-
+router.post("/deletar-usuario", async (req, res) => {
+  const {
+    id, usuarioId, name, lastName,
+  } = req.body.params;
   try {
     const usuario = await Usuario.destroy({
       where: {
         id,
       },
     });
+
+    if (usuario) {
+      await Log.create({
+        // eslint-disable-next-line
+				data: Date.now(),
+        // eslint-disable-next-line
+        usuario: `${usuarioId}`,
+        tabela: "Usuarios",
+        operacao: `O usuário ${name} ${lastName} de id: ${id} foi deletado.`,
+      });
+    }
 
     res.send({ usuario });
   } catch (error) {
@@ -90,7 +169,6 @@ router.delete("/deletar-usuario/:id", async (req, res) => {
 
 // -------------------------------- Create User ----------------------------------
 router.post("/criar-usuario", create, async (req, res) => {
-  console.log("Testando");
   res.status(200).send({ message: "Usuário criado com sucesso!" });
 });
 // -------------------------------------------------------------------------------
