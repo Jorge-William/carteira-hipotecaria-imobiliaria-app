@@ -8,13 +8,13 @@ let PageSize = 15
 
 export default function TableAuditoria() {
 	const [lista, setLista] = useState([])
-	const [isLoading, setLoading] = useState(true)
+	// const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
 
 	useEffect(() => {
 		setTimeout(() => {
 			getDocsNaoAuditados().then((dados) => setLista(dados))
-			setLoading(false)
+			// setLoading(false)
 		}, 1000)
 	}, [])
 

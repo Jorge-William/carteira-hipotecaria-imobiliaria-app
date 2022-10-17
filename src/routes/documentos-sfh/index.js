@@ -47,7 +47,6 @@ const upload = multer({
 router.use("/documentos", express.static("pastas/sfh/"));
 
 router.post("/upload-sfh", upload.array("file"), async (req, res) => {
-  console.log(req.body);
   const {
     tipo,
     rotulo,

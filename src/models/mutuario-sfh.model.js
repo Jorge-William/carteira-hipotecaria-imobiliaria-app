@@ -63,7 +63,7 @@ const DocumentosSfh = sequelize.define(
       type: DataTypes.TEXT,
     },
     operador: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
     status: {
       type: DataTypes.TEXT,
@@ -220,8 +220,8 @@ DocumentosSfh.hasOne(AuditoriaSfh, { foreignKey: "doc_id" });
 
 // sequelize.sync({ alter: true });
 // sequelize.sync();
-// DocumentosSfh.sync({ force: true });
-AuditoriaSfh.sync({ alter: true });
+DocumentosSfh.sync({ alter: true });
+// AuditoriaSfh.sync({ alter: true });
 
 module.exports = {
   MutuariosSfh,

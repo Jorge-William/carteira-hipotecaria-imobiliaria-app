@@ -34,15 +34,17 @@ const UserProfileIcon = () => {
 				</li>
 				{type === 'administrador' && (
 					<li>
-						<a className='dropdown-item' href='/'>
-							Usuários
-						</a>
+						<Link className='dropdown-item' to='/usuarios'>
+							Gerenciar operadores
+						</Link>
 					</li>
 				)}
 				{type === 'administrador' && (
-					<Link className='nav-link' to='/auditoria' style={{color: 'black'}}>
-						Auditoria
-					</Link>
+					<li>
+						<Link className='dropdown-item' to='/auditoria'>
+							Auditoria
+						</Link>
+					</li>
 				)}
 				{/* <li>
 					<a className='dropdown-item' href='/'>
