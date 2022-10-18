@@ -20,6 +20,7 @@ import { AuditandoDoc } from './pages/AuditandoDoc.page'
 import { AuditandoDocSfh } from './pages/AuditandoDocSfh.page'
 import { DetalhesAuditoriaSfh } from './pages/DetalhesAuditoriaSfh.page'
 import Usuarios from './pages/Usuarios.page'
+import Operador from './pages/Operador.page'
 
 const App = () => {
 	const [auth, setAuth] = useState(null)
@@ -114,6 +115,12 @@ const App = () => {
 					<Route
 						path='/mutuario-sfh/adicionar'
 						element={<AdicionarMutuarioSfh />}
+					/>
+				)}
+				{auth && (
+					<Route
+						path='/operador'
+						element={<Operador />}
 					/>
 				)}
 				{auth && <Route path='/auditoria' element={<Auditoria />} />}
