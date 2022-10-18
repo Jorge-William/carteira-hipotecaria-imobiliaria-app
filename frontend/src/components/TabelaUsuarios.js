@@ -2,7 +2,6 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import ModalEditarUsuario from './ModalEditarUsuario'
-import { v4 as uuidv4 } from 'uuid'
 
 const TabelaUsuarios = ({ infoUser, callback }) => {
 	const [user, setUser] = useState([])
@@ -13,10 +12,9 @@ const TabelaUsuarios = ({ infoUser, callback }) => {
 	}, [infoUser, user])
 
 	const usuario_id = JSON.parse(localStorage.getItem('userData'))
-	const {id} = usuario_id
+	const { id } = usuario_id
 	// pois map so rola com arrays...
 	const usuarios = [user]
-	const uuid = uuidv4()
 	const deletarOperador = (id, name, lastName, usuarioId) => {
 		Swal.fire({
 			icon: 'warning',
@@ -32,7 +30,7 @@ const TabelaUsuarios = ({ infoUser, callback }) => {
 						params: {
 							id,
 							usuarioId,
-							name, 
+							name,
 							lastName
 						}
 					})
@@ -81,7 +79,7 @@ const TabelaUsuarios = ({ infoUser, callback }) => {
 					{usuarios[0].listaUsuarios?.map((user, key) => {
 						return (
 							<>
-								<tr key={key+1}>
+								<tr key={key + 1}>
 									<th scope='row'>{user.id}</th>
 									<td>{user.name}</td>
 									<td>{user.lastName}</td>
@@ -91,7 +89,7 @@ const TabelaUsuarios = ({ infoUser, callback }) => {
 										<button
 											className='btn btn-success btn-sm'
 											data-bs-toggle='modal'
-											data-bs-target={`#edita-mutuario${uuid}`}
+											data-bs-target={`#edita-mutuario`}
 											onClick={() => teste(user.id)}
 										>
 											<i class='bi bi-pencil-fill'></i>
@@ -116,10 +114,11 @@ const TabelaUsuarios = ({ infoUser, callback }) => {
 								{
 									<ModalEditarUsuario
 										key={key}
-										uuid={uuid}
-										user={{
+										user={
+
 											id_operador
-										}}
+
+										}
 										callback={callback}
 									/>
 								}
