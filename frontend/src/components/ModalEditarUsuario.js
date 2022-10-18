@@ -3,31 +3,37 @@ import { useState, useEffect } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import Swal from 'sweetalert2'
 
-const ModalEditarUsuario = ({ user, uuid, callback}) => {
-	const [userData, setUserData] = useState()
-    const [usuario, setUsuario] = useState({id: '', name:'', lasName:'', email: '', type: ''})
-    const [novosDados, setNovosDados] = useState({id: usuario.id, name: usuario.name, lasName: usuario.name, email: usuario.email , type: usuario.type})
+const ModalEditarUsuario = ({ user, callback }) => {
+	// const [userData, setUserData] = useState()// Id do usuário
+	const [usuario, setUsuario] = useState({ id: '', name: '', lasName: '', email: '', type: '' })
+	const [novosDados, setNovosDados] = useState({ id: usuario.id, name: usuario.name, lasName: usuario.name, email: usuario.email, type: usuario.type })
+
+	const usuario_id = JSON.parse(localStorage.getItem('userData'))
+	const { id } = usuario_id
+
+	// useEffect(() => {
+	// 	setUserData(user)
+	// }, [user])
 
 	useEffect(() => {
-		setUserData(user)
-	}, [userData, user])
-	// console.log(user);
+		const getUser = (idEditado) => {
+			axios.post('/usuario-modal', {
+				params: {
+					idEditado,
+					id
+				}
+			})
+				.then(response => setUsuario(response.data))
+		}
+		getUser(user)
+	}, [user, id]);
 
-	const getUser = (id) => {
-		axios.post('/usuario-modal', { params: { id }}).then(response => setUsuario(response.data))
-	}
-
-	useEffect(() => {
-		getUser(user.id_operador)
-	},[user.id_operador])
-
-	// console.log(user, uuid)
 
 	const handleChange = (event) => {
 		const value = event.target.value
-		setNovosDados({...usuario, [event.target.name]: value})
+		setNovosDados({ ...usuario, [event.target.name]: value })
 	}
-	
+
 	const handleClick = () => {
 		Swal.fire({
 			icon: 'warning',
@@ -40,11 +46,12 @@ const ModalEditarUsuario = ({ user, uuid, callback}) => {
 			preConfirm: () => {
 				return axios
 					.put('/salvar-edicao', {
-							novosDados
+						novosDados, id
 					})
 					.then((response) => {
 						// console.log(response)
 						callback()
+						setUsuario({ id: '', name: '', lasName: '', email: '', type: '' })
 						if (!response.statusText === 'OK') {
 							throw new Error(response.statusText)
 						}
@@ -65,15 +72,15 @@ const ModalEditarUsuario = ({ user, uuid, callback}) => {
 		})
 	}
 
-	return !usuario ? <Skeleton count={3}/> : (
+	return !usuario ? <Skeleton count={3} /> : (
 		<div
 			class='modal fade'
-			id={`edita-mutuario${uuid}`}
+			id={`edita-mutuario`}
 			tabindex='-1'
 			aria-labelledby='exampleModalLabel'
 			aria-hidden='true'
 		>
-			<div class='modal-dialog'>
+			<div class='modal-dialog modal-dialog-centered'>
 				<div class='modal-content'>
 					<div class='modal-header'>
 						<h1 class='modal-title fs-5' id='exampleModalLabel'>

@@ -15,22 +15,22 @@ const router = new express.Router();
 router.post("/login", login, async (req, res) => {
   const {
     /* eslint-disable */
-		id,
-		name,
-		lastName,
-		token,
-		type,
-		usuario_id
-	} = req.user
-	try {
-		// Por enquanto retorna todos os dados do usuario para o frontend
-		res.send({
-			message: 'Bem vindo ',
-			id,
-			name,
-			lastName,
-			usuario_id,
-			/* eslint-enable */
+    id,
+    name,
+    lastName,
+    token,
+    type,
+    usuario_id
+  } = req.user
+  try {
+    // Por enquanto retorna todos os dados do usuario para o frontend
+    res.send({
+      message: 'Bem vindo ',
+      id,
+      name,
+      lastName,
+      usuario_id,
+      /* eslint-enable */
       type,
       token,
       userIsValid: true,
@@ -71,12 +71,14 @@ router.get("/usuarios", async (req, res) => {
 // -------------------------------- Fetch usuarios por id -------------------------------
 
 router.post("/usuario-modal", async (req, res) => {
+  console.log(req.body.params.idEditado);
   try {
     const usuario = await Usuario.findAll({
       where: {
-        id: req.body.params.id,
+        id: req.body.params.idEditado,
       },
     });
+    // console.log(usuario)
     const {
       email, name, id, lastName, type,
     } = usuario[0];
@@ -94,10 +96,8 @@ router.post("/usuario-modal", async (req, res) => {
 });
 
 router.put("/salvar-edicao", async (req, res) => {
-  console.log(req);
-
   const {
-    email, name, id, lastName, type,
+    email, name, idEditado, lastName, type, id,
   } = req.body.novosDados;
 
   try {
@@ -105,7 +105,7 @@ router.put("/salvar-edicao", async (req, res) => {
       {
         email,
         name,
-        id,
+        idEditado,
         lastName,
         type,
       },
@@ -116,16 +116,12 @@ router.put("/salvar-edicao", async (req, res) => {
       },
     );
 
-    if (usuario) {
-      await Log.create({
-        // eslint-disable-next-line
-				data: Date.now(),
-        // eslint-disable-next-line
-        usuario: usuario_id,
-        tabela: "Usuarios",
-        operacao: `O usuário ${name} ${lastName} de id: ${id} foi editado.`,
-      });
-    }
+    await Log.create({
+      data: Date.now(),
+      usuario: `${req.body.id}`,
+      tabela: "Usuarios",
+      operacao: `O usuário ${name} ${lastName} de id: ${id} foi editado.`,
+    });
 
     res.send({
       usuario,
@@ -147,11 +143,11 @@ router.post("/deletar-usuario", async (req, res) => {
         id,
       },
     });
-
+    console.log(usuario);
     if (usuario) {
       await Log.create({
         // eslint-disable-next-line
-				data: Date.now(),
+        data: Date.now(),
         // eslint-disable-next-line
         usuario: `${usuarioId}`,
         tabela: "Usuarios",
