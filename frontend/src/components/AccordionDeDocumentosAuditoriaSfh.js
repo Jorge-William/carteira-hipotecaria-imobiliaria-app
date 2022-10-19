@@ -2,9 +2,9 @@ import renderSwitch from '../helpers/renderSwitch'
 import Skeleton from 'react-loading-skeleton'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import acertoData from '../helpers/acertoData'
 
 export default function AccordionDeDocumentosAuditoriaSfh({ documentos }) {
-
 	const [option, setOption] = useState('0')
 	const [docsFiltrados, setDocsFiltrados] = useState([])
 
@@ -35,7 +35,9 @@ export default function AccordionDeDocumentosAuditoriaSfh({ documentos }) {
 							Documentos não auditados
 						</option>
 						<option value='10'>Auditados com pendências</option>
-						<option value='3'>Documentos Certificados pelo auditor</option>
+						<option value='3'>
+							Documentos Certificados pelo auditor
+						</option>
 					</select>
 				</div>
 			</div>
@@ -98,7 +100,11 @@ export default function AccordionDeDocumentosAuditoriaSfh({ documentos }) {
 											<tr key={key}>
 												<th scope='row'>{item.id}</th>
 												<td>{item.nome_arquivo}</td>
-												<td>{item.dt_registro}</td>
+												<td>
+													{acertoData(
+														item.dt_registro
+													)}
+												</td>
 
 												<td>{item.qtd_pag}</td>
 												<td>{item.cod_pasta}</td>
@@ -133,19 +139,21 @@ export default function AccordionDeDocumentosAuditoriaSfh({ documentos }) {
 															<i className='bi bi-file-earmark-arrow-up'></i>
 														</button>
 													</a>
-													{item.status !== '3' && item.status !== '10' && (
-														<Link
-															to={`/auditando-sfh/${item.id}`}
-														>
-															<button
-																type='button'
-																className='btn btn-success'
+													{item.status !== '3' &&
+														item.status !==
+															'10' && (
+															<Link
+																to={`/auditando-sfh/${item.id}`}
 															>
-																Auditar{' '}
-																<i className='bi bi-clipboard2-data'></i>
-															</button>
-														</Link>
-													) }
+																<button
+																	type='button'
+																	className='btn btn-success'
+																>
+																	Auditar{' '}
+																	<i className='bi bi-clipboard2-data'></i>
+																</button>
+															</Link>
+														)}
 												</div>
 											</tr>
 										</tbody>

@@ -2,12 +2,12 @@ import renderSwitch from '../helpers/renderSwitch'
 import Skeleton from 'react-loading-skeleton'
 import Swal from 'sweetalert2'
 import axios from 'axios'
+import acertoData from '../helpers/acertoData'
 
-const AccordionDeDocumentos = ({ documentos, callServices}) => {
+const AccordionDeDocumentos = ({ documentos, callServices }) => {
+	const userInfo = JSON.parse(localStorage.getItem('userData'))
 
-const userInfo = JSON.parse(localStorage.getItem('userData'))
-
-const {id} = userInfo
+	const { id } = userInfo
 
 	const handleClick = (tipoDoc, pasta, idDoc, idUser, arquivo) => {
 		Swal.fire({
@@ -32,16 +32,15 @@ const {id} = userInfo
 							senha,
 							idUser,
 							arquivo
-
 						}
 					})
 					.then((response) => {
-					console.log(response);
+						// console.log(response)
 						if (response.data.status) {
 							callServices()
 							return response
 						}
-							throw new Error(response.data.status)
+						throw new Error(response.data.status)
 					})
 					.catch((error) => {
 						Swal.showValidationMessage(`${error} - Senha inválida!`)
@@ -130,7 +129,11 @@ const {id} = userInfo
 											<tr key={key}>
 												<th scope='row'>{item.id}</th>
 												<td>{item.nome_arquivo}</td>
-												<td>{item.dt_registro}</td>
+												<td>
+													{acertoData(
+														item.dt_registro
+													)}
+												</td>
 
 												<td>{item.qtd_pag}</td>
 												<td>{item.cod_pasta}</td>

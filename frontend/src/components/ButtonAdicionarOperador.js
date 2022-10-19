@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 // import Skeleton from 'react-loading-skeleton'
 
-const ButtonAdicionarOperador = ({callback}) => {
+const ButtonAdicionarOperador = ({ callback }) => {
 	const [mostraForm, setMostraForm] = useState(false)
 	const [formData, setFormData] = useState({
 		name: '',
@@ -12,7 +12,7 @@ const ButtonAdicionarOperador = ({callback}) => {
 		type: ''
 	})
 
-useEffect(() => {console.log('recarregou!!')},[formData])
+	// useEffect(() => {console.log('recarregou!!')},[formData])
 
 	const handleChange = (event) => {
 		const value = event.target.value
@@ -44,9 +44,9 @@ useEffect(() => {console.log('recarregou!!')},[formData])
 						}
 					})
 					.then((response) => {
-					// 	console.log(response)
-					callback()
-					setMostraForm((prev) => !prev)
+						// 	console.log(response)
+						callback()
+						setMostraForm((prev) => !prev)
 						if (!response.statusText === 'OK') {
 							throw new Error(response.statusText)
 						}
@@ -122,7 +122,14 @@ useEffect(() => {console.log('recarregou!!')},[formData])
 					</div>
 					<div className='col-md-1'>
 						<button
-							disabled={formData.name === '' || formData.lastName === '' || formData.email === '' || formData.type === '' ? true : false}
+							disabled={
+								formData.name === '' ||
+								formData.lastName === '' ||
+								formData.email === '' ||
+								formData.type === ''
+									? true
+									: false
+							}
 							type='submit'
 							className='btn btn-success'
 							onClick={() => handleClick()}

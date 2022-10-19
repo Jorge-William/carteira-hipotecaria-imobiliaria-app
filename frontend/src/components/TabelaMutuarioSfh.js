@@ -20,11 +20,11 @@ const TabelaMutuarioSfh = () => {
 		setLoading(false)
 	}
 	useEffect(() => {
-		setTimeout(() => {
-			fetchMutuarios()
-		}, 1000)
+		// setTimeout(() => {
+		fetchMutuarios()
+		// }, 1000)
 	}, [])
-	console.log(isLoading)
+
 	const currentTableData = useMemo(() => {
 		const firstPageIndex = (currentPage - 1) * PageSize
 		const lastPageIndex = firstPageIndex + PageSize
@@ -46,7 +46,7 @@ const TabelaMutuarioSfh = () => {
 							<Skeleton count={1} height={25} />
 						</th>
 						<th scope='col'>
-							<Skeleton width={100} height={25} />
+							<Skeleton count={1} height={25} />
 						</th>
 						<th scope='col'>
 							<Skeleton count={1} height={25} />

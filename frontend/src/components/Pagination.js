@@ -34,52 +34,55 @@ const Pagination = (props) => {
 
 	let lastPage = paginationRange[paginationRange.length - 1]
 	return (
-		<ul
-			className={classnames('pagination-container', {
-				[className]: className
-			})}
-		>
-			{/* Seta de navegação da esquerda */}
-			<li
-				className={classnames('pagination-item', {
-					disabled: currentPage === 1
+		<section className='mt-5 mb-5'>
+			<ul
+				className={classnames('pagination-container', {
+					[className]: className
 				})}
-				onClick={onPrevious}
 			>
-				<div className='arrow left' />
-			</li>
-			{paginationRange.map((pageNumber, key) => {
-				// Se o pageItem for um PONTO (DOT), renderize o caractere unicode DOTS
-				if (pageNumber === DOTS) {
+				{/* Seta de navegação da esquerda */}
+				<li
+					className={classnames('pagination-item', {
+						disabled: currentPage === 1
+					})}
+					onClick={onPrevious}
+				>
+					<div className='arrow left' />
+				</li>
+				{paginationRange.map((pageNumber, key) => {
+					// Se o pageItem for um PONTO (DOT), renderize o caractere unicode DOTS
+					if (pageNumber === DOTS) {
+						return (
+							<li key={key} className='pagination-item dots'>
+								&#8230;
+							</li>
+						)
+					}
+
+					// Renderize a amostra de página
 					return (
-						<li key={key} className='pagination-item dots'>
-							&#8230;
+						<li
+							key={key}
+							className={classnames('pagination-item', {
+								selected: pageNumber === currentPage
+							})}
+							onClick={() => onPageChange(pageNumber)}
+						>
+							{pageNumber}
 						</li>
 					)
-				}
-
-				// Renderize a amostra de página
-				return (
-					<li key={key}
-						className={classnames('pagination-item', {
-							selected: pageNumber === currentPage
-						})}
-						onClick={() => onPageChange(pageNumber)}
-					>
-						{pageNumber}
-					</li>
-				)
-			})}
-			{/*  Seta de navegação da direita */}
-			<li 
-				className={classnames('pagination-item', {
-					disabled: currentPage === lastPage
 				})}
-				onClick={onNext}
-			>
-				<div className='arrow right' />
-			</li>
-		</ul>
+				{/*  Seta de navegação da direita */}
+				<li
+					className={classnames('pagination-item', {
+						disabled: currentPage === lastPage
+					})}
+					onClick={onNext}
+				>
+					<div className='arrow right' />
+				</li>
+			</ul>
+		</section>
 	)
 }
 

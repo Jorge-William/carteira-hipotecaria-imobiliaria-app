@@ -178,7 +178,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 							<Skeleton count={1} />
 						) : (
 							<>
-								<label gtmlFor='tipo' className='form-label'>
+								<label htmlFor='tipo' className='form-label'>
 									Tipo
 								</label>
 								<input
