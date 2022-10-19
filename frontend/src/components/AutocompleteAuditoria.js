@@ -87,8 +87,8 @@ const Autocomplete = (props) => {
 	// }
 	// console.log(Array.from(Object.values(data), (breed) => breed.rotulo))
 
-	const { placeholder, data, tipo } = props
-	console.log(props)
+	const { placeholder, data, tipo, mutuario } = props
+	// console.log(props)
 	return (
 		<div className='row'>
 			<form
@@ -159,7 +159,7 @@ const Autocomplete = (props) => {
 											data-bs-target='#exampleModal2'
 											// onClick={() => setLiberaModal()}
 										> */}
-											{tipo === 'lei' ? (
+											{mutuario === 'Lei' ? (
 												<Link
 													to={`/detalhes-auditoria/${filter.id}`}
 												>

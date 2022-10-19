@@ -35,7 +35,7 @@ const AccordionDeDocumentos = ({ documentos, callServices }) => {
 						}
 					})
 					.then((response) => {
-						console.log(response)
+						// console.log(response)
 						if (response.data.status) {
 							callServices()
 							return response

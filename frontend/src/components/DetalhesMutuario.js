@@ -12,12 +12,12 @@ const DetalheMutuario = ({ id }) => {
 	const [dados, setDados] = useState({})
 	const [documentos, setDocumentos] = useState([])
 	const [mostrarEdicao, setMostrarEdicao] = useState(false)
-	
-	const callServices = useCallback( async () => {
+
+	const callServices = useCallback(async () => {
 		// Posição 0 é o id do mutuário e a posição 17 é o tipo(L ou C)
 		const documentos = await getDocumentos(id)
 		const mutuario = await getMutuarioById(id)
-		console.log('Estão me chamando!');
+		// console.log('Estão me chamando!');
 		setDocumentos(documentos)
 		setDados(mutuario)
 	}, [id])
@@ -68,7 +68,10 @@ const DetalheMutuario = ({ id }) => {
 			) : (
 				<EditarMutuario dadosMutuario={dados} />
 			)}
-			<AccordionDeDocumentos documentos={documentos} callServices={() => callServices()} />
+			<AccordionDeDocumentos
+				documentos={documentos}
+				callServices={() => callServices()}
+			/>
 		</section>
 	)
 }
