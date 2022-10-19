@@ -17,8 +17,10 @@ import AdicionarMutuarioSfh from './pages/AdicionarMutuarioSfh.page'
 import Auditoria from './pages/Auditoria.page'
 import { DetalhesAuditoria } from './pages/DetalhesAuditoria.page'
 import { AuditandoDoc } from './pages/AuditandoDoc.page'
-import {AuditandoDocSfh  }from './pages/AuditandoDocSfh.page'
-import {DetalhesAuditoriaSfh} from './pages/DetalhesAuditoriaSfh.page'
+import { AuditandoDocSfh } from './pages/AuditandoDocSfh.page'
+import { DetalhesAuditoriaSfh } from './pages/DetalhesAuditoriaSfh.page'
+import Usuarios from './pages/Usuarios.page'
+import Operador from './pages/Operador.page'
 
 const App = () => {
 	const [auth, setAuth] = useState(null)
@@ -33,9 +35,8 @@ const App = () => {
 		localStorage.setItem('user', auth)
 	}, [auth])
 
-
 	return (
-		<main className='container'>
+		<main className='container-fluid'>
 			{auth && <Menu logout={() => setAuth(false)} />}
 			<Routes>
 				{!auth && (
@@ -84,7 +85,10 @@ const App = () => {
 					<Route path='/auditando/:id' element={<AuditandoDoc />} />
 				)}
 				{auth && (
-					<Route path='/auditando-sfh/:id' element={<AuditandoDocSfh />} />
+					<Route
+						path='/auditando-sfh/:id'
+						element={<AuditandoDocSfh />}
+					/>
 				)}
 				{auth && (
 					<Route
@@ -113,7 +117,14 @@ const App = () => {
 						element={<AdicionarMutuarioSfh />}
 					/>
 				)}
+				{auth && (
+					<Route
+						path='/operador'
+						element={<Operador />}
+					/>
+				)}
 				{auth && <Route path='/auditoria' element={<Auditoria />} />}
+				{auth && <Route path='/usuarios' element={<Usuarios />} />}
 				<Route
 					path='*'
 					element={<Navigate to={auth ? '/dashboard' : '/login'} />}

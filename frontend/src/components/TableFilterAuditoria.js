@@ -1,6 +1,6 @@
 import Autocomplete from './AutocompleteAuditoria'
 import '../style/TableFilter.css'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 const TableFilterAuditoria = (data) => {
 	// const leiArray = []
@@ -67,6 +67,7 @@ const TableFilterAuditoria = (data) => {
 									<div className='col-md-12'>
 										<Autocomplete
 											tipo={'rotulo'}
+											mutuario={'Lei'}
 											placeholder={
 												'Código de Pasta - ex. L0001'
 											}
@@ -96,6 +97,7 @@ const TableFilterAuditoria = (data) => {
 									<div className='col-12'>
 										<Autocomplete
 											tipo={'nome'}
+											mutuario={'Lei'}
 											placeholder={'Nome do mutuário'}
 											data={data.data}
 											suggestions={Array.from(

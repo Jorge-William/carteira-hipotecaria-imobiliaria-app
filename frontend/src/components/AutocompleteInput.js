@@ -88,7 +88,7 @@ const Autocomplete = (props) => {
 	// console.log(Array.from(Object.values(data), (breed) => breed.rotulo))
 
 	const { placeholder, data, tipo } = props
-	console.log(data)
+	// console.log(data)
 	return (
 		<div className='row'>
 			<form

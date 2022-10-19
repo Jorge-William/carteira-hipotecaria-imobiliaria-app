@@ -10,7 +10,7 @@ export default function TableAuditoriaSfh() {
 	const [lista, setLista] = useState([])
 	// const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
-console.log(lista);
+	// console.log(lista);
 
 	useEffect(() => {
 		setTimeout(() => {

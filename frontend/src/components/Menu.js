@@ -11,14 +11,17 @@ const Menu = ({ logout }) => {
 		logout()
 		AuthService.logout()
 	}
-	// let userInfo = null
-	// userInfo = JSON.parse(localStorage.getItem('userData'))
-	// const { type } = userInfo
+	let userInfo = null
+	userInfo = JSON.parse(localStorage.getItem('userData'))
+	const { type } = userInfo
 
 	return (
-		<section className='container'>
+		<section className='container-fluid'>
 			<nav className='navbar navbar-expand-lg fixed-top navbar-dark bg-dark'>
-				<div className='container'>
+				<div
+					className='container-fluid'
+					style={{ marginLeft: 60, marginRight: 60 }}
+				>
 					<Link className='navbar-brand' to='/dashboard'>
 						<img
 							style={{ width: 60 }}
@@ -87,7 +90,18 @@ const Menu = ({ logout }) => {
 									</li>
 								</ul>
 							</li>
-							
+							{type === 'administrador' && (
+								<li>
+									<Link className='nav-link' to='/auditoria'>
+										Auditoria
+									</Link>
+								</li>
+							)}
+							<li>
+								<Link className='nav-link' to='/operador'>
+									Operador
+								</Link>
+							</li>
 							{/* <li className='nav-item dropdown'>
 								<a
 									className='nav-link dropdown-toggle'
