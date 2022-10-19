@@ -36,7 +36,7 @@ const App = () => {
 	}, [auth])
 
 	return (
-		<main className='container'>
+		<main className='container-fluid'>
 			{auth && <Menu logout={() => setAuth(false)} />}
 			<Routes>
 				{!auth && (
