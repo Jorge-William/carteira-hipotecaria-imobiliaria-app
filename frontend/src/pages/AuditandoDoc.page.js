@@ -19,8 +19,8 @@ export function AuditandoDoc() {
 	const [checklist, setChecklist] = useState([
 		{ id: 1, prop: 'Natureza do documento', status: false },
 		{ id: 2, prop: 'Legibilidade', status: false },
-		{ id: 3, prop: 'Quantidade de paginas', status: false },
-		{ id: 4, prop: 'Nome do mutuario', status: false },
+		{ id: 3, prop: 'Quantidade de páginas', status: false },
+		{ id: 4, prop: 'Nome do mutuário', status: false },
 		{ id: 5, prop: 'Ordem páginas', status: false },
 		{ id: 6, prop: 'Alinhamento do documento', status: false },
 		{ id: 7, prop: 'Informações do Verso', status: false }

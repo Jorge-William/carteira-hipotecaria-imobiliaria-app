@@ -6,6 +6,7 @@ const mutuarioLeiRoutes = require("./src/routes/mutuario-lei/index");
 const mutuarioSfhRoutes = require("./src/routes/mutuario-sfh/index");
 const documentoLei = require("./src/routes/documento-lei/index");
 const documentoSfh = require("./src/routes/documentos-sfh/index");
+const atividade = require("./src/routes/atividade/index");
 const documentos = require("./src/routes/documentos/index");
 const dashboard = require("./src/routes/dashboard/index");
 const audicaoSfh = require("./src/routes/audicao-sfh/index");
@@ -39,12 +40,15 @@ app.use(audicaoSfh);
 app.use(audicaoLei);
 app.use(documentos);
 app.use(dashboard);
+app.use(atividade);
 // ----------------------------------------------------------------------------
 
 const PORT = process.env.PORT || 5000;
 // eslint-disable-next-line no-console
 console.log(PORT);
 // eslint-disable-next-line no-console
-app.listen(PORT, () => console.log(`---------------------->> Sever is running on ${PORT} <-----------------------`));
+app.listen(PORT, () => console.log(
+  `---------------------->> Sever is running on ${PORT} <-----------------------`,
+));
 // // eslint-disable-next-line no-console
 // console.log();

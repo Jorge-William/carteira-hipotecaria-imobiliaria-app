@@ -21,6 +21,7 @@ import { AuditandoDocSfh } from './pages/AuditandoDocSfh.page'
 import { DetalhesAuditoriaSfh } from './pages/DetalhesAuditoriaSfh.page'
 import Usuarios from './pages/Usuarios.page'
 import Operador from './pages/Operador.page'
+import Atividades from './pages/Atividades.page'
 
 const App = () => {
 	const [auth, setAuth] = useState(null)
@@ -88,6 +89,12 @@ const App = () => {
 					<Route
 						path='/auditando-sfh/:id'
 						element={<AuditandoDocSfh />}
+					/>
+				)}
+				{auth && (
+					<Route
+						path='/atividade'
+						element={<Atividades />}
 					/>
 				)}
 				{auth && (

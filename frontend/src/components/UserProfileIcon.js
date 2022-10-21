@@ -28,9 +28,9 @@ const UserProfileIcon = () => {
 				</li>
 				<li className='dropdown-divider'></li>
 				<li>
-					<a className='dropdown-item' href='/'>
+					<Link className='dropdown-item' to='/atividade'>
 						Atividade
-					</a>
+					</Link>
 				</li>
 				{type === 'administrador' && (
 					<li>
