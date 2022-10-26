@@ -22,8 +22,16 @@ const TabelaOperador = () => {
 		}, 1000)
 	}, [])
 
-	const handleClick = (dados) => {
-		setModalData(dados)
+	const handleClick = (id) => {
+		setTimeout(() => {
+			return axios
+				.post('/retorna-id-mutuario', {
+					id
+				})
+				.then((response) => response.data)
+				.then((dados) => setModalData(dados))
+			// setLoading(false)
+		}, 1000)
 	}
 
 	const PageSize = 15
@@ -78,15 +86,7 @@ const TabelaOperador = () => {
 										className='btn btn-outline-success'
 										data-bs-toggle='modal'
 										data-bs-target='#modalOperador'
-										onClick={() =>
-											handleClick([
-												dado.doc_id,
-												dado.alinhamento,
-												dado.ordem_pag,
-												dado.legibilidade,
-												dado.scan_verso
-											])
-										}
+										onClick={() => handleClick(dado.doc_id)}
 									>
 										{dado.doc_id}
 									</button>
