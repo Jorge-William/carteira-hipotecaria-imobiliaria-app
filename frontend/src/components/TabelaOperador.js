@@ -4,11 +4,13 @@ import { useEffect, useState, useMemo } from 'react'
 import axios from 'axios'
 import acertoData from '../helpers/acertoData'
 import SkeletonTabela from '../components/SkeletonTabela'
+import ModalTelaOperador from './ModalTelaOperador'
 
 const TabelaOperador = () => {
 	const [lista, setLista] = useState([])
 	// const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
+	const [modalData, setModalData] = useState([])
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -19,6 +21,18 @@ const TabelaOperador = () => {
 			// setLoading(false)
 		}, 1000)
 	}, [])
+
+	const handleClick = (id) => {
+		setTimeout(() => {
+			return axios
+				.post('/retorna-id-mutuario', {
+					id
+				})
+				.then((response) => response.data)
+				.then((dados) => setModalData(dados))
+			// setLoading(false)
+		}, 1000)
+	}
 
 	const PageSize = 15
 
@@ -66,8 +80,20 @@ const TabelaOperador = () => {
                                 </Link>
                             </td> */}
 							<td>{dado.cod_pasta}</td>
-							<td>{dado.doc_id}</td>
+							<td>
+								<td>
+									<button
+										className='btn btn-outline-success'
+										data-bs-toggle='modal'
+										data-bs-target='#modalOperador'
+										onClick={() => handleClick(dado.doc_id)}
+									>
+										{dado.doc_id}
+									</button>
+								</td>
+							</td>
 							<td>{dado.tipo_documento}</td>
+
 							<td>{acertoData(dado.dt_auditoria)}</td>
 							<td>{dado.auditado_por}</td>
 							<td>{dado.obs}</td>
@@ -173,6 +199,8 @@ const TabelaOperador = () => {
 				pageSize={PageSize}
 				onPageChange={(page) => setCurrentPage(page)}
 			/>
+			{/* <!-- Modal --> */}
+			<ModalTelaOperador infoDoc={modalData} />
 		</section>
 	)
 }

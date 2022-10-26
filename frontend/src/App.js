@@ -11,6 +11,7 @@ import MutuarioSfh from './pages/MutuarioSfh.page'
 import MutuarioLeiDetalhesPage from './pages/MutuarioLeiDetalhes.page'
 import MutuarioSfhDetalhesPage from './pages/MutuarioSfhDetalhes.page'
 import AdicionarDocumentoPage from './pages/AdicionarDocumento.page'
+import SubstituirDocumentoLeiPage from './pages/SubstituirDocumentoLei.page'
 import AdicionarDocumentoSfhPage from './pages/AdicionarDocumentoSfh.page'
 import AdicionarMutuarioLei from './pages/AdicionarMutuarioLei.page'
 import AdicionarMutuarioSfh from './pages/AdicionarMutuarioSfh.page'
@@ -91,16 +92,17 @@ const App = () => {
 						element={<AuditandoDocSfh />}
 					/>
 				)}
-				{auth && (
-					<Route
-						path='/atividade'
-						element={<Atividades />}
-					/>
-				)}
+				{auth && <Route path='/atividade' element={<Atividades />} />}
 				{auth && (
 					<Route
 						path='/mutuario/lei/adicionardocumento/:id'
 						element={<AdicionarDocumentoPage />}
+					/>
+				)}
+				{auth && (
+					<Route
+						path='/mutuario/lei/substituir-documento-lei/:id'
+						element={<SubstituirDocumentoLeiPage />}
 					/>
 				)}
 				{auth && (
@@ -124,12 +126,7 @@ const App = () => {
 						element={<AdicionarMutuarioSfh />}
 					/>
 				)}
-				{auth && (
-					<Route
-						path='/operador'
-						element={<Operador />}
-					/>
-				)}
+				{auth && <Route path='/operador' element={<Operador />} />}
 				{auth && <Route path='/auditoria' element={<Auditoria />} />}
 				{auth && <Route path='/usuarios' element={<Usuarios />} />}
 				<Route
