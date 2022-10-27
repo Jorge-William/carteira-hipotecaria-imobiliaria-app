@@ -10,10 +10,12 @@ router.get("/lei/documento", async (req, res) => {
 
 router.post("/retorna-id-mutuario", async (req, res) => {
   const idDoc = req.body.id;
-  console.log(typeof idDoc);
 
   try {
-    const result = await DocumentosLei.findOne({ where: { id: idDoc }, attributes: ["mutuario_id"] });
+    const result = await DocumentosLei.findOne({
+      where: { id: idDoc },
+      attributes: ["cod_pasta", "id", "arquivo", "mutuario_id"],
+    });
     console.log(result);
     res.status(200).send(result);
   } catch (error) {

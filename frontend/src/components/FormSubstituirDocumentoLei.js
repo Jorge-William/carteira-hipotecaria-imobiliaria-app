@@ -5,6 +5,7 @@ import SelectInput from './SelectInput'
 import { useState, useEffect, useRef } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import Swal from 'sweetalert2'
+import deletaDocumento from '../helpers/deletaDocumento'
 // import withReactContent from 'sweetalert2-react-content'
 
 import axios from 'axios'
@@ -138,7 +139,7 @@ const FormSubstituirDocumentoLei = ({ dados }) => {
 									title: 'Documento salvo no sistema.'
 								})
 							}
-							return navigate(`/detalhes/${id}`, {
+							return navigate(`/operador`, {
 								replace: true
 							})
 						})

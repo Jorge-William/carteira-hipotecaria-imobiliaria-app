@@ -1,24 +1,50 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-const ModalTelaOperador = (props) => {
-	const [documentoInfo, setDocumentoInfo] = useState([])
+
+						
+
+import deletaDocumento from '../helpers/deletaDocumento'
+const ModalTelaOperador = (props, callback) => {
+
+const navigate = useNavigate()
+
+	const [documentoInfo, setDocumentoInfo] = useState({
+		infoDoc: {
+			dados: {
+				arquivo: '',
+				cod_pasta: '',
+				id: 0,
+				mutuario_id: 0
+			},
+			tipo: ''
+		}
+	})
 
 	useEffect(() => {
 		setDocumentoInfo(props)
 	}, [props])
-	// const {id }= documentoInfo.infoDoc;
-	const navigate = useNavigate()
+
 
 	useEffect(() => {
 		console.log('foi')
 	}, [documentoInfo])
-	// const { docData, alinhamento, ordemPag, legibilidade, scanVerso } =
-	// documentoInfo
 
-	const alterarDoc = () => {
-		navigate(
-			`/mutuario/lei/substituir-documento-lei/${documentoInfo.infoDoc.mutuario_id}`
-		)
+	// console.log(documentoInfo)
+
+	const { tipo } = documentoInfo.infoDoc
+
+	const alterarDoc = async () => {
+		if (documentoInfo) {
+			const { arquivo, cod_pasta, id, mutuario_id } =
+				documentoInfo.infoDoc.dados
+				const result = await deletaDocumento(tipo, cod_pasta, id, arquivo, mutuario_id)
+				if(result){
+					navigate(
+						`/mutuario/lei/substituir-documento-lei/${mutuario_id}`
+						)
+					}
+			callback()
+		}
 	}
 
 	return documentoInfo.length === 0 ? (

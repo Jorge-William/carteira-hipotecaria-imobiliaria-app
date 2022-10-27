@@ -11,7 +11,10 @@ const TabelaOperador = () => {
 	// const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [modalData, setModalData] = useState([])
+	const [reloadTabela, setReloadTabela] = useState({reload: false})
+	
 
+	
 	useEffect(() => {
 		setTimeout(() => {
 			return axios
@@ -20,18 +23,26 @@ const TabelaOperador = () => {
 				.then((dados) => setLista(dados))
 			// setLoading(false)
 		}, 1000)
-	}, [])
+	}, [reloadTabela])
 
-	const handleClick = (id) => {
+	const handleClick = (id, tipo) => {
 		setTimeout(() => {
 			return axios
 				.post('/retorna-id-mutuario', {
+					// id do documento
 					id
 				})
 				.then((response) => response.data)
-				.then((dados) => setModalData(dados))
+				// .then(() => {
+				// 	setModalData(tipo)
+				// })
+				.then((dados) => setModalData({dados, tipo}))
 			// setLoading(false)
 		}, 1000)
+	}
+
+	const setLoad = () => {
+		setReloadTabela({reload: true})
 	}
 
 	const PageSize = 15
@@ -86,7 +97,12 @@ const TabelaOperador = () => {
 										className='btn btn-outline-success'
 										data-bs-toggle='modal'
 										data-bs-target='#modalOperador'
-										onClick={() => handleClick(dado.doc_id)}
+										onClick={() =>
+											handleClick(
+												dado.doc_id,
+												dado.tipo_documento
+											)
+										}
 									>
 										{dado.doc_id}
 									</button>
@@ -200,7 +216,7 @@ const TabelaOperador = () => {
 				onPageChange={(page) => setCurrentPage(page)}
 			/>
 			{/* <!-- Modal --> */}
-			<ModalTelaOperador infoDoc={modalData} />
+			<ModalTelaOperador infoDoc={modalData} callback={() => setLoad()}/>
 		</section>
 	)
 }
