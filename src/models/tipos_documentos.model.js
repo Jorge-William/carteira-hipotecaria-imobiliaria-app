@@ -11,6 +11,10 @@ const TipoDeDocumento = sequelize.define("tipos_doc_lei", {
   descricao: {
     type: DataTypes.STRING,
   },
+
+}, {
+  freezeTableName: true,
+  timestamps: false,
 });
 
 const TipoDeDocumentoSfh = sequelize.define("tipos_doc_sfh", {
@@ -23,6 +27,10 @@ const TipoDeDocumentoSfh = sequelize.define("tipos_doc_sfh", {
   descricao: {
     type: DataTypes.STRING,
   },
+
+}, {
+  freezeTableName: true,
+  timestamps: false,
 });
 
 module.exports = { TipoDeDocumento, TipoDeDocumentoSfh };
