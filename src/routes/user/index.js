@@ -1,6 +1,8 @@
 require("dotenv").config();
 const express = require("express");
+const bcrypt = require("bcryptjs/dist/bcrypt");
 const Log = require("../../models/log.model");
+
 // const auth = require("../../middleware/auth.middleware");
 const {
   login,
@@ -15,22 +17,22 @@ const router = new express.Router();
 router.post("/login", login, async (req, res) => {
   const {
     /* eslint-disable */
-    id,
-    name,
-    lastName,
-    token,
-    type,
-    usuario_id
-  } = req.user
-  try {
-    // Por enquanto retorna todos os dados do usuario para o frontend
-    res.send({
-      message: 'Bem vindo ',
-      id,
-      name,
-      lastName,
-      usuario_id,
-      /* eslint-enable */
+		id,
+		name,
+		lastName,
+		token,
+		type,
+		usuario_id
+	} = req.user
+	try {
+		// Por enquanto retorna todos os dados do usuario para o frontend
+		res.send({
+			message: 'Bem vindo ',
+			id,
+			name,
+			lastName,
+			usuario_id,
+			/* eslint-enable */
       type,
       token,
       userIsValid: true,
@@ -147,9 +149,9 @@ router.post("/deletar-usuario", async (req, res) => {
     if (usuario) {
       await Log.create({
         // eslint-disable-next-line
-        data: Date.now(),
+				data: Date.now(),
         // eslint-disable-next-line
-        usuario: `${usuarioId}`,
+				usuario: `${usuarioId}`,
         tabela: "Usuarios",
         operacao: `O usuário ${name} ${lastName} de id: ${id} foi deletado.`,
       });
@@ -168,5 +170,30 @@ router.post("/criar-usuario", create, async (req, res) => {
   res.status(200).send({ message: "Usuário criado com sucesso!" });
 });
 // -------------------------------------------------------------------------------
+
+router.put("/modificar-senha", async (req, res) => {
+  const { userId, senha, name } = req.body;
+
+  const passwordHashed = await bcrypt.hash(senha, 8);
+
+  try {
+    const result = await Usuario.update({ password: passwordHashed }, { where: { id: userId } });
+
+    if (result) {
+      await Log.create({
+        // eslint-disable-next-line
+				data: Date.now(),
+        // eslint-disable-next-line
+				usuario: `${userId}`,
+        tabela: "Usuarios",
+        operacao: `O usuário ${name} de id: ${userId}, editou sua senha.`,
+      });
+    }
+
+    res.status(200).send({ status: true });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
 module.exports = router;
