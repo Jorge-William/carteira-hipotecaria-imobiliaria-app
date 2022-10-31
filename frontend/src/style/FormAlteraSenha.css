@@ -1,0 +1,13 @@
+#main-container{
+    width: 500px;
+    height: 800px;
+}
+
+.icon-visualization {
+    padding: 0 0 0 0;
+    justify-content: start;
+    display: flex;
+    align-self: end;
+    /* border: solid red 1px; */
+    line-height: initial;
+}

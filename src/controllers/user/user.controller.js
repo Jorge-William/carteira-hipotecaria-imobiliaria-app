@@ -41,7 +41,6 @@ const create = async (req, res, next) => {
 			type
 		})
 
-    console.log(user);
 		const passwordHashed = await bcrypt.hash(user.password, 8)
 		user.password = passwordHashed
 

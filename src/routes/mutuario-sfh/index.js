@@ -4,7 +4,7 @@ const fs = require("fs/promises");
 const sequelize = require("../../database/sequelize.connection");
 
 const router = new express.Router();
-const { MutuariosSfh, ImoveisSfh } = require("../../models/mutuario-sfh.model");
+const { MutuariosSfh, ImoveisSfh, DocumentosSfh } = require("../../models/mutuario-sfh.model");
 
 // ------------------------------------ Buscar ------------------------------------
 router.get("/mutuariosfh", async (req, res) => {
@@ -145,6 +145,21 @@ router.post("/criar-mutuario-sfh", async (req, res) => {
     }
   } catch (error) {
     res.send({ Erro: `${error}` });
+  }
+});
+
+router.post("/retorna-id-mutuario-sfh", async (req, res) => {
+  const idDoc = req.body.id;
+
+  try {
+    const result = await DocumentosSfh.findOne({
+      where: { id: idDoc },
+      attributes: ["cod_pasta", "id", "arquivo", "mutuario_id"],
+    });
+    console.log(result);
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(501).send(error.message);
   }
 });
 

@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-						
-
 import deletaDocumento from '../helpers/deletaDocumento'
-const ModalTelaOperador = (props, callback) => {
-
-const navigate = useNavigate()
+const ModalTelaOperadorSfh = (props, callback) => {
+	const navigate = useNavigate()
 
 	const [documentoInfo, setDocumentoInfo] = useState({
 		infoDoc: {
@@ -24,7 +21,6 @@ const navigate = useNavigate()
 		setDocumentoInfo(props)
 	}, [props])
 
-
 	useEffect(() => {
 		console.log('foi')
 	}, [documentoInfo])
@@ -37,12 +33,16 @@ const navigate = useNavigate()
 		if (documentoInfo) {
 			const { arquivo, cod_pasta, id, mutuario_id } =
 				documentoInfo.infoDoc.dados
-				const result = await deletaDocumento(tipo, cod_pasta, id, arquivo, mutuario_id)
-				if(result){
-					navigate(
-						`/mutuario/lei/substituir-documento-lei/${mutuario_id}`
-						)
-					}
+			const result = await deletaDocumento(
+				tipo,
+				cod_pasta,
+				id,
+				arquivo,
+				mutuario_id
+			)
+			if (result) {
+				navigate(`/mutuario/sfh/adicionardocumento/${mutuario_id}`)
+			}
 			callback()
 		}
 	}
@@ -50,15 +50,15 @@ const navigate = useNavigate()
 	return documentoInfo.length === 0 ? (
 		<div
 			class='modal fade'
-			id='modalOperador'
-			tabindex='-2'
-			aria-labelledby='exampleModalLabel'
+			id='modalOperadorSfh'
+			tabindex='-1'
+			aria-labelledby='exampleModalLabel3'
 			aria-hidden='true'
 		>
 			<div class='modal-dialog modal-dialog-centered'>
 				<div class='modal-content'>
 					<div class='modal-header'>
-						<h1 class='modal-title fs-5' id='exampleModalLabel'>
+						<h1 class='modal-title fs-5' id='exampleModalLabel3'>
 							Modal title
 						</h1>
 						<button
@@ -89,9 +89,9 @@ const navigate = useNavigate()
 	) : (
 		<div
 			class='modal fade'
-			id='modalOperador'
+			id='modalOperadorSfh'
 			tabindex='-1'
-			aria-labelledby='exampleModalLabel'
+			aria-labelledby='exampleModalLabel2'
 			aria-hidden='true'
 		>
 			<div class='modal-dialog modal-dialog-centered'>
@@ -99,7 +99,7 @@ const navigate = useNavigate()
 					<div class='modal-header'>
 						<h1
 							class='modal-title fs-5'
-							id='exampleModalLabel'
+							id='exampleModalLabel2'
 							style={{ color: 'red' }}
 						>
 							Atenção
@@ -137,4 +137,4 @@ const navigate = useNavigate()
 		</div>
 	)
 }
-export default ModalTelaOperador
+export default ModalTelaOperadorSfh

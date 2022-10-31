@@ -16,7 +16,7 @@ const SelectInput = (props) => {
 
 	return (
 		<>
-			<select
+			{/* <select
 				className='form-select'
 				aria-label='Default select example'
 				onChange={(e) => props.callback(e.target.value)}
@@ -29,7 +29,22 @@ const SelectInput = (props) => {
 						</option>
 					)
 				})}
-			</select>
+			</select> */}
+			{/* <label for='exampleDataList' class='form-label'>
+				Datalist example
+			</label> */}
+			<input
+				class='form-control'
+				list='datalistOptions'
+				id='exampleDataList'
+				placeholder='Digite para buscar um tipo...'
+				onChange={(e) => props.callback(e.target.value)}
+			/>
+			<datalist id='datalistOptions'>
+				{tipoDocArray?.map((item, key) => {
+					return <option key={key} value={item.descricao} />
+				})}
+			</datalist>
 		</>
 	)
 }

@@ -5,7 +5,11 @@ const fs = require("fs/promises");
 const sequelize = require("../../database/sequelize.connection");
 
 const router = new express.Router();
-const { MutuariosLei, ImoveisLei } = require("../../models/mutuario-lei.model");
+const {
+  MutuariosLei,
+  ImoveisLei,
+  DocumentosLei,
+} = require("../../models/mutuario-lei.model");
 
 // ------------------------------------ Buscar ------------------------------------
 router.get("/mutuariolei", async (req, res) => {
@@ -31,6 +35,7 @@ router.post("/alldatamutuariobyid", async (req, res) => {
     // PRODUÇÃO
     // eslint-disable-next-line
 		const [result] =
+    // eslint-disable-next-line
 			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
     FROM app_chi.mutuarios_lei a
@@ -42,6 +47,7 @@ router.post("/alldatamutuariobyid", async (req, res) => {
     // DESENVOLVIMENTO
     // eslint-disable-next-line
 		const [result] =
+    // eslint-disable-next-line
 			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
     FROM testdb.mutuarios_lei a
@@ -153,7 +159,23 @@ router.post("/criar-mutuario-lei", async (req, res) => {
   }
 });
 
+router.post("/retorna-id-mutuario", async (req, res) => {
+  const idDoc = req.body.id;
+
+  try {
+    const result = await DocumentosLei.findOne({
+      where: { id: idDoc },
+      attributes: ["cod_pasta", "id", "arquivo", "mutuario_id"],
+    });
+    console.log(result);
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(501).send(error.message);
+  }
+});
+
 // ------------------------------------ Editar  ------------------------------------
+// eslint-disable-next-line
 router.post("/editar-mutuario", async (req, res) => {
   console.log(req.body.params);
 
