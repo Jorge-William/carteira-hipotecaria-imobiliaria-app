@@ -4,11 +4,16 @@ import { useEffect, useState, useMemo } from 'react'
 import axios from 'axios'
 import SkeletonTabela from './SkeletonTabela'
 import acertoData from '../helpers/acertoData'
+// import ModalTelaOperador from './ModalTelaOperador'
+import ModalTelaOperadorSfh from './ModalTelaOperadorSfh'
 
 const TabelaOperadorSfh = () => {
 	const [lista, setLista] = useState([])
 	// const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
+	const [modalData, setModalData] = useState([])
+	const [reloadTabela, setReloadTabela] = useState({ reload: false })
+
 	console.log(lista)
 
 	useEffect(() => {
@@ -19,7 +24,7 @@ const TabelaOperadorSfh = () => {
 				.then((dados) => setLista(dados))
 			// setLoading(false)
 		}, 1000)
-	}, [])
+	}, [reloadTabela])
 
 	const PageSize = 15
 
@@ -28,6 +33,28 @@ const TabelaOperadorSfh = () => {
 		const lastPageIndex = firstPageIndex + PageSize
 		return lista.slice(firstPageIndex, lastPageIndex)
 	}, [currentPage, lista])
+
+	const handleClick = (id, tipo) => {
+		setTimeout(() => {
+			return (
+				axios
+					.post('/retorna-id-mutuario-sfh', {
+						// id do documento
+						id
+					})
+					.then((response) => response.data)
+					// .then(() => {
+					// 	setModalData(tipo)
+					// })
+					.then((dados) => setModalData({ dados, tipo }))
+			)
+			// setLoading(false)
+		}, 1000)
+	}
+
+	const setLoad = () => {
+		setReloadTabela({ reload: true })
+	}
 
 	return lista.length === 0 ? (
 		<>
@@ -67,7 +94,21 @@ const TabelaOperadorSfh = () => {
                                 </Link>
                             </td> */}
 							<td>{dado.cod_pasta}</td>
-							<td>{dado.doc_id}</td>
+							<td>
+								<button
+									className='btn btn-outline-success'
+									data-bs-toggle='modal'
+									data-bs-target='#modalOperadorSfh'
+									onClick={() =>
+										handleClick(
+											dado.doc_id,
+											dado.tipo_documento
+										)
+									}
+								>
+									{dado.doc_id}
+								</button>
+							</td>
 							<td>{dado.tipo_documento}</td>
 							<td>{acertoData(dado.dt_auditoria)}</td>
 							<td>{dado.auditado_por}</td>
@@ -173,6 +214,10 @@ const TabelaOperadorSfh = () => {
 				totalCount={lista.length}
 				pageSize={PageSize}
 				onPageChange={(page) => setCurrentPage(page)}
+			/>
+			<ModalTelaOperadorSfh
+				infoDoc={modalData}
+				callback={() => setLoad()}
 			/>
 		</section>
 	)

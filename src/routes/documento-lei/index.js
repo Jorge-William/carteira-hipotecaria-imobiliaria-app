@@ -1,26 +1,10 @@
 const express = require("express");
-const { DocumentosLei } = require("../../models/mutuario-lei.model");
 
 const router = new express.Router();
 
 // ------------------------------------ Buscar ------------------------------------
 router.get("/lei/documento", async (req, res) => {
   res.send({ msg: "Está funcionando" });
-});
-
-router.post("/retorna-id-mutuario", async (req, res) => {
-  const idDoc = req.body.id;
-
-  try {
-    const result = await DocumentosLei.findOne({
-      where: { id: idDoc },
-      attributes: ["cod_pasta", "id", "arquivo", "mutuario_id"],
-    });
-    console.log(result);
-    res.status(200).send(result);
-  } catch (error) {
-    res.status(501).send(error.message);
-  }
 });
 
 // // ------------------------------------ Criar  ------------------------------------

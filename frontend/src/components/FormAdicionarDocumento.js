@@ -48,21 +48,16 @@ const FormAdicionarDocumento = ({ dados }) => {
 	const { usuario_id } = localStorageData
 
 	const callback = (value) => {
-		// console.log(typeof value)
-		const abreviacao = arrayTipoDoc.find((item) => {
-			const idConvertido = item.id
-			// console.log(typeof item.id)
-			if (idConvertido.toString() === value) {
-				return JSON.stringify(item)
-			} else {
-				return undefined
-			}
+		console.log(value)
+		const item = arrayTipoDoc.find((item) => {
+			return item.descricao === value
 		})
-		// console.log(abreviacao)
+
+		console.log(item)
 		setDadosDocumento({
 			...dadosDocumento,
-			tipoDocId: value,
-			abreviacao
+			tipoDocId: item.id,
+			abreviacao: item.abreviacao
 		})
 	}
 
@@ -114,10 +109,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 					formData.append('tipoDocId', dadosDocumento.tipoDocId)
 					formData.append('paginas', dadosDocumento.paginas)
 					formData.append('observacao', dadosDocumento.observacao)
-					formData.append(
-						'abrevTipoDoc',
-						dadosDocumento.abreviacao.abreviacao
-					)
+					formData.append('abrevTipoDoc', dadosDocumento.abreviacao)
 					formData.append('operadorId', usuario_id)
 					formData.append('file', fileSelected)
 					formData.append('mutuarioId', id)
@@ -246,7 +238,16 @@ const FormAdicionarDocumento = ({ dados }) => {
 						/>
 						{/* --------------------------------------------------------------------- */}
 					</div>
-					<div className='col-md-6 col-sm-12'>
+					<div className='col-md-1'>
+						<label htmlFor='Código' className='form-label'>
+							Código
+						</label>
+
+						<h3 className='text-secondary border  ps-1'>
+							{dadosDocumento.abreviacao}
+						</h3>
+					</div>
+					<div className='col-md-5 col-sm-12'>
 						<label htmlFor='formFile' className='form-label'>
 							Arquivo
 						</label>
@@ -297,7 +298,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 							className='btn btn-success mt-4'
 							data-bs-toggle='modal'
 							data-bs-target='#adicionar-documento'
-							onClick={saveDoc}
+							onClick={() => saveDoc()}
 						>
 							Salvar
 						</button>

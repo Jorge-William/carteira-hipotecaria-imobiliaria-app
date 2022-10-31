@@ -5,17 +5,23 @@ import SelectInput from './SelectInput'
 import { useState, useEffect, useRef } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import Swal from 'sweetalert2'
+// import deletaDocumento from '../helpers/deletaDocumento'
 // import withReactContent from 'sweetalert2-react-content'
 
 import axios from 'axios'
 
-const FormAdicionarDocumentoSfh = ({ dados }) => {
+const FormSubstituirDocumentoSfh = ({ dados }) => {
 	/**  O hook useParams serve para sabermos o id e voltar
 	 * exatamente para o mutuario que deu origem a inclusão do documento
 	 */
 	const { id } = useParams()
 	const filesElement = useRef(null)
+	// console.log(dados.tipoDoc);
+
+	// console.log(mutuarioData)
 	const arrayTipoDoc = dados.tipoDoc
+	// console.log(typeof arrayTipoDoc)
+	// const { values } = dados
 
 	const [mutuarioData, setMutuarioData] = useState({
 		tipo: '',
@@ -35,7 +41,6 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 	const [dadosDocumento, setDadosDocumento] = useState({
 		tipoDocId: ''
 	})
-
 	const [fileSelected, setFileSelected] = useState()
 
 	// Extrai o id do usuário atual
@@ -44,19 +49,27 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 	const { usuario_id } = localStorageData
 
 	const callback = (value) => {
-		console.log(value)
-		const item = arrayTipoDoc.find((item) => {
-			return item.descricao === value
+		// console.log(typeof value)
+		const abreviacao = arrayTipoDoc.find((item) => {
+			const idConvertido = item.id
+			// console.log(typeof item.id)
+			if (idConvertido.toString() === value) {
+				return JSON.stringify(item)
+			} else {
+				return undefined
+			}
 		})
-
-		console.log(item)
+		// console.log(abreviacao)
 		setDadosDocumento({
 			...dadosDocumento,
-			tipoDocId: item.id,
-			abreviacao: item.abrev
+			tipoDocId: value,
+			abreviacao
 		})
 	}
-	// console.log(dadosDocumento)
+
+	// useState(() => {
+	// 	console.log(dadosDocumento);
+	// }, [dadosDocumento])
 
 	const handleChange = (event) => {
 		const value = event.target.value
@@ -102,17 +115,22 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 					formData.append('tipoDocId', dadosDocumento.tipoDocId)
 					formData.append('paginas', dadosDocumento.paginas)
 					formData.append('observacao', dadosDocumento.observacao)
-					formData.append('abrevTipoDoc', dadosDocumento.abreviacao)
+					formData.append(
+						'abrevTipoDoc',
+						dadosDocumento.abreviacao.abreviacao
+					)
 					formData.append('operadorId', usuario_id)
 					formData.append('file', fileSelected)
 					formData.append('mutuarioId', id)
+					// console.log(formData.get('file'))
 					axios
-						.post('/upload-sfh', formData, {
+						.post('/upload', formData, {
 							headers: {
 								'Content-Type': 'multipart/form-data'
 							}
 						})
 						.then((response) => {
+							// console.log(response)
 							if (response.statusText !== 'OK') {
 								throw new Error(response.statusText)
 							} else {
@@ -121,7 +139,7 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 									title: 'Documento salvo no sistema.'
 								})
 							}
-							return navigate(`/detalhes-sfh/${id}`, {
+							return navigate(`/operador`, {
 								replace: true
 							})
 						})
@@ -161,7 +179,7 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 							<Skeleton count={1} />
 						) : (
 							<>
-								<label gtmlFor='tipo' className='form-label'>
+								<label htmlFor='tipo' className='form-label'>
 									Tipo
 								</label>
 								<input
@@ -229,16 +247,7 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 						/>
 						{/* --------------------------------------------------------------------- */}
 					</div>
-					<div className='col-md-1'>
-						<label htmlFor='Código' className='form-label'>
-							Código
-						</label>
-
-						<h3 className='text-secondary border  ps-1'>
-							{dadosDocumento.abreviacao}
-						</h3>
-					</div>
-					<div className='col-md-5 col-sm-12'>
+					<div className='col-md-6 col-sm-12'>
 						<label htmlFor='formFile' className='form-label'>
 							Arquivo
 						</label>
@@ -280,7 +289,7 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 				<div className='row mt-5'>
 					<div className='col d-flex gap-2 justify-content-between'>
 						<button className='btn btn-secondary mt-4'>
-							<Link to={`/detalhes-sfh/${id}`}>
+							<Link to={`/operador`}>
 								<i className='bi bi-arrow-left'></i>Voltar
 							</Link>
 						</button>
@@ -300,4 +309,4 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 	)
 }
 
-export default FormAdicionarDocumentoSfh
+export default FormSubstituirDocumentoSfh

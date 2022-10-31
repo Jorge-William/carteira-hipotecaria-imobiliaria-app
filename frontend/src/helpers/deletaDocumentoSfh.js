@@ -1,11 +1,11 @@
 import Swal from 'sweetalert2'
 import axios from 'axios'
 
-const deletaDocumento = (tipoDoc, pasta, idDoc, arquivo, mutuario_id) => {
+const deletaDocumento =  (tipoDoc, pasta, idDoc, arquivo, mutuario_id) => {
 	const userInfo = JSON.parse(localStorage.getItem('userData'))
-
+	
 	const { id } = userInfo
-
+	
 	const resultadoSwal = Swal.fire({
 		title: 'Atenção',
 		input: 'password',
@@ -39,9 +39,7 @@ const deletaDocumento = (tipoDoc, pasta, idDoc, arquivo, mutuario_id) => {
 					throw new Error(response.data.status)
 				})
 				.catch((error) => {
-					Swal.showValidationMessage(
-						`${error.message} - Senha inválida!`
-					)
+					Swal.showValidationMessage(`${error.message} - Senha inválida!`)
 					return false
 				})
 		},

@@ -5,7 +5,7 @@ import SelectInput from './SelectInput'
 import { useState, useEffect, useRef } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import Swal from 'sweetalert2'
-import deletaDocumento from '../helpers/deletaDocumento'
+// import deletaDocumento from '../helpers/deletaDocumento'
 // import withReactContent from 'sweetalert2-react-content'
 
 import axios from 'axios'
@@ -48,28 +48,42 @@ const FormSubstituirDocumentoLei = ({ dados }) => {
 
 	const { usuario_id } = localStorageData
 
-	const callback = (value) => {
-		// console.log(typeof value)
-		const abreviacao = arrayTipoDoc.find((item) => {
-			const idConvertido = item.id
-			// console.log(typeof item.id)
-			if (idConvertido.toString() === value) {
-				return JSON.stringify(item)
-			} else {
-				return undefined
-			}
-		})
-		// console.log(abreviacao)
-		setDadosDocumento({
-			...dadosDocumento,
-			tipoDocId: value,
-			abreviacao
-		})
-	}
+	// const callback = (value) => {
+	// 	// console.log(typeof value)
+	// 	const abreviacao = arrayTipoDoc.find((item) => {
+	// 		const idConvertido = item.id
+	// 		// console.log(typeof item.id)
+	// 		if (idConvertido.toString() === value) {
+	// 			return JSON.stringify(item)
+	// 		} else {
+	// 			return undefined
+	// 		}
+	// 	})
+	// 	// console.log(abreviacao)
+	// 	setDadosDocumento({
+	// 		...dadosDocumento,
+	// 		tipoDocId: value,
+	// 		abreviacao
+	// 	})
+	// }
 
 	// useState(() => {
 	// 	console.log(dadosDocumento);
 	// }, [dadosDocumento])
+
+	const callback = (value) => {
+		console.log(value)
+		const item = arrayTipoDoc.find((item) => {
+			return item.descricao === value
+		})
+
+		console.log(item)
+		setDadosDocumento({
+			...dadosDocumento,
+			tipoDocId: item.id,
+			abreviacao: item.abreviacao
+		})
+	}
 
 	const handleChange = (event) => {
 		const value = event.target.value
@@ -115,10 +129,7 @@ const FormSubstituirDocumentoLei = ({ dados }) => {
 					formData.append('tipoDocId', dadosDocumento.tipoDocId)
 					formData.append('paginas', dadosDocumento.paginas)
 					formData.append('observacao', dadosDocumento.observacao)
-					formData.append(
-						'abrevTipoDoc',
-						dadosDocumento.abreviacao.abreviacao
-					)
+					formData.append('abrevTipoDoc', dadosDocumento.abreviacao)
 					formData.append('operadorId', usuario_id)
 					formData.append('file', fileSelected)
 					formData.append('mutuarioId', id)
@@ -247,7 +258,16 @@ const FormSubstituirDocumentoLei = ({ dados }) => {
 						/>
 						{/* --------------------------------------------------------------------- */}
 					</div>
-					<div className='col-md-6 col-sm-12'>
+					<div className='col-md-1'>
+						<label htmlFor='Código' className='form-label'>
+							Código
+						</label>
+
+						<h3 className='text-secondary border  ps-1'>
+							{dadosDocumento.abreviacao}
+						</h3>
+					</div>
+					<div className='col-md-5 col-sm-12'>
 						<label htmlFor='formFile' className='form-label'>
 							Arquivo
 						</label>
