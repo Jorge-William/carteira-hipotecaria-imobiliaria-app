@@ -1,23 +1,135 @@
 import { useState, useEffect } from 'react'
+import Swal from 'sweetalert2'
+import axios from 'axios'
+import '../style/upperCase.css'
 
 const FilterTipoDoc = (props) => {
 	const { tiposDoc } = props
 	const [tipoDocArray, setTipoDocArray] = useState([
 		{ id: '', descricao: '' }
 	])
-	const [valorBusca, setValorBusca] = useState({})
+	const [valorBusca, setValorBusca] = useState('0')
 	// const [showtable, setShowTable] = useState(false)
-	const [tableData, setTableData] = useState()
+	const [tableData, setTableData] = useState({id: '', tipo: '', abrev: '', descricao: ''})
+	const [isEdit, setIsEdit] = useState(false)
+	const [abrev, setAbrev] = useState({ abrev: '' })
+	const [descricao, setDescricao] = useState({ descricao: '' })
+	const [showTable, setShowTable] = useState(false)
+	useEffect(() => {
+		setShowTable(false)
+	},[valorBusca])
+
+	const userData = JSON.parse(localStorage.getItem('userData'))
+	const usuario_id = userData.id
 
 	useEffect(() => {
 		setTipoDocArray(tiposDoc)
 	}, [tiposDoc])
 
+	useEffect(() => {
+		setAbrev(tableData.abrev)
+		setDescricao(tableData.descricao)
+	},[isEdit,tableData])
+
+	// const tipoMutuario = 'sfh'
+
 	const handleClick = () => {
 		const result = tipoDocArray.find((item) => {
 			return item.descricao === valorBusca
+			// return {id: '', tipo: '', abrev: '', descricao: ''}
 		})
-		setTableData(result)
+		console.log(result)
+		if(result === undefined) {
+			return setTableData({id: '', tipo: '', abrev: '', descricao: ''})
+		} else {
+			setShowTable(true)
+			// setValorBusca('')
+			return setTableData(result)
+		}
+	}
+
+	const handleDelete = (id) => {
+		Swal.fire({
+			title: 'Deseja deletar o tipo?',
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonText: 'Sim deletar',
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return axios
+					.post('/deletar-tipo', {
+						params: {
+							id,
+							usuario_id,
+							descricao: tableData.descricao
+						}
+					})
+					.then((response) => {
+						console.log(response)
+						if (!response.data.result) {
+							throw new Error()
+						}
+						props.callbackFilter()
+						setTableData({id: '', tipo: '', abrev: '', descricao: ''})
+						setShowTable(false)
+						setValorBusca('0')
+						return response
+					})
+					.catch((error) => {
+						Swal.showValidationMessage(`Request failed: ${error}`)
+					})
+			},
+			allowOutsideClick: () => !Swal.isLoading()
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire({
+					icon: 'success',
+					title: 'O tipo de documento foi deletado!'
+				})
+			}
+		})
+	}
+	const handleEdit = (id) => {
+		Swal.fire({
+			title: 'Deseja salvar as alterações do tipo?',
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonText: 'Sim salvar',
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return axios
+					.put('/editar-tipo', {
+						params: {
+							id,
+							usuario_id,
+							descricao,
+							abrev
+						}
+					})
+					.then((response) => {
+						console.log(response)
+						if (!response.data.result) {
+							throw new Error()
+						}
+						props.callbackFilter()
+						setTableData({abrev: '', descricao: ''})
+						setShowTable(false)
+						setIsEdit(false)
+						return response
+					})
+					.catch((error) => {
+						Swal.showValidationMessage(`Request failed: ${error}`)
+					})
+			},
+			allowOutsideClick: () => !Swal.isLoading()
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire({
+					icon: 'success',
+					title: 'O tipo de documento foi editado com sucesso!'
+				})
+			}
+		})
 	}
 
 	// useEffect(() => {
@@ -43,24 +155,82 @@ const FilterTipoDoc = (props) => {
 				<div className='col-md-1 d-grid'>
 					<button
 						className='btn btn-primary d-grid'
+						// disabled={valorBusca === '' ?true: false}
 						onClick={() => handleClick()}
 					>
 						Buscar
 					</button>
 				</div>
-				<div className='col-md-2  d-grid'>
-					<button
-						type='button'
-						className='btn btn-outline-success'
-						data-bs-toggle='modal'
-						data-bs-target='#adicionarTipo'
-					>
-						Adicionar um tipo
-					</button>
-				</div>
-				{!tableData ? (
-					<></>
-				) : (
+
+				
+				{isEdit  && (
+					<div className='col-md-12 mt-4 '>
+						<hr />
+						<table class='table table-hover table-borderless align-middle'>
+							<thead>
+								<tr>
+									<th scope='col'>#ID</th>
+									<th scope='col'>Tipo</th>
+									<th scope='col'>Abreviação</th>
+									<th scope='col'>Descrição</th>
+								</tr>
+							</thead>
+							<tbody className='text-secondary'>
+								<tr>
+									<td>{tableData.id}</td>
+									<td>{tableData.tipo}</td>
+									<td>
+										<input
+										size='10'
+											className='form-control upper-case'
+											placeholder={tableData.abrev}
+											type='text'
+											onChange={(e) =>
+												setAbrev(
+													e.target.value.toUpperCase()
+												)
+											}
+										/>
+									</td>
+									<td>
+										<input
+										size='50'
+											className='form-control upper-case'
+											placeholder={tableData.descricao}
+											type='text'
+											onChange={(e) =>
+												setDescricao(
+													e.target.value.toUpperCase()
+												)
+											}
+										/>
+									</td>
+									<td>
+										<button
+											className='btn btn-success me-2'
+											onClick={() =>
+												handleEdit(tableData.id)
+											}
+										>
+											Salvar alterções
+										</button>
+										<button
+											className='btn btn-secondary'
+											onClick={() =>
+												setIsEdit((prev) => !prev)
+											}
+										>
+											Cancelar edição
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<hr />
+					</div>
+				) }
+				
+				{!isEdit && showTable ? (
 					<div className='col-md-12 mt-4 '>
 						<hr />
 						<table class='table table-hover table-borderless align-middle'>
@@ -79,10 +249,20 @@ const FilterTipoDoc = (props) => {
 									<td>{tableData.abrev}</td>
 									<td>{tableData.descricao}</td>
 									<td>
-										<button className='btn btn-outline-primary me-2'>
+										<button
+											className='btn btn-outline-primary me-2'
+											onClick={() =>
+												setIsEdit((prev) => !prev)
+											}
+										>
 											Editar
 										</button>
-										<button className='btn btn-outline-danger'>
+										<button
+											className='btn btn-outline-danger'
+											onClick={() =>
+												handleDelete(tableData.id)
+											}
+										>
 											Excluir
 										</button>
 									</td>
@@ -91,72 +271,7 @@ const FilterTipoDoc = (props) => {
 						</table>
 						<hr />
 					</div>
-				)}
-			</div>
-			<div
-				class='modal fade'
-				id='adicionarTipo'
-				tabindex='-1'
-				aria-labelledby='exampleModalLabel'
-				aria-hidden='true'
-			>
-				<div class='modal-dialog modal-lg modal-dialog-centered'>
-					<div class='modal-content'>
-						<div class='modal-header'>
-							<h1 class='modal-title fs-5' id='exampleModalLabel'>
-								Adicionar um novo tipo
-							</h1>
-							<button
-								type='button'
-								class='btn-close'
-								data-bs-dismiss='modal'
-								aria-label='Close'
-							></button>
-						</div>
-						<div class='modal-body'>
-							<div className='row'>
-								<div class=' col-md-4 mb-3'>
-									<label
-										for='exampleFormControlInput1'
-										class='form-label'
-									>
-										Abreviação
-									</label>
-									<input
-										type='text'
-										class='form-control'
-										id='exampleFormControlInput1'
-									/>
-								</div>
-								<div class=' col-md-8 mb-3'>
-									<label
-										for='exampleFormControlInput1'
-										class='form-label'
-									>
-										Descrição
-									</label>
-									<input
-										type='text'
-										class='form-control'
-										id='exampleFormControlInput1'
-									/>
-								</div>
-							</div>
-						</div>
-						<div class='modal-footer'>
-							<button
-								type='button'
-								class='btn btn-secondary'
-								data-bs-dismiss='modal'
-							>
-								Cancelar
-							</button>
-							<button type='button' class='btn btn-primary'>
-								Salvar mudanças
-							</button>
-						</div>
-					</div>
-				</div>
+				): <></>}
 			</div>
 		</div>
 	)

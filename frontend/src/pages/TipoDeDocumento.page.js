@@ -4,7 +4,9 @@ import TabelaTipoDocumentoSfh from '../components/TabelaTipoDocumentoSfh'
 const TipoDeDocumento = () => {
 	return (
 		<section>
-			<h1 className='mb-4'>Tipo de Documentos</h1>
+			<div>
+				<h1 className='mb-4'>Tipo de Documentos</h1>
+			</div>
 			<nav className='mt-5'>
 				<div class='nav nav-tabs' id='nav-tab' role='tablist'>
 					<button
