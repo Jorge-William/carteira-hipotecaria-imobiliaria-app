@@ -102,6 +102,11 @@ const Menu = ({ logout }) => {
 									Operador
 								</Link>
 							</li>
+							<li>
+								<Link className='nav-link' to='/tipos-de-documento'>
+									Tipos de documentos
+								</Link>
+							</li>
 							{/* <li className='nav-item dropdown'>
 								<a
 									className='nav-link dropdown-toggle'
