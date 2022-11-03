@@ -11,6 +11,8 @@ const documentos = require("./src/routes/documentos/index");
 const dashboard = require("./src/routes/dashboard/index");
 const audicaoSfh = require("./src/routes/audicao-sfh/index");
 const audicaoLei = require("./src/routes/audicao-lei/index");
+const tiposDocSfh = require("./src/routes/tipo-doc-sfh/index");
+const tiposDocLei = require("./src/routes/tipo-doc-lei/index");
 
 const app = express();
 require("dotenv").config();
@@ -41,6 +43,8 @@ app.use(audicaoLei);
 app.use(documentos);
 app.use(dashboard);
 app.use(atividade);
+app.use(tiposDocSfh);
+app.use(tiposDocLei);
 // ----------------------------------------------------------------------------
 
 const PORT = process.env.PORT || 5000;

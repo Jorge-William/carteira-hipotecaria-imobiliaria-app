@@ -24,6 +24,7 @@ import Usuarios from './pages/Usuarios.page'
 import Operador from './pages/Operador.page'
 import Atividades from './pages/Atividades.page'
 import AlterarSenha from './pages/AlterarSenha.page'
+import TipoDeDocumento from './pages/TipoDeDocumento.page'
 
 const App = () => {
 	const [auth, setAuth] = useState(null)
@@ -114,6 +115,9 @@ const App = () => {
 				)}
 				{auth && (
 					<Route path='/mutuario/sfh' element={<MutuarioSfh />} />
+				)}
+				{auth && (
+					<Route path='/tipos-de-documento' element={<TipoDeDocumento />} />
 				)}
 				{auth && (
 					<Route path='/alterar-senha' element={<AlterarSenha />} />
