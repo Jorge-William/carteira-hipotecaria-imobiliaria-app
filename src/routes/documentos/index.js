@@ -12,7 +12,6 @@ const passValidation = require("../../middleware/passValidation.middleware");
 const passValidationAlteraDoc = require("../../middleware/passValidation.alteraDoc.middleware");
 const { AuditoriaLei } = require("../../models/mutuario-lei.model");
 const { AuditoriaSfh } = require("../../models/mutuario-sfh.model");
-const { TipoDeDocumento, TipoDeDocumentoSfh } = require("../../models/tipos_documentos.model");
 
 // const { DocumentoLei } = require("../../models/mutuario-lei.model");
 // const create = require("../../controllers/mutuario-lei/mutuario-lei.controller");
@@ -79,24 +78,6 @@ const upload = multer({
 // Como está no banco => '/pastas/lei/L0980/L0980L128.pdf'
 // http://localhost:5001/documentos/L8889/L888980.pdf  Url para ler um arquivo
 router.use("/documentos", express.static("pastas/lei/"));
-
-router.get("/tipos-documentos-lei", async (req, res) => {
-  try {
-    const tiposLei = await TipoDeDocumento.findAll();
-    res.status(200).send(tiposLei);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
-
-router.get("/tipos-documentos-sfh", async (req, res) => {
-  try {
-    const tiposSfh = await TipoDeDocumentoSfh.findAll();
-    res.status(200).send(tiposSfh);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
 
 router.post("/upload", upload.array("file"), async (req, res) => {
   // console.log(req.files[0]);
