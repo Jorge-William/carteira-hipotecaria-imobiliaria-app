@@ -3,6 +3,7 @@ const express = require("express");
 const { QueryTypes } = require("sequelize");
 const fs = require("fs/promises");
 const sequelize = require("../../database/sequelize.connection");
+const Log = require("../../models/log.model");
 
 const router = new express.Router();
 const {
@@ -177,7 +178,8 @@ router.post("/retorna-id-mutuario", async (req, res) => {
 // ------------------------------------ Editar  ------------------------------------
 // eslint-disable-next-line
 router.post("/editar-mutuario", async (req, res) => {
-  // const {id} = req.body.params;
+  const { usuario_id } = req.body.params;
+
   const {
     id, nome,
     end,
@@ -198,27 +200,6 @@ router.post("/editar-mutuario", async (req, res) => {
     obs,
     cep,
   } = req.body.params.dados;
-  console.log(
-    id,
-    nome,
-    end,
-    numero,
-    bairro,
-    cidade,
-    uf,
-    hipoteca,
-    escritura,
-    complemento,
-    telefone,
-    // eslint-disable-next-line
-    dt_liq,
-    // eslint-disable-next-line
-    num_obra,
-    // eslint-disable-next-line
-    cod_historico,
-    obs,
-    cep,
-  );
   try {
     const imovel = await ImoveisLei.update({
       // eslint-disable-next-line
@@ -238,9 +219,19 @@ router.post("/editar-mutuario", async (req, res) => {
       cidade,
       uf,
     }, { where: { mutuario_id: id } });
+
     const mutuario = await MutuariosLei.update({ nome, telefone }, { where: { id } });
 
-    if (mutuario && imovel) {
+    const log = await Log.create({
+      data: Date.now(),
+      // eslint-disable-next-line
+      usuario: usuario_id,
+      tabela: "Mutuario Lei",
+      // eslint-disable-next-line
+      operacao: `O Mutuario ${nome}, foi editado.`
+    });
+    console.log(log);
+    if (mutuario && imovel && log) {
       res.status(200).send({ result: true });
     } else {
       throw new Error();
