@@ -222,6 +222,7 @@ DocumentosLei.hasOne(AuditoriaLei, { foreignKey: "doc_id" });
 
 // sequelize.sync();
 // DocumentosLei.sync({ force: true });
+// ImoveisLei.sync({ alter: true });
 
 module.exports = {
   MutuariosLei,

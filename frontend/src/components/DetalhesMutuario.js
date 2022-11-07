@@ -12,6 +12,7 @@ const DetalheMutuario = ({ id }) => {
 	const [dados, setDados] = useState({})
 	const [documentos, setDocumentos] = useState([])
 	const [mostrarEdicao, setMostrarEdicao] = useState(false)
+	const [load, setLoad] = useState(false)
 
 	const callServices = useCallback(async () => {
 		// Posição 0 é o id do mutuário e a posição 17 é o tipo(L ou C)
@@ -24,8 +25,12 @@ const DetalheMutuario = ({ id }) => {
 
 	useEffect(() => {
 		callServices()
-	}, [id, callServices])
+	}, [id, callServices, load])
 
+	const reload = () => {
+		setLoad(true)
+		setMostrarEdicao(false)
+	}
 	return !dados ? (
 		<Skeleton count={10} />
 	) : (
@@ -62,11 +67,27 @@ const DetalheMutuario = ({ id }) => {
 						</button>
 					</Link>
 				</div>
+				<div className='col-md'>
+					<Link to={`/mutuario/lei/adicionardocumento/${id}`}>
+						<button
+							className='btn btn-outline-danger crud-btn'
+							data-bs-toggle='tooltip'
+							data-bs-placement='top'
+							title='Deletar mutuário'
+						>
+							<i className='bi bi-person-x-fill'></i>
+						</button>
+					</Link>
+				</div>
 			</section>
 			{!mostrarEdicao ? (
 				<ExibirMutuario dados={dados} />
 			) : (
-				<EditarMutuario dadosMutuario={dados} />
+				<EditarMutuario
+					dadosMutuario={dados}
+					callback={reload}
+					tipo={'lei'}
+				/>
 			)}
 			<AccordionDeDocumentos
 				documentos={documentos}

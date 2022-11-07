@@ -1,34 +1,70 @@
 import { useState, useEffect } from 'react'
 import { SkeletonEditarMutuario } from './Skeleton.editarMutuario'
 import axios from 'axios'
-
-export function EditarMutuario({ dadosMutuario }) {
+import Swal from 'sweetalert2'
+export function EditarMutuario({ dadosMutuario, callback, tipo }) {
 	const [dados, setDados] = useState()
-	const [novosDados, setNovosDados] = useState()
-
+	// const [novosDados, setNovosDados] = useState()
+	console.log(dados)
 	useEffect(() => {
 		setTimeout(() => {
 			setDados(dadosMutuario.result[0])
 		}, 2000)
-	}, [dados, dadosMutuario])
+	}, [dadosMutuario])
+
+	const userData = JSON.parse(localStorage.getItem('userData'))
+	const usuario_id = userData.id
 
 	function handleChange(event) {
 		const value = event.target.value
 
-		setNovosDados({
-			...novosDados,
+		setDados({
+			...dados,
 			[event.target.name]: value
 		})
 	}
-
-    function handleClick(){
-        return axios
-        .post('/editar-mutuario', {
-            params: {
-                novosDados
-            }
-        })
-    }
+	// const dadosAtuais = JSON.parse(dados)
+	const handleSave = (id) => {
+		Swal.fire({
+			title: 'Deseja salvar as alterações?',
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonText: 'Sim salvar',
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return axios
+					.post(`/editar-mutuario-${tipo}`, {
+						params: {
+							id,
+							usuario_id,
+							dados
+						}
+					})
+					.then((response) => {
+						callback()
+						if (!response.data.result) {
+							throw new Error()
+						}
+						// props.callbackFilter()
+						// setTableData({id: '', tipo: '', abrev: '', descricao: ''})
+						// setShowTable(false)
+						// setValorBusca('0')
+						return response
+					})
+					.catch((error) => {
+						Swal.showValidationMessage(`Request failed: ${error}`)
+					})
+			},
+			allowOutsideClick: () => !Swal.isLoading()
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire({
+					icon: 'success',
+					title: 'As alterações foram salvas!'
+				})
+			}
+		})
+	}
 
 	// const { nome, bairro, rotulo } = dados.result[0]
 	return !dados ? (
@@ -138,8 +174,8 @@ export function EditarMutuario({ dadosMutuario }) {
 									<input
 										type='date'
 										className='form-control'
-										name='dataLiq'
-										placeholder={dados.dataLiq}
+										name='dt_liq'
+										value={dados.dt_liq}
 										onChange={handleChange}
 									/>
 								</div>
@@ -150,15 +186,79 @@ export function EditarMutuario({ dadosMutuario }) {
 									>
 										Escritura
 									</label>
+									<div>
+										<div className='form-check'>
+											<input
+												className='form-check-input'
+												type='radio'
+												name='escritura'
+												id='a1'
+												value='1'
+												onChange={handleChange}
+											/>
+											<label
+												className='form-check-label'
+												for='a1'
+											>
+												Sim
+											</label>
+										</div>
+										<div className='form-check'>
+											<input
+												className='form-check-input'
+												type='radio'
+												name='escritura'
+												id='b1'
+												value='0'
+												onChange={handleChange}
+											/>
+											<label
+												className='form-check-label'
+												for='b1'
+											>
+												Não
+											</label>
+										</div>
+									</div>
 
-									{dados.escritura === '1' ? (
+									{/* {dados.escritura === 1 ? (
+									<>
+										<div className="form-check">
+										<input className="form-check-input" type="radio" name="escritura" id="escritura-01" value='1' checked onChange={handleChange}/>
+										<label className="form-check-label" for="escritura-01">
+										  Sim
+										</label>
+									  </div>
+									  <div className="form-check">
+										<input className="form-check-input" type="radio" name="escritura" id="escritura-02" value='0' onChange={handleChange}/>
+										<label className="form-check-label" for="escritura-02">
+										  Não
+										</label>
+									  </div>
+									</>
+									):(<>
+										<div className="form-check">
+										<input className="form-check-input" type="radio" name="escritura" id="escritura-03" value='1' onChange={handleChange}/>
+										<label className="form-check-label" for="escritura-03">
+										  Sim
+										</label>
+									  </div>
+									  <div className="form-check">
+										<input className="form-check-input" type="radio" name="escritura" id="escritura-04" value='0' checked onChange={handleChange}/>
+										<label className="form-check-label" for="escritura-04">
+										  Não
+										</label>
+									  </div>
+									</>)} */}
+
+									{/* {dados.escritura === '1' ? (
 										<select
 											className='form-select'
 											aria-label='Default select example'
 											name='escritura'
 											onChange={handleChange}
 										>
-											<option value='1' defaultValue>
+											<option value='1' selected="selected">
 												Sim
 											</option>
 											<option
@@ -178,40 +278,111 @@ export function EditarMutuario({ dadosMutuario }) {
 											<option
 												className='vermelho'
 												value='0'
-												defaultValue
+												selected="selected"
 											>
 												Não
 											</option>
-											<option value='1'>Sim</option>
+											<option value='1' >Sim</option>
 										</select>
-									)}
+									)} */}
 								</div>
 								<div className='mb-3 col-md-1'>
 									<label
-										htmlFor='exampleInputEmail1'
+										htmlFor='hipoteca'
 										className='form-label'
 									>
 										Hipoteca
 									</label>
-									<select
-										className='form-select'
-										aria-label='Default select example'
-										name='hipoteca'
-										onChange={handleChange}
-									>
-										<option
-											className='vermelho'
-											value='0'
-											defaultValue
+									<div>
+										<div className='form-check'>
+											<input
+												className='form-check-input'
+												type='radio'
+												name='hipoteca'
+												id='a'
+												value='1'
+												onChange={handleChange}
+											/>
+											<label
+												className='form-check-label'
+												for='a'
+											>
+												Sim
+											</label>
+										</div>
+										<div className='form-check'>
+											<input
+												className='form-check-input'
+												type='radio'
+												name='hipoteca'
+												id='b'
+												value='0'
+												onChange={handleChange}
+											/>
+											<label
+												className='form-check-label'
+												for='b'
+											>
+												Não
+											</label>
+										</div>
+									</div>
+
+									{/* //  ):(<>
+									// 	<div className="form-check">
+									// 	<input className="form-check-input" type="radio" name="hipoteca" id="flexRadioDefault111" value='1' onChange={handleChange}/>
+									// 	<label className="form-check-label" for="flexRadioDefault111">
+									// 	  Sim
+									// 	</label>
+									//   </div>
+									//   <div className="form-check">
+									// 	<input className="form-check-input" type="radio" name="hipoteca" id="flexRadioDefault22" value='0' checked onChange={handleChange}/>
+									// 	<label className="form-check-label" for="flexRadioDefault22">
+									// 	  Não
+									// 	</label>
+									//   </div>
+									// </>)} */}
+									{/* {dados.hipoteca === '1' ? (
+										<select
+										id='hipoteca'
+											className='form-select'
+											aria-label='Default select example'
+											name='hipoteca'
+											onChange={handleChange}
 										>
-											Não
-										</option>
-										<option value='1'>Sim</option>
-									</select>
+											<option value={1} selected>
+												Sim
+											</option>
+											<option
+												className='vermelho'
+												value={0}
+											>
+												Não
+											</option>
+										</select>
+									) : (
+										<select
+										id='hipoteca'
+
+											className='form-select'
+											aria-label='Default select example'
+											name='hipoteca'
+											onChange={handleChange}
+										>
+											<option
+												className='vermelho'
+												value={0}
+												selected
+											>
+												Não
+											</option>
+											<option value={1}>Sim</option>
+										</select>
+									)} */}
 								</div>
 								<div className='mb-3 col-md-2'>
 									<label
-										htmlFor='exampleInputEmail1'
+										htmlFor='num_obra'
 										className='form-label'
 									>
 										Numero da obra
@@ -219,16 +390,16 @@ export function EditarMutuario({ dadosMutuario }) {
 									<input
 										type='text'
 										className='form-control'
-										id='exampleInputEmail1'
+										id='num_obra'
 										aria-describedby='emailHelp'
-										name='numObra'
+										name='num_obra'
 										placeholder={dados.num_obra}
 										onChange={handleChange}
 									/>
 								</div>
 								<div className='mb-3 col-md-2'>
 									<label
-										htmlFor='exampleInput'
+										htmlFor='cod_hist'
 										className='form-label'
 									>
 										Código Historico
@@ -236,23 +407,20 @@ export function EditarMutuario({ dadosMutuario }) {
 									<input
 										type='text'
 										className='form-control'
-										id='exampleInputEmail1'
-										name='codHist'
+										id='cod_hist'
+										name='cod_historico'
 										placeholder={dados.cod_historico}
 										onChange={handleChange}
 									/>
 								</div>
 								<div className='mb-3 col-md-4'>
-									<label
-										htmlFor='exampleInputEmail1'
-										className='form-label'
-									>
+									<label htmlFor='obs' className='form-label'>
 										Observação
 									</label>
 									<input
 										type='text'
 										className='form-control'
-										id='exampleInputEmail1'
+										id='obs'
 										aria-describedby='emailHelp'
 										name='obs'
 										placeholder={dados.obs}
@@ -263,16 +431,13 @@ export function EditarMutuario({ dadosMutuario }) {
 						</section>
 						<div className='row'>
 							<div className='mb-3 col-md-2'>
-								<label
-									htmlFor='exampleInputEmail1'
-									className='form-label'
-								>
+								<label htmlFor='cep' className='form-label'>
 									CEP
 								</label>
 								<input
 									type='text'
 									className='form-control'
-									id='exampleInputEmail1'
+									id='cep'
 									aria-describedby='emailHelp'
 									name='cep'
 									placeholder={dados.cep}
@@ -280,33 +445,27 @@ export function EditarMutuario({ dadosMutuario }) {
 								/>
 							</div>
 							<div className='mb-3 col-md-3'>
-								<label
-									htmlFor='exampleInputEmail1'
-									className='form-label'
-								>
+								<label htmlFor='end' className='form-label'>
 									Endereço
 								</label>
 								<input
 									type='text'
 									className='form-control'
-									id='exampleInputEmail1'
+									id='end'
 									aria-describedby='emailHelp'
-									name='endereco'
+									name='end'
 									placeholder={dados.end}
 									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-1'>
-								<label
-									htmlFor='exampleInputEmail1'
-									className='form-label'
-								>
+								<label htmlFor='numero' className='form-label'>
 									Número
 								</label>
 								<input
 									type='text'
 									className='form-control'
-									id='exampleInputEmail1'
+									id='numero'
 									aria-describedby='emailHelp'
 									name='numero'
 									placeholder={dados.numero}
@@ -314,33 +473,27 @@ export function EditarMutuario({ dadosMutuario }) {
 								/>
 							</div>
 							<div className='mb-3 col-md-2'>
-								<label
-									htmlFor='exampleInputEmail1'
-									className='form-label'
-								>
-									Complem.
+								<label htmlFor='complem' className='form-label'>
+									Complemento
 								</label>
 								<input
 									type='text'
 									className='form-control'
-									id='exampleInputEmail1'
+									id='complem'
 									aria-describedby='emailHelp'
-									name='compl'
+									name='complemento'
 									placeholder={dados.complemento}
 									onChange={handleChange}
 								/>
 							</div>
 							<div className='mb-3 col-md-2'>
-								<label
-									htmlFor='exampleInputEmail1'
-									className='form-label'
-								>
+								<label htmlFor='bairro' className='form-label'>
 									Bairro
 								</label>
 								<input
 									type='text'
 									className='form-control'
-									id='exampleInputEmail1'
+									id='bairro'
 									aria-describedby='emailHelp'
 									name='bairro'
 									placeholder={dados.bairro}
@@ -348,16 +501,13 @@ export function EditarMutuario({ dadosMutuario }) {
 								/>
 							</div>
 							<div className='mb-3 col-md-2'>
-								<label
-									htmlFor='exampleInputEmail1'
-									className='form-label'
-								>
+								<label htmlFor='cidade' className='form-label'>
 									Cidade
 								</label>
 								<input
 									type='text'
 									className='form-control'
-									id='exampleInputEmail1'
+									id='cidade'
 									aria-describedby='emailHelp'
 									name='cidade'
 									placeholder={dados.cidade}
@@ -365,16 +515,13 @@ export function EditarMutuario({ dadosMutuario }) {
 								/>
 							</div>
 							<div className='mb-3 col-md-1'>
-								<label
-									htmlFor='exampleInputEmail1'
-									className='form-label'
-								>
+								<label htmlFor='uf' className='form-label'>
 									UF
 								</label>
 								<input
 									type='text'
 									className='form-control'
-									id='exampleInputEmail1'
+									id='uf'
 									aria-describedby='emailHelp'
 									name='uf'
 									placeholder={dados.uf}
@@ -399,7 +546,7 @@ export function EditarMutuario({ dadosMutuario }) {
 							<button
 								type='button'
 								className='btn btn-success float-end'
-								onClick={handleClick}
+								onClick={() => handleSave(dados.id)}
 							>
 								Salvar Alterações
 								<i className='bi bi-save2 ms-2'></i>

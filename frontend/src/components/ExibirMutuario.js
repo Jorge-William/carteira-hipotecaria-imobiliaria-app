@@ -88,7 +88,7 @@ const ExibirMutuario = ({ dados }) => {
 									{dados.result?.[0].bairro}
 								</div>
 								<div className='col'>
-									<strong>Comp:</strong>{' '}
+									<strong>Complemento:</strong>{' '}
 									{dados.result?.[0].complemento}
 								</div>
 								<div className='col'>

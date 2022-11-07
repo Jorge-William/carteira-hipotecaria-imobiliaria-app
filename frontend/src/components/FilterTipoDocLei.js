@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import '../style/upperCase.css'
 
-const FilterTipoDoc = (props) => {
+const FilterTipoDocLei = (props) => {
 	const { tiposDoc } = props
 	const [tipoDocArray, setTipoDocArray] = useState([
 		{ id: '', descricao: '' }
@@ -15,6 +15,7 @@ const FilterTipoDoc = (props) => {
 	const [abreviacao, setAbrev] = useState({ abreviacao: '' })
 	const [descricao, setDescricao] = useState({ descricao: '' })
 	const [showTable, setShowTable] = useState(false)
+
 	useEffect(() => {
 		setShowTable(false)
 	},[valorBusca])
@@ -141,12 +142,12 @@ const FilterTipoDoc = (props) => {
 				<div className='col-md-8'>
 					<input
 						class='form-control'
-						list='datalistOptions'
+						list='datalistOptionsLEI'
 						id='exampleDataList'
 						placeholder='Digite para buscar um tipo...'
 						onChange={(e) => setValorBusca(e.target.value)}
 					/>
-					<datalist id='datalistOptions'>
+					<datalist id='datalistOptionsLEI'>
 						{tipoDocArray?.map((item, key) => {
 							return <option key={key} value={item.descricao} />
 						})}
@@ -277,4 +278,4 @@ const FilterTipoDoc = (props) => {
 	)
 }
 
-export default FilterTipoDoc
+export default FilterTipoDocLei
