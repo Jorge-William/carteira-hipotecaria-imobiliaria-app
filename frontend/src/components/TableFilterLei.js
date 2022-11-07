@@ -8,9 +8,9 @@ const TableFilterLei = (data) => {
 	const leiImoveis = leiArray.filter((item) => item !== undefined)
 
 	return (
-		<section className='mb-5'>
+		<section className='mb-5 container-fluid'>
 			<div className='row justify-content-center'>
-				<div id='botao-filtro' className='col-md-3 d-grid'>
+				<div id='botao-filtro' className='col-md-2'>
 					<a
 						className='btn btn-outline-primary'
 						data-bs-toggle='collapse'
@@ -20,9 +20,10 @@ const TableFilterLei = (data) => {
 						aria-controls='buscaPorPasta'
 					>
 						Buscar um mutuário
+						<i className='bi bi-search ms-2' />
 					</a>
 				</div>
-				<div id='botao-filtro' className='col-md-3 d-grid'>
+				<div id='botao-filtro' className='col-md-2'>
 					<Link to={`/mutuario/adicionar`}>
 						<div
 							className='btn btn-outline-success'

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 const SelectInput = (props) => {
-	const { tipoDoc } = props
+	const { tipoDoc, tipo } = props
 	const [tipoDocArray, setTipoDocArray] = useState([
 		{ id: '', descricao: '' }
 	])
@@ -37,14 +37,22 @@ const SelectInput = (props) => {
 				class='form-control'
 				list='datalistOptions'
 				id='exampleDataList'
-				placeholder='Digite para buscar um tipo...'
+				placeholder='Digite a abrevição do documento...'
 				onChange={(e) => props.callback(e.target.value)}
 			/>
-			<datalist id='datalistOptions'>
-				{tipoDocArray?.map((item, key) => {
-					return <option key={key} value={item.descricao} />
-				})}
-			</datalist>
+			{tipo === 'lei' ? (
+				<datalist id='datalistOptions'>
+					{tipoDocArray?.map((item, key) => {
+						return <option key={key} value={item.abreviacao} />
+					})}
+				</datalist>
+			) : (
+				<datalist id='datalistOptions'>
+					{tipoDocArray?.map((item, key) => {
+						return <option key={key} value={item.abrev} />
+					})}
+				</datalist>
+			)}
 		</>
 	)
 }

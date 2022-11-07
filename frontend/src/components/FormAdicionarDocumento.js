@@ -40,6 +40,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 	const [dadosDocumento, setDadosDocumento] = useState({
 		tipoDocId: ''
 	})
+	console.log(dadosDocumento)
 	const [fileSelected, setFileSelected] = useState()
 
 	// Extrai o id do usuário atual
@@ -50,14 +51,15 @@ const FormAdicionarDocumento = ({ dados }) => {
 	const callback = (value) => {
 		console.log(value)
 		const item = arrayTipoDoc.find((item) => {
-			return item.descricao === value
+			return item.abreviacao === value
 		})
 
 		console.log(item)
 		setDadosDocumento({
 			...dadosDocumento,
 			tipoDocId: item.id,
-			abreviacao: item.abreviacao
+			abreviacao: item.abreviacao,
+			descricao: item.descricao
 		})
 	}
 
@@ -226,28 +228,29 @@ const FormAdicionarDocumento = ({ dados }) => {
 				</div>
 				<h4 className='mt-5'>Dados do documento</h4>
 				<hr />
-				<div className='row mt-3 mb-5'>
-					<div className='col-md-5 col-sm-12'>
+				<div className='row mt-1 mb-5'>
+					<div className='col-md-2 col-sm-12'>
 						<label htmlFor='select' className='form-label'>
-							Tipo do documento
+							Abreviação
 						</label>
 						{/* ----------------------- Select componente---------------------------- */}
 						<SelectInput
 							tipoDoc={dados.tipoDoc}
 							callback={callback}
+							tipo={'lei'}
 						/>
 						{/* --------------------------------------------------------------------- */}
 					</div>
-					<div className='col-md-1'>
+					<div className='col-md-6'>
 						<label htmlFor='Código' className='form-label'>
-							Código
+							Descrição
 						</label>
 
 						<h3 className='text-secondary border  ps-1'>
-							{dadosDocumento.abreviacao}
+							{dadosDocumento.descricao}
 						</h3>
 					</div>
-					<div className='col-md-5 col-sm-12'>
+					<div className='col-md-3 col-sm-12'>
 						<label htmlFor='formFile' className='form-label'>
 							Arquivo
 						</label>
