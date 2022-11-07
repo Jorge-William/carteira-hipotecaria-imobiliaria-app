@@ -36,7 +36,7 @@ router.post("/alldatamutuariobyid", async (req, res) => {
     // PRODUÇÃO
     // eslint-disable-next-line
 		const [result] =
-			// eslint-disable-next-line
+    // eslint-disable-next-line
 			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
     FROM app_chi.mutuarios_lei a
@@ -48,8 +48,8 @@ router.post("/alldatamutuariobyid", async (req, res) => {
     // DESENVOLVIMENTO
     // eslint-disable-next-line
 		const [result] =
-			// eslint-disable-next-line
-			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
+    // eslint-disable-next-line
+	await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
     FROM testdb.mutuarios_lei a
     LEFT JOIN testdb.imoveis_lei b 
@@ -177,7 +177,8 @@ router.post("/retorna-id-mutuario", async (req, res) => {
 
 // ------------------------------------ Editar  ------------------------------------
 // eslint-disable-next-line
-router.post("/editar-mutuario", async (req, res) => {
+router.post("/editar-mutuario-lei", async (req, res) => {
+// eslint-disable-next-line
   const { usuario_id } = req.body.params;
 
   const {
@@ -228,7 +229,7 @@ router.post("/editar-mutuario", async (req, res) => {
       usuario: usuario_id,
       tabela: "Mutuario Lei",
       // eslint-disable-next-line
-      operacao: `O Mutuario ${nome}, foi editado.`
+      operacao: `O Mutuario ${nome}, id: ${id} foi editado.`
     });
     console.log(log);
     if (mutuario && imovel && log) {

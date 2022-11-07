@@ -12,6 +12,7 @@ const DetalheMutuarioSfh = ({ id }) => {
 	const [dados, setDados] = useState({})
 	const [documentos, setDocumentos] = useState([])
 	const [mostrarEdicao, setMostrarEdicao] = useState(false)
+	const [load, setLoad] = useState(false)
 
 
 	const callServices = useCallback( async () => {
@@ -25,7 +26,12 @@ const DetalheMutuarioSfh = ({ id }) => {
 
 	useEffect(() => {
 		callServices()
-	}, [id, callServices])
+	}, [id, callServices, load])
+
+	const reload = () => {
+		setLoad(true)
+		setMostrarEdicao(false)
+	}
 
 	return !dados ? (
 		<Skeleton count={10} />
@@ -67,7 +73,7 @@ const DetalheMutuarioSfh = ({ id }) => {
 			{!mostrarEdicao ? (
 				<ExibirMutuarioSfh dados={dados} />
 			) : (
-				<EditarMutuario dadosMutuario={dados} />
+				<EditarMutuario dadosMutuario={dados} callback={reload}  tipo={'sfh'}/>
 			)}
 			<AccordionDeDocumentos documentos={documentos} callServices={() => callServices()} />
 		</section>

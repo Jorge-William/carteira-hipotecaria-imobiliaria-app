@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { SkeletonEditarMutuario } from './Skeleton.editarMutuario'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-export function EditarMutuario({ dadosMutuario }) {
+export function EditarMutuario({ dadosMutuario, callback, tipo }) {
 	const [dados, setDados] = useState()
 	// const [novosDados, setNovosDados] = useState()
-console.log(dados);
+	console.log(dados)
 	useEffect(() => {
 		setTimeout(() => {
 			setDados(dadosMutuario.result[0])
@@ -33,7 +33,7 @@ console.log(dados);
 			showLoaderOnConfirm: true,
 			preConfirm: () => {
 				return axios
-					.post('/editar-mutuario', {
+					.post(`/editar-mutuario-${tipo}`, {
 						params: {
 							id,
 							usuario_id,
@@ -41,7 +41,7 @@ console.log(dados);
 						}
 					})
 					.then((response) => {
-						console.log(response)
+						callback()
 						if (!response.data.result) {
 							throw new Error()
 						}
@@ -186,20 +186,84 @@ console.log(dados);
 									>
 										Escritura
 									</label>
+									<div>
+										<div className='form-check'>
+											<input
+												className='form-check-input'
+												type='radio'
+												name='escritura'
+												id='a1'
+												value='1'
+												onChange={handleChange}
+											/>
+											<label
+												className='form-check-label'
+												for='a1'
+											>
+												Sim
+											</label>
+										</div>
+										<div className='form-check'>
+											<input
+												className='form-check-input'
+												type='radio'
+												name='escritura'
+												id='b1'
+												value='0'
+												onChange={handleChange}
+											/>
+											<label
+												className='form-check-label'
+												for='b1'
+											>
+												Não
+											</label>
+										</div>
+									</div>
 
-									{dados.escritura === 1 ? (
+									{/* {dados.escritura === 1 ? (
+									<>
+										<div className="form-check">
+										<input className="form-check-input" type="radio" name="escritura" id="escritura-01" value='1' checked onChange={handleChange}/>
+										<label className="form-check-label" for="escritura-01">
+										  Sim
+										</label>
+									  </div>
+									  <div className="form-check">
+										<input className="form-check-input" type="radio" name="escritura" id="escritura-02" value='0' onChange={handleChange}/>
+										<label className="form-check-label" for="escritura-02">
+										  Não
+										</label>
+									  </div>
+									</>
+									):(<>
+										<div className="form-check">
+										<input className="form-check-input" type="radio" name="escritura" id="escritura-03" value='1' onChange={handleChange}/>
+										<label className="form-check-label" for="escritura-03">
+										  Sim
+										</label>
+									  </div>
+									  <div className="form-check">
+										<input className="form-check-input" type="radio" name="escritura" id="escritura-04" value='0' checked onChange={handleChange}/>
+										<label className="form-check-label" for="escritura-04">
+										  Não
+										</label>
+									  </div>
+									</>)} */}
+
+									{/* {dados.escritura === '1' ? (
 										<select
 											className='form-select'
 											aria-label='Default select example'
 											name='escritura'
 											onChange={handleChange}
 										>
-											<option value={1} selected>
+											<option value='1' selected="selected">
 												Sim
 											</option>
 											<option
 												className='vermelho'
-												value={0}
+												value='0'
 											>
 												Não
 											</option>
@@ -213,14 +277,14 @@ console.log(dados);
 										>
 											<option
 												className='vermelho'
-												value={0}
-												selected
+												value='0'
+												selected="selected"
 											>
 												Não
 											</option>
-											<option value={1}>Sim</option>
+											<option value='1' >Sim</option>
 										</select>
-									)}
+									)} */}
 								</div>
 								<div className='mb-3 col-md-1'>
 									<label
@@ -229,7 +293,56 @@ console.log(dados);
 									>
 										Hipoteca
 									</label>
-									{dados.hipoteca === 1 ? (
+									<div>
+										<div className='form-check'>
+											<input
+												className='form-check-input'
+												type='radio'
+												name='hipoteca'
+												id='a'
+												value='1'
+												onChange={handleChange}
+											/>
+											<label
+												className='form-check-label'
+												for='a'
+											>
+												Sim
+											</label>
+										</div>
+										<div className='form-check'>
+											<input
+												className='form-check-input'
+												type='radio'
+												name='hipoteca'
+												id='b'
+												value='0'
+												onChange={handleChange}
+											/>
+											<label
+												className='form-check-label'
+												for='b'
+											>
+												Não
+											</label>
+										</div>
+									</div>
+
+									{/* //  ):(<>
+									// 	<div className="form-check">
+									// 	<input className="form-check-input" type="radio" name="hipoteca" id="flexRadioDefault111" value='1' onChange={handleChange}/>
+									// 	<label className="form-check-label" for="flexRadioDefault111">
+									// 	  Sim
+									// 	</label>
+									//   </div>
+									//   <div className="form-check">
+									// 	<input className="form-check-input" type="radio" name="hipoteca" id="flexRadioDefault22" value='0' checked onChange={handleChange}/>
+									// 	<label className="form-check-label" for="flexRadioDefault22">
+									// 	  Não
+									// 	</label>
+									//   </div>
+									// </>)} */}
+									{/* {dados.hipoteca === '1' ? (
 										<select
 										id='hipoteca'
 											className='form-select'
@@ -265,7 +378,7 @@ console.log(dados);
 											</option>
 											<option value={1}>Sim</option>
 										</select>
-									)}
+									)} */}
 								</div>
 								<div className='mb-3 col-md-2'>
 									<label
@@ -301,10 +414,7 @@ console.log(dados);
 									/>
 								</div>
 								<div className='mb-3 col-md-4'>
-									<label
-										htmlFor='obs'
-										className='form-label'
-									>
+									<label htmlFor='obs' className='form-label'>
 										Observação
 									</label>
 									<input
@@ -321,10 +431,7 @@ console.log(dados);
 						</section>
 						<div className='row'>
 							<div className='mb-3 col-md-2'>
-								<label
-									htmlFor='cep'
-									className='form-label'
-								>
+								<label htmlFor='cep' className='form-label'>
 									CEP
 								</label>
 								<input
@@ -338,10 +445,7 @@ console.log(dados);
 								/>
 							</div>
 							<div className='mb-3 col-md-3'>
-								<label
-									htmlFor='end'
-									className='form-label'
-								>
+								<label htmlFor='end' className='form-label'>
 									Endereço
 								</label>
 								<input
@@ -355,10 +459,7 @@ console.log(dados);
 								/>
 							</div>
 							<div className='mb-3 col-md-1'>
-								<label
-									htmlFor='numero'
-									className='form-label'
-								>
+								<label htmlFor='numero' className='form-label'>
 									Número
 								</label>
 								<input
@@ -372,10 +473,7 @@ console.log(dados);
 								/>
 							</div>
 							<div className='mb-3 col-md-2'>
-								<label
-									htmlFor='complem'
-									className='form-label'
-								>
+								<label htmlFor='complem' className='form-label'>
 									Complemento
 								</label>
 								<input
@@ -389,10 +487,7 @@ console.log(dados);
 								/>
 							</div>
 							<div className='mb-3 col-md-2'>
-								<label
-									htmlFor='bairro'
-									className='form-label'
-								>
+								<label htmlFor='bairro' className='form-label'>
 									Bairro
 								</label>
 								<input
@@ -406,10 +501,7 @@ console.log(dados);
 								/>
 							</div>
 							<div className='mb-3 col-md-2'>
-								<label
-									htmlFor='cidade'
-									className='form-label'
-								>
+								<label htmlFor='cidade' className='form-label'>
 									Cidade
 								</label>
 								<input
@@ -423,10 +515,7 @@ console.log(dados);
 								/>
 							</div>
 							<div className='mb-3 col-md-1'>
-								<label
-									htmlFor='uf'
-									className='form-label'
-								>
+								<label htmlFor='uf' className='form-label'>
 									UF
 								</label>
 								<input
