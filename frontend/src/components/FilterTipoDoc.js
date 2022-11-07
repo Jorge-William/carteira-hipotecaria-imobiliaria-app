@@ -15,6 +15,7 @@ const FilterTipoDoc = (props) => {
 	const [abrev, setAbrev] = useState({ abrev: '' })
 	const [descricao, setDescricao] = useState({ descricao: '' })
 	const [showTable, setShowTable] = useState(false)
+
 	useEffect(() => {
 		setShowTable(false)
 	},[valorBusca])
@@ -140,13 +141,13 @@ const FilterTipoDoc = (props) => {
 			<div className='row mb-5 align-items-end'>
 				<div className='col-md-8'>
 					<input
-						class='form-control'
-						list='datalistOptions'
+						className='form-control'
+						list='datalistOptionsSFH'
 						id='exampleDataList'
 						placeholder='Digite para buscar um tipo...'
 						onChange={(e) => setValorBusca(e.target.value)}
 					/>
-					<datalist id='datalistOptions'>
+					<datalist id='datalistOptionsSFH'>
 						{tipoDocArray?.map((item, key) => {
 							return <option key={key} value={item.descricao} />
 						})}
