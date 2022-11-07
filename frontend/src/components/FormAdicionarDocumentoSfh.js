@@ -46,18 +46,17 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 	const callback = (value) => {
 		console.log(value)
 		const item = arrayTipoDoc.find((item) => {
-			return item.descricao === value
+			return item.abrev === value
 		})
 
 		console.log(item)
 		setDadosDocumento({
 			...dadosDocumento,
 			tipoDocId: item.id,
-			abreviacao: item.abrev
+			abreviacao: item.abrev,
+			descricao: item.descricao
 		})
 	}
-	// console.log(dadosDocumento)
-
 	const handleChange = (event) => {
 		const value = event.target.value
 
@@ -218,7 +217,7 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 				<h4 className='mt-5'>Dados do documento</h4>
 				<hr />
 				<div className='row mt-3 mb-5'>
-					<div className='col-md-5 col-sm-12'>
+					<div className='col-md-2 col-sm-12'>
 						<label htmlFor='select' className='form-label'>
 							Tipo do documento
 						</label>
@@ -226,19 +225,20 @@ const FormAdicionarDocumentoSfh = ({ dados }) => {
 						<SelectInput
 							tipoDoc={dados.tipoDoc}
 							callback={callback}
+							tipo={'sfh'}
 						/>
 						{/* --------------------------------------------------------------------- */}
 					</div>
-					<div className='col-md-1'>
+					<div className='col-md-5'>
 						<label htmlFor='Código' className='form-label'>
-							Código
+							Descrição
 						</label>
 
 						<h3 className='text-secondary border  ps-1'>
-							{dadosDocumento.abreviacao}
+							{dadosDocumento.descricao}
 						</h3>
 					</div>
-					<div className='col-md-5 col-sm-12'>
+					<div className='col-md-4 col-sm-12'>
 						<label htmlFor='formFile' className='form-label'>
 							Arquivo
 						</label>
