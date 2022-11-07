@@ -67,18 +67,6 @@ const DetalheMutuario = ({ id }) => {
 						</button>
 					</Link>
 				</div>
-				<div className='col-md'>
-					<Link to={`/mutuario/lei/adicionardocumento/${id}`}>
-						<button
-							className='btn btn-outline-danger crud-btn'
-							data-bs-toggle='tooltip'
-							data-bs-placement='top'
-							title='Deletar mutuário'
-						>
-							<i className='bi bi-person-x-fill'></i>
-						</button>
-					</Link>
-				</div>
 			</section>
 			{!mostrarEdicao ? (
 				<ExibirMutuario dados={dados} />

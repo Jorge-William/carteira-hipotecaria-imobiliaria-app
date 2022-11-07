@@ -8,9 +8,9 @@ const TableFilterSfh = (data) => {
 	const sfhImoveis = sfhArray.filter((item) => item !== undefined)
 
 	return (
-		<section className='mb-5'>
+		<section className='mb-5 container-fluid'>
 			<div className='row justify-content-center'>
-				<div id='botao-filtro' className='col-md-3 d-grid'>
+				<div id='botao-filtro' className='col-md-2 '>
 					<a
 						className='btn btn-outline-primary'
 						data-bs-toggle='collapse'
@@ -20,9 +20,10 @@ const TableFilterSfh = (data) => {
 						aria-controls='buscaPorPasta'
 					>
 						Buscar um mutuário
+						<i className='bi bi-search ms-2' />
 					</a>
 				</div>
-				<div id='botao-filtro' className='col-md-3 d-grid'>
+				<div id='botao-filtro' className='col-md-2 '>
 					<Link to={`/mutuario-sfh/adicionar`}>
 						<div
 							className='btn btn-outline-success'
@@ -96,7 +97,7 @@ const TableFilterSfh = (data) => {
 										<AutocompleteSfh
 											tipo={'rotulo'}
 											placeholder={
-												'Código de Pasta - ex. L0001'
+												'Código de Pasta - ex. C0001'
 											}
 											data={data.data}
 											suggestions={Array.from(
