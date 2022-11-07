@@ -241,7 +241,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 						/>
 						{/* --------------------------------------------------------------------- */}
 					</div>
-					<div className='col-md-5'>
+					<div className='col-md-6'>
 						<label htmlFor='Código' className='form-label'>
 							Descrição
 						</label>
@@ -250,7 +250,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 							{dadosDocumento.descricao}
 						</h3>
 					</div>
-					<div className='col-md-4 col-sm-12'>
+					<div className='col-md-3 col-sm-12'>
 						<label htmlFor='formFile' className='form-label'>
 							Arquivo
 						</label>
