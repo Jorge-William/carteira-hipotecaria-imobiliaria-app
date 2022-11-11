@@ -168,6 +168,7 @@ router.post("/deletar-documento", passValidation, async (req, res) => {
     const tipo = Array.from(pasta)[0];
 
     if (tipo === "L") {
+      const auditoria = await AuditoriaLei.destroy({ where: { doc_id: idDoc } });
       const documentoLei = await DocumentosLei.destroy({
         where: {
           id: idDoc,
@@ -185,10 +186,14 @@ router.post("/deletar-documento", passValidation, async (req, res) => {
           operacao: `O documento ${tipoDoc}, de ID: ${idDoc}, foi deletado.`,
         });
 
+        console.log(auditoria);
+
         console.log(log);
         res.status(200).send({ status: true });
       }
     } else {
+      const auditoria = await AuditoriaSfh.destroy({ where: { doc_id: idDoc } });
+
       const documentoSfh = await DocumentosSfh.destroy({
         where: {
           id: idDoc,
@@ -204,6 +209,7 @@ router.post("/deletar-documento", passValidation, async (req, res) => {
           operacao: `O documento ${tipoDoc}, de ID: ${idDoc}, foi deletado.`,
         });
         console.log(log);
+        console.log(auditoria);
 
         res.status(200).send({ status: true });
       }
