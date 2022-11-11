@@ -88,14 +88,75 @@ const Menu = ({ logout }) => {
 											LEI
 										</Link>
 									</li>
+									<hr className='dropdown-divider' />
+
+									<li>
+										<a
+											className='dropdown-item'
+
+											target='blank'
+											href={
+												process.env.NODE_ENV ===
+												'production'
+													? 'http://10.100.1.156:5001/manuais/manual-mutuario.pdf'
+													: process.env.NODE_ENV ===
+													  'development'
+													? 'http://localhost:5001/manuais/manual-mutuario.pdf'
+													: 'http://localhost:3000/dashboard'
+											}
+										>
+											Manual do mutuário
+										</a>
+									</li>
 								</ul>
 							</li>
 							{type === 'administrador' && (
-								<li>
-									<Link className='nav-link' to='/auditoria'>
-										Auditoria
+								<li className='nav-item dropdown'>
+								<a
+									className='nav-link dropdown-toggle active'
+									href='/'
+									id='navbarDropdown'
+									role='button'
+									data-bs-toggle='dropdown'
+									aria-expanded='false'
+								>
+									Auditoria
+								</a>
+								<ul
+									className='dropdown-menu'
+									aria-labelledby='navbarDropdown'
+								>
+									<li>
+									<Link className='dropdown-item' to='/auditoria'>
+										Auditar documentos
 									</Link>
-								</li>
+										
+									</li>
+									<li>
+										<hr className='dropdown-divider' />
+									</li>
+									<li>
+
+										<a
+											className='dropdown-item'
+
+											target='blank'
+											href={
+												process.env.NODE_ENV ===
+												'production'
+													? 'http://10.100.1.156:5001/manuais/manual-auditoria.pdf'
+													: process.env.NODE_ENV ===
+													  'development'
+													? 'http://localhost:5001/manuais/manual-auditoria.pdf'
+													: 'http://localhost:3000/dashboard'
+											}
+										>
+											Manual da auditoria
+										</a>
+
+									</li>
+								</ul>
+							</li>
 							)}
 							<li>
 								<Link className='nav-link' to='/operador'>
@@ -103,7 +164,10 @@ const Menu = ({ logout }) => {
 								</Link>
 							</li>
 							<li>
-								<Link className='nav-link' to='/tipos-de-documento'>
+								<Link
+									className='nav-link'
+									to='/tipos-de-documento'
+								>
 									Tipos de documentos
 								</Link>
 							</li>

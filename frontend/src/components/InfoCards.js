@@ -18,6 +18,7 @@ const InfoCards = () => {
 		]
 	})
 
+	console.log(infoMutuarios)
 	useEffect(() => {
 		const callServices = async () => {
 			const result = await getInfoCards()

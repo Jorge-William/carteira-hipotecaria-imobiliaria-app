@@ -19,18 +19,26 @@ router.get("/info-mutuarios", async (req, res) => {
   //   + "where status = 0",
   // );
 
-  // const [auditadosLei, metadataAuditadosSfh] = await sequelize.query(
-  //   `select count(status) as 'auditados_lei' from documentos_lei where status != ${0};
-  //   select count(status) as 'auditados_sfh' from documentos_sfh where status != ${0};`,
-  // );
+  const [auditadosSfh, metadataAuditadosSfh] = await sequelize.query(
+    `select count(status) as 'auditados_lei' from documentos_lei where status != ${0};`,
+  );
+
+  const [auditadosLei, metadataAuditadosLei] = await sequelize.query(
+    `select count(status) as 'auditados_sfh' from documentos_sfh where status != ${0};`,
+  );
 
   console.log(mutuariosLei);
   console.log(mutuariosSfh);
+  console.log(auditadosLei);
+  console.log(auditadosSfh);
   // // console.log(metadataNaoAuditadosLei);
   // console.log(metadataAuditadosSfh);
 
   res.status(200).send({
-    metadataLei, metadataSfh,
+    metadataLei,
+    metadataSfh,
+    metadataAuditadosSfh,
+    metadataAuditadosLei,
   });
 });
 
