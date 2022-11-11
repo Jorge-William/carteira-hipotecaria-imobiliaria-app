@@ -18,7 +18,8 @@ router.post("/documentosSfh", async (req, res) => {
   //   const documentos = await DocumentoLei.findAll({ where: { mutuario_id: id } });
   //   res.send(documentos);
   // eslint-disable-next-line
-  const [results] =	await sequelize.query(`select documentos_sfh.id ,documentos_sfh.dt_registro,
+	const [results] =
+		await sequelize.query(`select documentos_sfh.id ,documentos_sfh.dt_registro,
     documentos_sfh.nome_arquivo, documentos_sfh.status,
     documentos_sfh.arquivo, documentos_sfh.qtd_pag, documentos_sfh.auditor, 
     documentos_sfh.cod_pasta, tipos_doc_sfh.descricao from documentos_sfh inner join tipos_doc_sfh
@@ -45,6 +46,7 @@ const upload = multer({
 // Como está no banco => '/pastas/lei/L0980/L0980L128.pdf'
 // http://localhost:5001/documentos/L8889/L888980.pdf  Url para ler um arquivo
 router.use("/documentos", express.static("pastas/sfh/"));
+router.use("/manuais", express.static("mutuario/"));
 
 router.post("/upload-sfh", upload.array("file"), async (req, res) => {
   const {
@@ -97,7 +99,8 @@ router.post("/upload-sfh", upload.array("file"), async (req, res) => {
 
 router.get("/documentos-nao-auditados-sfh", async (req, res) => {
   // eslint-disable-next-line
-	const docsNaoAuditados = await sequelize.query(`SELECT mutuarios_sfh.id, mutuarios_sfh.rotulo,
+	const docsNaoAuditados =
+		await sequelize.query(`SELECT mutuarios_sfh.id, mutuarios_sfh.rotulo,
   mutuarios_sfh.nome, COUNT(documentos_sfh.status = 0)  AS nao_auditados  FROM mutuarios_sfh, 
   documentos_sfh WHERE documentos_sfh.status != 3 AND documentos_sfh.status != 10 AND mutuarios_sfh.id = documentos_sfh.mutuario_id  
   GROUP  BY mutuarios_sfh.id, mutuarios_sfh.id, mutuarios_sfh.rotulo,
@@ -109,7 +112,7 @@ router.get("/documentos-nao-auditados-sfh", async (req, res) => {
 router.post("/doc-auditando-sfh", async (req, res) => {
   const { id } = req.body.params;
 
-  const [result] = await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome, mutuario_id, a.id as id_documento
+  const [result] =		await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome, mutuario_id, a.id as id_documento
   FROM documentos_sfh a 
   LEFT JOIN tipos_doc_sfh b ON a.tipo_doc_id = b.id 
   LEFT JOIN mutuarios_sfh c ON a.mutuario_id = c.id  
@@ -119,14 +122,17 @@ router.post("/doc-auditando-sfh", async (req, res) => {
 
 router.get("/dashboard-sfh", async (req, res) => {
   // eslint-disable-next-line
-  const [naoAuditados] =		await sequelize.query(`SELECT count(status) AS naoAuditados
+	const [naoAuditados] =
+		await sequelize.query(`SELECT count(status) AS naoAuditados
   FROM documentos_sfh  WHERE status = 0;`);
   // eslint-disable-next-line
-  const [auditados] =		await sequelize.query(`SELECT  COUNT(status) AS auditados
+	const [auditados] =
+		await sequelize.query(`SELECT  COUNT(status) AS auditados
   FROM documentos_sfh
   WHERE status = 3`);
   // eslint-disable-next-line
-  const [pendentes] =		await sequelize.query(`SELECT  COUNT(status) AS pendentes
+	const [pendentes] =
+		await sequelize.query(`SELECT  COUNT(status) AS pendentes
   FROM documentos_sfh
   WHERE status != 3 AND status != 0`);
 
