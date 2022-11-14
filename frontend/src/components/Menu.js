@@ -93,7 +93,6 @@ const Menu = ({ logout }) => {
 									<li>
 										<a
 											className='dropdown-item'
-
 											target='blank'
 											href={
 												process.env.NODE_ENV ===
@@ -112,60 +111,63 @@ const Menu = ({ logout }) => {
 							</li>
 							{type === 'administrador' && (
 								<li className='nav-item dropdown'>
-								<a
-									className='nav-link dropdown-toggle active'
-									href='/'
-									id='navbarDropdown'
-									role='button'
-									data-bs-toggle='dropdown'
-									aria-expanded='false'
-								>
-									Auditoria
-								</a>
-								<ul
-									className='dropdown-menu'
-									aria-labelledby='navbarDropdown'
-								>
-									<li>
-									<Link className='dropdown-item' to='/auditoria'>
-										Auditar documentos
-									</Link>
-										
-									</li>
-									<li>
-										<hr className='dropdown-divider' />
-									</li>
-									<li>
-
-										<a
-											className='dropdown-item'
-
-											target='blank'
-											href={
-												process.env.NODE_ENV ===
-												'production'
-													? 'http://10.100.1.156:5001/manuais/manual-auditoria.pdf'
-													: process.env.NODE_ENV ===
-													  'development'
-													? 'http://localhost:5001/manuais/manual-auditoria.pdf'
-													: 'http://localhost:3000/dashboard'
-											}
-										>
-											Manual da auditoria
-										</a>
-
-									</li>
-								</ul>
-							</li>
+									<a
+										className='nav-link dropdown-toggle active'
+										href='/'
+										id='navbarDropdown'
+										role='button'
+										data-bs-toggle='dropdown'
+										aria-expanded='false'
+									>
+										Auditoria
+									</a>
+									<ul
+										className='dropdown-menu'
+										aria-labelledby='navbarDropdown'
+									>
+										<li>
+											<Link
+												className='dropdown-item'
+												to='/auditoria'
+											>
+												Auditar documentos
+											</Link>
+										</li>
+										<li>
+											<hr className='dropdown-divider' />
+										</li>
+										<li>
+											<a
+												className='dropdown-item'
+												target='blank'
+												href={
+													process.env.NODE_ENV ===
+													'production'
+														? 'http://10.100.1.156:5001/manuais/manual-auditoria.pdf'
+														: process.env
+																.NODE_ENV ===
+														  'development'
+														? 'http://localhost:5001/manuais/manual-auditoria.pdf'
+														: 'http://localhost:3000/dashboard'
+												}
+											>
+												Manual da auditoria
+											</a>
+										</li>
+									</ul>
+								</li>
 							)}
 							<li>
-								<Link className='nav-link' to='/operador'>
+								<Link
+									className='nav-link active'
+									to='/operador'
+								>
 									Operador
 								</Link>
 							</li>
 							<li>
 								<Link
-									className='nav-link'
+									className='nav-link active'
 									to='/tipos-de-documento'
 								>
 									Tipos de documentos

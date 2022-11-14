@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import getInfoCards from '../services/getInfoCards.service'
 import '../style/info-cards.css'
-import Skeleton from 'react-loading-skeleton'
+// import Skeleton from 'react-loading-skeleton'
 import AnimatedNumber from 'animated-number-react'
 
 const InfoCards = () => {
 	const [infoMutuarios, setInfoMutuarios] = useState({
-		metadataLei: [
-			{
-				qtd_mutuarios_lei: 0
-			}
-		],
-		metadataSfh: [
-			{
-				qtd_mutuarios_sfh: 0
-			}
-		]
+		docsAuditados: 0,
+		docsNaoAuditados: 0,
+		totalMutLei: 0,
+		totalMutSfh: 0,
+		totalMutuarios: 0
 	})
 
 	console.log(infoMutuarios)
@@ -27,131 +22,113 @@ const InfoCards = () => {
 		callServices()
 	}, [])
 
-	const total =
-		infoMutuarios.metadataLei[0].qtd_mutuarios_lei +
-		infoMutuarios.metadataSfh[0].qtd_mutuarios_sfh
+	// <AnimatedNumber
+	// 	value={totalSfh}
+	// 	duration={2000}
+	// 	formatValue={(totalSfh) => totalSfh.toFixed()}
+	// />
+	const {
+		docsAuditados,
+		docsNaoAuditados,
+		totalMutLei,
+		totalMutSfh,
+		totalMutuarios
+	} = infoMutuarios
 
-	const totalLei = infoMutuarios.metadataLei[0].qtd_mutuarios_lei
-	const totalSfh = infoMutuarios.metadataSfh[0].qtd_mutuarios_sfh
 	return (
-		<div className='row mt-5 d-flex justify-content-center gap-2 mx-auto'>
-			{!infoMutuarios ? (
-				<Skeleton count={10} />
-			) : (
-				<div className='col-lg-6' id='card-principal'>
-					<div className=''>
-						<h1 className='p-3 titulo'>Total de mutuários</h1>
-						<div className='row d-inline-flex'>
-							<div className='col-md d-inline-flex'>
-								<i
-									className='ms-2 bi bi-people text-success'
-									id='icone-card-principal'
-								></i>
-							</div>
-							<div className='col-lg'>
-								<p className='numero text-secondary'>
-									<AnimatedNumber
-										value={total}
-										formatValue={(total) => total.toFixed()}
-									/>
-								</p>
-							</div>
-						</div>
+		<div className='container gy-2 p-3'>
+			<div className='row row-cols-1 row-cols-lg-3 mb-2 justify-content-center'>
+				<div className='col m-3 cards'>
+					<div className='p-5 border-bottom'>
+						<h2 className='text-secondary'>Total de Mutuários</h2>
+					</div>
+					<div className='text-center'>
+						<p className='text-secondary number'>
+							<AnimatedNumber
+								value={totalMutuarios}
+								duration={2000}
+								formatValue={(totalMutuarios) =>
+									totalMutuarios.toFixed()
+								}
+							/>
+						</p>
 					</div>
 				</div>
-			)}
-			<div className='col-lg-6'>
-				<div className='row gap-2 d-flex'>
-					<div className='col-md-12 p-3' id='secundario-um'>
-						<div className='row mx-auto'>
-							<div className='col-md-6'>
-								<div className='row mt-2  align-items-center'>
-									<h3 className='titulos-card-um'>
-										Mutuarios Lei
-									</h3>
-								</div>
-								<div className='row gap-5 mt-3 d-inline-flex '>
-									<i
-										className='bi bi-person-badge  d-flex justify-content-center text-primary'
-										id='icone-card-um'
-									></i>
-									<p className='numero-card-um text-warning   d-flex justify-content-center '>
-										<AnimatedNumber
-											value={totalLei}
-											formatValue={(totalLei) =>
-												totalLei.toFixed()
-											}
-										/>
-									</p>
-								</div>
-							</div>
-							<div className='col-md-6'>
-								<div className='row mt-2  align-items-center'>
-									<h3 className='titulos-card-um'>
-										Mutuarios Sfh
-									</h3>
-								</div>
-								<div className='row gap-5 mt-3 d-inline-flex '>
-									<i
-										className='bi bi-person-badge-fill  d-flex justify-content-center text-success'
-										id='icone-card-um'
-									></i>
-
-									<p className='numero-card-um text-warning  d-flex justify-content-center'>
-										<AnimatedNumber
-											value={totalSfh}
-											duration={2000}
-											formatValue={(totalSfh) =>
-												totalSfh.toFixed()
-											}
-										/>
-									</p>
-								</div>
-							</div>
-						</div>
+				<div className='col m-3 cards'>
+					<div className='p-5 border-bottom'>
+						<h2 className='text-secondary'>
+							Mutuários
+							<br /> Lei
+						</h2>
 					</div>
-					<div className='col-md-12' id='secundario-dois'>
-						<div className='row mx-auto'>
-							<div className='col-md-6'>
-								<div className='row mt-2  align-items-center'>
-									<h3 className='titulos-card-um'>
-										Documentos Auditados
-									</h3>
-								</div>
-								<div className='row gap-5 mt-3 d-inline-flex '>
-									<i
-										className='bi bi-file-earmark-check d-flex justify-content-center text-success'
-										id='icone-card-um'
-									></i>
-									<p className='numero-card-um   d-flex justify-content-center'>
-										{/* {
-											infoMutuarios.data.lei[0]
-												.qtd_mutuarios_lei
-										} */}
-									</p>
-								</div>
-							</div>
-							<div className='col-md-6'>
-								<div className='row mt-2  align-items-center'>
-									<h3 className='titulos-card-um'>
-										Documentos Não Auditados
-									</h3>
-								</div>
-								<div className='row gap-5 mt-3 d-inline-flex '>
-									<i
-										className='bi bi-file-earmark-excel d-flex justify-content-center text-danger'
-										id='icone-card-um'
-									></i>
-
-									<p className='numero-card-um  d-flex justify-content-center'>
-										{/* {
-											infoMutuarios.data.sfh[0]
-												.qtd_mutuarios_sfh
-										} */}
-									</p>
-								</div>
-							</div>
-						</div>
+					<div className='text-center'>
+						<p className='text-primary number'>
+							<AnimatedNumber
+								value={totalMutLei}
+								duration={2000}
+								formatValue={(totalMutLei) =>
+									totalMutLei.toFixed()
+								}
+							/>
+						</p>
+					</div>
+				</div>
+				<div className='col m-3 cards'>
+					<div className='p-5 border-bottom'>
+						<h2 className='text-secondary'>
+							Mutuários
+							<br /> SFH
+						</h2>
+					</div>
+					<div className='text-center'>
+						<p className='text-warning number'>
+							<AnimatedNumber
+								value={totalMutSfh}
+								duration={2000}
+								formatValue={(totalMutSfh) =>
+									totalMutSfh.toFixed()
+								}
+							/>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div className='row g-3 justify-content-center'>
+				<div className='col-6 m-3 card-maior ps-4 pe-4'>
+					<div className='p-5 border-bottom'>
+						<h2 className='text-secondary'>
+							Documentos
+							<br /> Auditados
+						</h2>
+					</div>
+					<div className='text-center'>
+						<p className='text-success number text-end'>
+							<AnimatedNumber
+								value={docsAuditados}
+								duration={2000}
+								formatValue={(docsAuditados) =>
+									docsAuditados.toFixed()
+								}
+							/>
+						</p>
+					</div>
+				</div>
+				<div className='col-6 m-3 card-maior ps-4 pe-4'>
+					<div className='p-5 border-bottom'>
+						<h2 className='text-secondary'>
+							Documentos não Auditados
+						</h2>
+					</div>
+					<div className='text-center'>
+						<p className='text-danger number text-end'>
+							<AnimatedNumber
+								value={docsNaoAuditados}
+								duration={2000}
+								formatValue={(docsNaoAuditados) =>
+									docsNaoAuditados.toFixed()
+								}
+							/>
+						</p>
 					</div>
 				</div>
 			</div>
