@@ -40,7 +40,7 @@ const App = () => {
 	}, [auth])
 
 	return (
-		<main className='container-fluid'>
+		<main className='container-xxl'>
 			{auth && <Menu logout={() => setAuth(false)} />}
 			<Routes>
 				{!auth && (
@@ -117,7 +117,10 @@ const App = () => {
 					<Route path='/mutuario/sfh' element={<MutuarioSfh />} />
 				)}
 				{auth && (
-					<Route path='/tipos-de-documento' element={<TipoDeDocumento />} />
+					<Route
+						path='/tipos-de-documento'
+						element={<TipoDeDocumento />}
+					/>
 				)}
 				{auth && (
 					<Route path='/alterar-senha' element={<AlterarSenha />} />
