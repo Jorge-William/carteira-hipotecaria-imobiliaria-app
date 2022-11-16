@@ -1,9 +1,11 @@
 import '../style/FormAlteraSenha.css'
 import { useState } from 'react'
+// import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import axios from 'axios'
+// import AuthService from '../services/auth.service'
 
-const FormAlterarSenha = () => {
+const FormAlterarSenha = ({ callback }) => {
 	const [password, setPassword] = useState({
 		passwordOne: '',
 		passwordTwo: ''
@@ -11,8 +13,8 @@ const FormAlterarSenha = () => {
 	const [alternateIcon, setAlternateIcon] = useState(false)
 
 	const localStorageData = JSON.parse(localStorage.getItem('userData'))
-	
-	const {id, name} = localStorageData
+
+	const { id, name, primeiroLogin } = localStorageData
 
 	const handleChange = (event) => {
 		const value = event.target.value
@@ -21,6 +23,8 @@ const FormAlterarSenha = () => {
 	}
 
 	const { passwordOne } = password
+
+	// const navigate = useNavigate()
 
 	const passwordValidate = () => {
 		if (password.passwordOne !== password.passwordTwo) {
@@ -47,16 +51,31 @@ const FormAlterarSenha = () => {
 				confirmButtonText: 'Salvar a nova senha',
 				showLoaderOnConfirm: true,
 				preConfirm: () => {
-					return axios.put('/modificar-senha', {
+					return axios
+						.put('/modificar-senha', {
 							senha: passwordOne,
 							userId: id,
-							name
-					
-						}
-					)
+							name,
+							primeiroLogin
+						})
 						.then((response) => {
-							console.log(response);
-							if (!response.data.status) {
+							const data = JSON.parse(
+								localStorage.getItem('userData')
+							)
+							const { primeiroLogin } = data
+
+							if (primeiroLogin) {
+								localStorage.setItem(
+									'userData.primeiroLogin',
+									false
+								)
+							}
+							if (response) {
+								callback()
+								// navigate(`/dashboard`, {
+								// 	replace: true
+								// })
+							} else if (!response.data.status) {
 								throw new Error(response.data.status)
 							}
 							return response
@@ -72,7 +91,8 @@ const FormAlterarSenha = () => {
 				if (result.isConfirmed) {
 					Swal.fire({
 						icon: 'success',
-						title: 'Senha salva com sucesso'
+						title: 'Senha alterada com sucesso',
+						text: 'Agora faça login com a nova senha.'
 					})
 				}
 			})
@@ -92,7 +112,7 @@ const FormAlterarSenha = () => {
 								Digite uma nova senha
 							</label>
 							<input
-								autocomplete='new-password'
+								autoComplete='new-password'
 								name='passwordOne'
 								type={alternateIcon ? 'text' : 'password'}
 								className='form-control'
@@ -134,7 +154,7 @@ const FormAlterarSenha = () => {
 								Repita a senha
 							</label>
 							<input
-								autocomplete='new-password'
+								autoComplete='new-password'
 								name='passwordTwo'
 								type={alternateIcon ? 'text' : 'password'}
 								className='form-control'
@@ -149,7 +169,8 @@ const FormAlterarSenha = () => {
 			<button
 				className='btn btn-success'
 				disabled={
-					password.passwordOne.length < 8 && password.passwordTwo.length < 8
+					password.passwordOne.length < 8 &&
+					password.passwordTwo.length < 8
 						? true
 						: false
 				}

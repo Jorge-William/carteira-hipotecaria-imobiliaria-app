@@ -198,7 +198,7 @@ export function EditarMutuario({ dadosMutuario, callback, tipo }) {
 											/>
 											<label
 												className='form-check-label'
-												for='a1'
+												htmlFor='a1'
 											>
 												Sim
 											</label>
@@ -214,7 +214,7 @@ export function EditarMutuario({ dadosMutuario, callback, tipo }) {
 											/>
 											<label
 												className='form-check-label'
-												for='b1'
+												htmlFor='b1'
 											>
 												Não
 											</label>
@@ -305,7 +305,7 @@ export function EditarMutuario({ dadosMutuario, callback, tipo }) {
 											/>
 											<label
 												className='form-check-label'
-												for='a'
+												htmlFor='a'
 											>
 												Sim
 											</label>
@@ -321,7 +321,7 @@ export function EditarMutuario({ dadosMutuario, callback, tipo }) {
 											/>
 											<label
 												className='form-check-label'
-												for='b'
+												htmlFor='b'
 											>
 												Não
 											</label>

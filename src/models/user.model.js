@@ -18,7 +18,6 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       notNull: false,
       notEmpty: true,
-      unique: true,
       validate: {
         isEmail: true,
       },
@@ -40,12 +39,23 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    primeiroLogin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: new Date(),
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: new Date(),
+    },
   },
+  { indexes: [{ unique: true, fields: ["email"] }] },
   {
     freezeTableName: true,
     timestamps: false,

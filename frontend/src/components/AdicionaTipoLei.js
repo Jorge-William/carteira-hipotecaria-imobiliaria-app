@@ -9,8 +9,8 @@ const AdicionaTipoLei = ({ callback }) => {
 		descricao: ''
 	})
 
-    const userData = JSON.parse(localStorage.getItem('userData'))
-    const usuario_id = userData.id
+	const userData = JSON.parse(localStorage.getItem('userData'))
+	const usuario_id = userData.id
 
 	const handleChange = (event) => {
 		const value = event.target.value.toUpperCase()
@@ -38,11 +38,11 @@ const AdicionaTipoLei = ({ callback }) => {
 					return axios
 						.put('/adicionar-tipo-lei', {
 							abreviacao,
-							descricao, 
-                            usuario_id
+							descricao,
+							usuario_id
 						})
 						.then((response) => {
-                            console.log(response)
+							console.log(response)
 							if (!response.data.result) {
 								throw new Error('A pasta')
 							}
@@ -71,7 +71,10 @@ const AdicionaTipoLei = ({ callback }) => {
 		<div className='container'>
 			<div className='row align-items-end'>
 				<div class=' col-md-1 mb-3'>
-					<label for='exampleFormControlInput1' class='form-label'>
+					<label
+						htmlFor='exampleFormControlInput1'
+						class='form-label'
+					>
 						Abreviação
 					</label>
 					<input
@@ -83,7 +86,10 @@ const AdicionaTipoLei = ({ callback }) => {
 					/>
 				</div>
 				<div className=' col-md-8 mb-3'>
-					<label for='exampleFormControlInput1' class='form-label'>
+					<label
+						htmlFor='exampleFormControlInput1'
+						class='form-label'
+					>
 						Descrição
 					</label>
 					<input

@@ -51,7 +51,7 @@ const ModalTelaOperadorSfh = (props, callback) => {
 		<div
 			class='modal fade'
 			id='modalOperadorSfh'
-			tabindex='-1'
+			tabIndex='-1'
 			aria-labelledby='exampleModalLabel3'
 			aria-hidden='true'
 		>
@@ -90,7 +90,7 @@ const ModalTelaOperadorSfh = (props, callback) => {
 		<div
 			class='modal fade'
 			id='modalOperadorSfh'
-			tabindex='-1'
+			tabIndex='-1'
 			aria-labelledby='exampleModalLabel2'
 			aria-hidden='true'
 		>

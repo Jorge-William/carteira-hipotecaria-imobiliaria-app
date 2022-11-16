@@ -13,7 +13,7 @@ const InfoCards = () => {
 		totalMutuarios: 0
 	})
 
-	console.log(infoMutuarios)
+	// console.log(infoMutuarios)
 	useEffect(() => {
 		const callServices = async () => {
 			const result = await getInfoCards()

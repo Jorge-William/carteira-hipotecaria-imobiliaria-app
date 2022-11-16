@@ -9,6 +9,7 @@ const {
   create,
   logout,
 } = require("../../controllers/user/user.controller");
+
 const Usuario = require("../../models/user.model");
 
 const router = new express.Router();
@@ -22,7 +23,8 @@ router.post("/login", login, async (req, res) => {
 		lastName,
 		token,
 		type,
-		usuario_id
+		usuario_id,
+		primeiroLogin
 	} = req.user
 	try {
 		// Por enquanto retorna todos os dados do usuario para o frontend
@@ -33,6 +35,7 @@ router.post("/login", login, async (req, res) => {
 			lastName,
 			usuario_id,
 			/* eslint-enable */
+      primeiroLogin,
       type,
       token,
       userIsValid: true,
@@ -145,7 +148,7 @@ router.post("/deletar-usuario", async (req, res) => {
         id,
       },
     });
-    console.log(usuario);
+
     if (usuario) {
       await Log.create({
         // eslint-disable-next-line
@@ -172,12 +175,26 @@ router.post("/criar-usuario", create, async (req, res) => {
 // -------------------------------------------------------------------------------
 
 router.put("/modificar-senha", async (req, res) => {
-  const { userId, senha, name } = req.body;
+  const {
+    userId, senha, name, primeiroLogin,
+  } = req.body;
 
   const passwordHashed = await bcrypt.hash(senha, 8);
 
   try {
-    const result = await Usuario.update({ password: passwordHashed }, { where: { id: userId } });
+    const result = await Usuario.update(
+      { password: passwordHashed },
+      { where: { id: userId } },
+    );
+
+    if (primeiroLogin) {
+      const firstLogin = await Usuario.update(
+        { primeiroLogin: false },
+        { where: { id: userId } },
+      );
+
+      console.log(`Primeiro login editado? ${firstLogin}`);
+    }
 
     if (result) {
       await Log.create({
@@ -190,7 +207,7 @@ router.put("/modificar-senha", async (req, res) => {
       });
     }
 
-    res.status(200).send({ status: true });
+    res.status(200).send({ status: true, result });
   } catch (error) {
     res.status(500).send(error.message);
   }

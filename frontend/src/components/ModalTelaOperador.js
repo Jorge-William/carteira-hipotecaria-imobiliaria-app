@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-						
-
 import deletaDocumento from '../helpers/deletaDocumento'
 const ModalTelaOperador = (props, callback) => {
-
-const navigate = useNavigate()
+	const navigate = useNavigate()
 
 	const [documentoInfo, setDocumentoInfo] = useState({
 		infoDoc: {
@@ -24,7 +21,6 @@ const navigate = useNavigate()
 		setDocumentoInfo(props)
 	}, [props])
 
-
 	useEffect(() => {
 		console.log('foi')
 	}, [documentoInfo])
@@ -37,12 +33,18 @@ const navigate = useNavigate()
 		if (documentoInfo) {
 			const { arquivo, cod_pasta, id, mutuario_id } =
 				documentoInfo.infoDoc.dados
-				const result = await deletaDocumento(tipo, cod_pasta, id, arquivo, mutuario_id)
-				if(result){
-					navigate(
-						`/mutuario/lei/substituir-documento-lei/${mutuario_id}`
-						)
-					}
+			const result = await deletaDocumento(
+				tipo,
+				cod_pasta,
+				id,
+				arquivo,
+				mutuario_id
+			)
+			if (result) {
+				navigate(
+					`/mutuario/lei/substituir-documento-lei/${mutuario_id}`
+				)
+			}
 			callback()
 		}
 	}
@@ -51,7 +53,7 @@ const navigate = useNavigate()
 		<div
 			class='modal fade'
 			id='modalOperador'
-			tabindex='-2'
+			tabIndex='-2'
 			aria-labelledby='exampleModalLabel'
 			aria-hidden='true'
 		>
@@ -90,7 +92,7 @@ const navigate = useNavigate()
 		<div
 			class='modal fade'
 			id='modalOperador'
-			tabindex='-1'
+			tabIndex='-1'
 			aria-labelledby='exampleModalLabel'
 			aria-hidden='true'
 		>
