@@ -63,7 +63,7 @@ const DocumentosLei = sequelize.define(
       type: DataTypes.TEXT,
     },
     operador: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
     status: {
       type: DataTypes.TEXT,
@@ -221,7 +221,7 @@ DocumentosLei.hasOne(AuditoriaLei, { foreignKey: "doc_id" });
 // AuditoriaLei.sync({ force: true });
 
 // sequelize.sync();
-// DocumentosLei.sync({ force: true });
+DocumentosLei.sync({ alter: true });
 // ImoveisLei.sync({ alter: true });
 
 module.exports = {
