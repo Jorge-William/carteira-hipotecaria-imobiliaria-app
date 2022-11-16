@@ -65,7 +65,7 @@ const DocumentoLei = sequelize.define(
   },
 );
 
-DocumentoLei.sync();
+// DocumentoLei.sync();
 
 DocumentoLei.belongsTo(TipoDeDocumento, {
   foreignKey: "tipo_doc_lei_id",

@@ -39,6 +39,6 @@ const TipoDeDocumentoSfh = sequelize.define(
   },
 );
 
-TipoDeDocumentoSfh.sync({ alter: true });
+// TipoDeDocumentoSfh.sync({ alter: true });
 
 module.exports = { TipoDeDocumento, TipoDeDocumentoSfh };

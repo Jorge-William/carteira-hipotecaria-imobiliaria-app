@@ -220,7 +220,7 @@ DocumentosSfh.hasOne(AuditoriaSfh, { foreignKey: "doc_id" });
 
 // sequelize.sync({ alter: true });
 // sequelize.sync();
-DocumentosSfh.sync({ alter: true });
+// DocumentosSfh.sync({ alter: true });
 // AuditoriaSfh.sync({ alter: true });
 
 module.exports = {

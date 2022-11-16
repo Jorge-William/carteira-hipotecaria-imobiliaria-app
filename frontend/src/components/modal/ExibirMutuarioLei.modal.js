@@ -22,7 +22,7 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 			id={id}
 			data-bs-backdrop='static'
 			data-bs-keyboard='false'
-			tabindex='-1'
+			tabIndex='-1'
 			aria-labelledby='staticBackdropLabel'
 			aria-hidden='true'
 		>
@@ -313,7 +313,10 @@ const ExibirMutuarioLei = ({ id, dados }) => {
 						>
 							Fechar
 						</button>
-						<button type='button' className='btn btn-outline-warning'>
+						<button
+							type='button'
+							className='btn btn-outline-warning'
+						>
 							Editar
 						</button>
 					</div>

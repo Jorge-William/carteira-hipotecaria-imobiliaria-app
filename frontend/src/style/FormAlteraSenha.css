@@ -5,7 +5,7 @@
 
 .icon-visualization {
     padding: 0 0 0 0;
-    justify-content: start;
+    justify-content: flex-start;
     display: flex;
     align-self: end;
     /* border: solid red 1px; */

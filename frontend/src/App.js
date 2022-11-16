@@ -40,7 +40,7 @@ const App = () => {
 	}, [auth])
 
 	return (
-		<main className='container-xxl'>
+		<main className='container-fluid'>
 			{auth && <Menu logout={() => setAuth(false)} />}
 			<Routes>
 				{!auth && (
@@ -123,7 +123,10 @@ const App = () => {
 					/>
 				)}
 				{auth && (
-					<Route path='/alterar-senha' element={<AlterarSenha />} />
+					<Route
+						path='/alterar-senha'
+						element={<AlterarSenha logout={() => setAuth(false)} />}
+					/>
 				)}
 				{auth && (
 					<Route

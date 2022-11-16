@@ -5,8 +5,20 @@ import Swal from 'sweetalert2'
 
 const ModalEditarUsuario = ({ user, callback }) => {
 	// const [userData, setUserData] = useState()// Id do usuário
-	const [usuario, setUsuario] = useState({ id: '', name: '', lasName: '', email: '', type: '' })
-	const [novosDados, setNovosDados] = useState({ id: usuario.id, name: usuario.name, lasName: usuario.name, email: usuario.email, type: usuario.type })
+	const [usuario, setUsuario] = useState({
+		id: '',
+		name: '',
+		lasName: '',
+		email: '',
+		type: ''
+	})
+	const [novosDados, setNovosDados] = useState({
+		id: usuario.id,
+		name: usuario.name,
+		lasName: usuario.name,
+		email: usuario.email,
+		type: usuario.type
+	})
 
 	const usuario_id = JSON.parse(localStorage.getItem('userData'))
 	const { id } = usuario_id
@@ -17,17 +29,17 @@ const ModalEditarUsuario = ({ user, callback }) => {
 
 	useEffect(() => {
 		const getUser = (idEditado) => {
-			axios.post('/usuario-modal', {
-				params: {
-					idEditado,
-					id
-				}
-			})
-				.then(response => setUsuario(response.data))
+			axios
+				.post('/usuario-modal', {
+					params: {
+						idEditado,
+						id
+					}
+				})
+				.then((response) => setUsuario(response.data))
 		}
 		getUser(user)
-	}, [user, id]);
-
+	}, [user, id])
 
 	const handleChange = (event) => {
 		const value = event.target.value
@@ -46,12 +58,19 @@ const ModalEditarUsuario = ({ user, callback }) => {
 			preConfirm: () => {
 				return axios
 					.put('/salvar-edicao', {
-						novosDados, id
+						novosDados,
+						id
 					})
 					.then((response) => {
 						// console.log(response)
 						callback()
-						setUsuario({ id: '', name: '', lasName: '', email: '', type: '' })
+						setUsuario({
+							id: '',
+							name: '',
+							lasName: '',
+							email: '',
+							type: ''
+						})
 						if (!response.statusText === 'OK') {
 							throw new Error(response.statusText)
 						}
@@ -72,11 +91,13 @@ const ModalEditarUsuario = ({ user, callback }) => {
 		})
 	}
 
-	return !usuario ? <Skeleton count={3} /> : (
+	return !usuario ? (
+		<Skeleton count={3} />
+	) : (
 		<div
 			class='modal fade'
 			id={`edita-mutuario`}
-			tabindex='-1'
+			tabIndex='-1'
 			aria-labelledby='exampleModalLabel'
 			aria-hidden='true'
 		>
@@ -157,7 +178,11 @@ const ModalEditarUsuario = ({ user, callback }) => {
 						>
 							Cancelar
 						</button>
-						<button type='button' class='btn btn-primary' onClick={handleClick}>
+						<button
+							type='button'
+							class='btn btn-primary'
+							onClick={handleClick}
+						>
 							Salvar mudanças
 						</button>
 					</div>
