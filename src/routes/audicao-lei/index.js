@@ -79,7 +79,7 @@ router.post('/audicao-lei', async (req, res) => {
         data: Date.now(),
         // eslint-disable-next-line
 				usuario: usuario_id,
-        tabela: "L",
+        tabela: "Auditoria Lei",
         // eslint-disable-next-line
 				operacao: `O documento ${descricao}, com ID: ${id_documento} foi auditado sem pendências.`
       });
@@ -90,7 +90,7 @@ router.post('/audicao-lei', async (req, res) => {
 				data: Date.now(),
         // eslint-disable-next-line
 				usuario: usuario_id,
-        tabela: "L",
+        tabela: "Auditoria Lei",
         // eslint-disable-next-line
         operacao: `O documento ${descricao}, com ID: ${id_documento} foi auditado com pendências para acerto.`,
       });
