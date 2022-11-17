@@ -8,14 +8,15 @@ import axios from 'axios'
 export function AuditandoDoc() {
 	const { id } = useParams()
 	const [docData, setDocData] = useState()
-	console.log(docData)
+	// console.log(docData)
 	const navigate = useNavigate()
 	// const [isLoading, setIsloading] = useState(true)
 	const [observacao, setObservacao] = useState('')
 	// console.log(docData)
 	let userInfo = null
 	userInfo = JSON.parse(localStorage.getItem('userData'))
-	const { usuario_id } = userInfo
+	const { id: usuario_id } = userInfo
+	
 	const [checklist, setChecklist] = useState([
 		{ id: 1, prop: 'Natureza do documento', status: false },
 		{ id: 2, prop: 'Legibilidade', status: false },
