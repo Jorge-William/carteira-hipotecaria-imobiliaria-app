@@ -108,25 +108,37 @@ router.post("/upload", upload.array("file"), async (req, res) => {
   const caminhoDoArquivo = path.join(
     `/pastas/lei/${req.body.rotulo}/${arquivo}`,
   );
+  try {
+    const documento = await DocumentosLei.create({
+      dt_registro: dataAgora,
+      tipo,
+      pasta_id: null,
+      mutuario_id: mutuarioId,
+      tipo_doc_lei_id: tipoDocId,
+      nome_arquivo: nomeDoArquivo,
+      arquivo: caminhoDoArquivo,
+      operador: operadorId,
+      obs: observacao,
+      cod_pasta: rotulo,
+      qtd_pag: paginas,
+      dt_auditoria: null,
+    });
 
-  const documento = await DocumentosLei.create({
-    dt_registro: dataAgora,
-    tipo,
-    pasta_id: null,
-    mutuario_id: mutuarioId,
-    tipo_doc_lei_id: tipoDocId,
-    nome_arquivo: nomeDoArquivo,
-    arquivo: caminhoDoArquivo,
-    operador: operadorId,
-    obs: observacao,
-    cod_pasta: rotulo,
-    qtd_pag: paginas,
-    dt_auditoria: null,
-  });
+    if (documento) {
+      const log = await Log.create({
+        data: Date.now(),
+        usuario: operadorId,
+        tabela: "Documento Lei",
+        operacao: `O documento ${nomeDoArquivo}, de ID: ${documento.id}, foi adicionado.`,
+      });
+      console.log(log);
+      res.send({ result: documento });
+    }
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
 
   // console.log(documento);
-
-  res.send({ result: documento });
 });
 
 router.get("/dashboard-lei", async (req, res) => {

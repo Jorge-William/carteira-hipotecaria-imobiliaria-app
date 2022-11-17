@@ -93,6 +93,8 @@ router.post("/criar-mutuario-sfh", async (req, res) => {
     cidade,
     uf,
   } = req.body.imovelData;
+  // eslint-disable-next-line
+  const { usuario_id } = req.body;
 
   try {
     // verificar se a pasta já existe
@@ -138,6 +140,14 @@ router.post("/criar-mutuario-sfh", async (req, res) => {
         mutuario_id: `${mutuario.dataValues.id}`,
       });
 
+      const log = await Log.create({
+        data: Date.now(),
+        // eslint-disable-next-line
+        usuario: usuario_id,
+        tabela: "Mutuario SFH",
+        operacao: `A pasta ${pasta.toUpperCase()}, do mutuário ${nome}, foi criada.`,
+      });
+      console.log(log);
       // console.log(mutuario.dataValues);
       res.send({
         mutuarioCriado: true,

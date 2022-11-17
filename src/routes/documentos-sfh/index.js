@@ -3,6 +3,7 @@ const multer = require("multer");
 const path = require("path");
 const storage = require("../../config/multerSfh.config");
 const sequelize = require("../../database/sequelize.connection");
+const Log = require("../../models/log.model");
 const { DocumentosSfh } = require("../../models/mutuario-sfh.model");
 
 // const { DocumentoLei } = require("../../models/mutuario-lei.model");
@@ -76,25 +77,37 @@ router.post("/upload-sfh", upload.array("file"), async (req, res) => {
   const caminhoDoArquivo = path.join(
     `/pastas/sfh/${req.body.rotulo}/${arquivo}`,
   );
+  try {
+    const documento = await DocumentosSfh.create({
+      dt_registro: dataAgora,
+      tipo,
+      pasta_id: null,
+      mutuario_id: mutuarioId,
+      tipo_doc_id: tipoDocId,
+      nome_arquivo: nomeDoArquivo,
+      arquivo: caminhoDoArquivo,
+      operador: operadorId,
+      obs: observacao,
+      cod_pasta: rotulo,
+      qtd_pag: paginas,
+      dt_auditoria: null,
+    });
 
-  const documento = await DocumentosSfh.create({
-    dt_registro: dataAgora,
-    tipo,
-    pasta_id: null,
-    mutuario_id: mutuarioId,
-    tipo_doc_id: tipoDocId,
-    nome_arquivo: nomeDoArquivo,
-    arquivo: caminhoDoArquivo,
-    operador: operadorId,
-    obs: observacao,
-    cod_pasta: rotulo,
-    qtd_pag: paginas,
-    dt_auditoria: null,
-  });
+    if (documento) {
+      const log = await Log.create({
+        data: Date.now(),
+        usuario: operadorId,
+        tabela: "Documento SFH",
+        operacao: `O documento ${nomeDoArquivo}, de ID: ${documento.id}, foi adicionado.`,
+      });
+      console.log(log);
+      res.send({ result: documento });
+    }
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
 
   // console.log(documento);
-
-  res.send({ result: documento });
 });
 
 router.get("/documentos-nao-auditados-sfh", async (req, res) => {
@@ -112,7 +125,7 @@ router.get("/documentos-nao-auditados-sfh", async (req, res) => {
 router.post("/doc-auditando-sfh", async (req, res) => {
   const { id } = req.body.params;
 
-  const [result] =		await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome, mutuario_id, a.id as id_documento
+  const [result] = await sequelize.query(`SELECT dt_registro, nome_arquivo, arquivo, cod_pasta, qtd_pag, descricao, nome, mutuario_id, a.id as id_documento
   FROM documentos_sfh a 
   LEFT JOIN tipos_doc_sfh b ON a.tipo_doc_id = b.id 
   LEFT JOIN mutuarios_sfh c ON a.mutuario_id = c.id  

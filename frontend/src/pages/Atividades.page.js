@@ -37,8 +37,9 @@ console.log(lista);
 	) : (
         <>
         <h1>Log de atividades</h1>
-		<section className='mt-5' style={{width: 1300}}>
-			<table class='table table-hover align-middle table-responsive-md'>
+		<section className='mt-5'>
+			<div className='table-responsive'>
+			<table class='table table-hover align-middle'>
 				<thead>
 					<tr>
 						<th scope='col'>#</th>
@@ -59,7 +60,7 @@ console.log(lista);
                                 </Link>
                             </td> */}
 							<td>{acertoData(dado.data)}</td>
-							<td>{dado.usuario}</td>
+							<td>{dado.name}</td>
 							<td>{dado.tabela}</td>
 							<td>{dado.operacao}</td>
 							
@@ -68,6 +69,7 @@ console.log(lista);
 					))}
 				</tbody>
 			</table>
+					</div>
 			<Pagination
 				className='pagination-bar justify-content-center mt-3'
 				currentPage={currentPage}

@@ -79,7 +79,7 @@ router.post('/audicao-sfh', async (req, res) => {
 				data: Date.now(),
         // eslint-disable-next-line
         usuario: usuario_id,
-        tabela: "C",
+        tabela: "Auditoria SFH",
         // eslint-disable-next-line
         operacao: `O documento ${descricao}, com ID: ${id_documento} foi auditado sem pendências.`,
       });
@@ -89,7 +89,7 @@ router.post('/audicao-sfh', async (req, res) => {
 				data: Date.now(),
         // eslint-disable-next-line
         usuario: usuario_id,
-        tabela: "C",
+        tabela: "Auditoria SFH",
         // eslint-disable-next-line
         operacao: `O documento ${descricao}, com ID: ${id_documento} foi auditado com pendências para acerto.`,
       });
