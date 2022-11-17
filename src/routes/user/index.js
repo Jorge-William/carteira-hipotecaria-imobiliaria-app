@@ -124,7 +124,7 @@ router.put("/salvar-edicao", async (req, res) => {
     await Log.create({
       data: Date.now(),
       usuario: `${req.body.id}`,
-      tabela: "Usuarios",
+      tabela: "Usuarios edição",
       operacao: `O usuário ${name} ${lastName} de id: ${id} foi editado.`,
     });
 
@@ -155,7 +155,7 @@ router.post("/deletar-usuario", async (req, res) => {
 				data: Date.now(),
         // eslint-disable-next-line
 				usuario: `${usuarioId}`,
-        tabela: "Usuarios",
+        tabela: "Usuarios deleção",
         operacao: `O usuário ${name} ${lastName} de id: ${id} foi deletado.`,
       });
     }
@@ -202,7 +202,7 @@ router.put("/modificar-senha", async (req, res) => {
 				data: Date.now(),
         // eslint-disable-next-line
 				usuario: `${userId}`,
-        tabela: "Usuarios",
+        tabela: "Usuarios senha",
         operacao: `O usuário ${name} de id: ${userId}, editou sua senha.`,
       });
     }

@@ -14,7 +14,7 @@ export function AuditandoDocSfh() {
 	// console.log(docData)
 	let userInfo = null
 	userInfo = JSON.parse(localStorage.getItem('userData'))
-	const { usuario_id } = userInfo
+	const { id: usuario_id } = userInfo
 	const [checklist, setChecklist] = useState([
 		{ id: 1, prop: 'Natureza do documento', status: false },
 		{ id: 2, prop: 'Legibilidade', status: false },

@@ -33,9 +33,9 @@ router.put("/adicionar-tipo-lei", async (req, res) => {
           data: Date.now(),
           // eslint-disable-next-line
 					usuario: usuario_id,
-          tabela: "Tipo de documento",
+          tabela: "Tipo de documento Lei",
           // eslint-disable-next-line
-					operacao: `O tipo ${descricao}, abreciação: ${abreviacao}, foi criado.`
+					operacao: `O tipo ${descricao}, abreviação: ${abreviacao}, foi criado.`
         });
         console.log(log);
       } else {

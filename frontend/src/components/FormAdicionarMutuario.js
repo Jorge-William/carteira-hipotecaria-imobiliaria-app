@@ -32,6 +32,11 @@ const FormAdicionarMutuario = () => {
 		uf: ''
 	})
 
+	const localStorageData = JSON.parse(localStorage.getItem('userData'))
+
+	const { id: usuario_id } = localStorageData
+
+
 	const handleChangeMutuario = (event) => {
 		const value = event.target.value
 		setMutuarioData({
@@ -65,12 +70,13 @@ const FormAdicionarMutuario = () => {
 					axios
 						.post('/criar-mutuario-lei', {
 							mutuarioData,
-							imovelData
+							imovelData,
+							usuario_id
 						})
 						.then((response) => {
 							if (response.data.mutuarioCriado === true) {
 								Swal.fire('Mutuario Criado', '', 'success')
-								return navigate('/mutuario/sfh', {
+								return navigate('/mutuario/lei', {
 									replace: true
 								})
 							} else if (response.data.mutuarioCriado === false) {

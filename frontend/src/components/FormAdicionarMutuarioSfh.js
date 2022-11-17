@@ -18,20 +18,25 @@ const FormAdicionarMutuario = () => {
 		pasta: false
 	})
 	const [imovelData, setImovelData] = useState({
-		dataLiq: null,
+		dataLiq: '',
 		escritura: '0',
 		hipoteca: '0',
-		numObra: null,
-		codHist: null,
+		numObra: '',
+		codHist: '',
 		obs: '',
-		cep: null,
+		cep: '',
 		endereco: '',
-		numero: null,
+		numero: '',
 		compl: '',
 		bairro: '',
 		cidade: '',
 		uf: ''
 	})
+
+	const localStorageData = JSON.parse(localStorage.getItem('userData'))
+
+	const { id: usuario_id } = localStorageData
+
 
 	const handleChangeMutuario = (event) => {
 		const value = event.target.value
@@ -66,7 +71,8 @@ const FormAdicionarMutuario = () => {
 					axios
 						.post('/criar-mutuario-sfh', {
 							mutuarioData,
-							imovelData
+							imovelData,
+							usuario_id
 						})
 						.then((response) => {
 							if (response.data.mutuarioCriado === true) {

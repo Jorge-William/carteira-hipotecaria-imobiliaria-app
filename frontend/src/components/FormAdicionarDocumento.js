@@ -46,7 +46,7 @@ const FormAdicionarDocumento = ({ dados }) => {
 	// Extrai o id do usuário atual
 	const localStorageData = JSON.parse(localStorage.getItem('userData'))
 
-	const { usuario_id } = localStorageData
+	const { id: usuario_id } = localStorageData
 
 	const callback = (value) => {
 		console.log(value)
