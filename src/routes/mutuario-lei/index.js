@@ -84,6 +84,10 @@ router.post("/criar-mutuario-lei", async (req, res) => {
   } = req.body.mutuarioData;
 
   const {
+    usuario_id,
+  } = req.body;
+
+  const {
     dataLiq,
     escritura,
     hipoteca,
@@ -142,6 +146,15 @@ router.post("/criar-mutuario-lei", async (req, res) => {
         uf: `${uf}`,
         mutuario_id: `${mutuario.dataValues.id}`,
       });
+
+      const log = await Log.create({
+        data: Date.now(),
+        // eslint-disable-next-line
+        usuario: usuario_id,
+        tabela: "Mutuario Lei",
+        operacao: `A pasta ${pasta.toUpperCase()}, do mutuário ${nome}, foi criada.`,
+      });
+      console.log(log);
 
       // console.log(mutuario.dataValues);
       res.send({
