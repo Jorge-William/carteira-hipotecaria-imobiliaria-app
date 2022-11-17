@@ -194,7 +194,7 @@ router.post("/deletar-documento", passValidation, async (req, res) => {
         const log = await Log.create({
           data: Date.now(),
           usuario: idUser,
-          tabela: `${tipo}`,
+          tabela: "Documento Lei",
           operacao: `O documento ${tipoDoc}, de ID: ${idDoc}, foi deletado.`,
         });
 
@@ -217,7 +217,7 @@ router.post("/deletar-documento", passValidation, async (req, res) => {
         const log = await Log.create({
           data: Date.now(),
           usuario: idUser,
-          tabela: `${tipo}`,
+          tabela: "Documento SFH",
           operacao: `O documento ${tipoDoc}, de ID: ${idDoc}, foi deletado.`,
         });
         console.log(log);
