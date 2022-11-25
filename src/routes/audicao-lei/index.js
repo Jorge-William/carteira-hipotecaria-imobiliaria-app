@@ -27,6 +27,8 @@ router.post('/audicao-lei', async (req, res) => {
   // console.log(req.body.params.docData);
   const { observacao } = req.body.params.observacao;
 
+  const verificaTipoDaVariavelObs = (obs) => (typeof obs === "undefined" ? null : obs);
+
   const checkList = req.body.params.checklist;
   // eslint-disable-next-line
 	const { usuario_id } = req.body.params
@@ -45,7 +47,7 @@ router.post('/audicao-lei', async (req, res) => {
       alinhamento: `${checkList[5].status}`,
       qtd_pag: `${checkList[2].status}`,
       scan_verso: `${checkList[6].status}`,
-      obs: `${observacao}`,
+      obs: verificaTipoDaVariavelObs(observacao),
       legibilidade: `${checkList[1].status}`,
       // eslint-disable-next-line
 			auditado_por: usuario_id,
