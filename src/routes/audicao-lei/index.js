@@ -1,5 +1,6 @@
 const express = require("express");
 const log = require("../../models/log.model");
+const sequelize = require("../../database/sequelize.connection");
 
 // const sequelize = require("../../database/sequelize.connection");
 const {
@@ -10,9 +11,26 @@ const {
 const router = express.Router();
 
 router.get("/tabela-operador", async (req, res) => {
-  const documentosPendentes = await AuditoriaLei.findAll();
+  const [result] = await sequelize.query(`SELECT auditoria_lei.id,
+  auditoria_lei.cod_pasta,
+  auditoria_lei.nome_mutuario,
+  auditoria_lei.ordem_pag,
+  auditoria_lei.natureza_doc,
+  auditoria_lei.alinhamento,
+  auditoria_lei.legibilidade,
+  auditoria_lei.qtd_pag,
+  auditoria_lei.scan_verso,
+  auditoria_lei.obs,
+  auditoria_lei.tipo_documento,
+  auditoria_lei.doc_id,
+  auditoria_lei.dt_auditoria,
+  operadores.name
+    FROM auditoria_lei
+    INNER JOIN operadores ON auditoria_lei.auditado_por = operadores.id  
+    ORDER BY auditoria_lei.dt_auditoria`);
 
-  res.send(documentosPendentes);
+  console.log(result);
+  res.send(result);
 });
 
 // eslint-disable-next-line
@@ -26,8 +44,6 @@ router.post('/audicao-lei', async (req, res) => {
   } = req.body.params.docData;
   // console.log(req.body.params.docData);
   const { observacao } = req.body.params.observacao;
-
-  const verificaTipoDaVariavelObs = (obs) => (typeof obs === "undefined" ? null : obs);
 
   const checkList = req.body.params.checklist;
   // eslint-disable-next-line
@@ -47,7 +63,7 @@ router.post('/audicao-lei', async (req, res) => {
       alinhamento: `${checkList[5].status}`,
       qtd_pag: `${checkList[2].status}`,
       scan_verso: `${checkList[6].status}`,
-      obs: verificaTipoDaVariavelObs(observacao),
+      obs: `${observacao}`,
       legibilidade: `${checkList[1].status}`,
       // eslint-disable-next-line
 			auditado_por: usuario_id,
