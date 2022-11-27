@@ -11,7 +11,7 @@ export function AuditandoDoc() {
 	// console.log(docData)
 	const navigate = useNavigate()
 	// const [isLoading, setIsloading] = useState(true)
-	const [observacao, setObservacao] = useState('')
+	const [observacao, setObservacao] = useState({observacao: ''})
 	// console.log(docData)
 	let userInfo = null
 	userInfo = JSON.parse(localStorage.getItem('userData'))

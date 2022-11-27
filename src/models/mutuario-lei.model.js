@@ -1,5 +1,6 @@
 const DataTypes = require("sequelize");
 const sequelize = require("../database/sequelize.connection");
+const User = require("./user.model");
 // const ImoveisLei = require("./imovel-lei.model");
 
 const MutuariosLei = sequelize.define(
@@ -216,12 +217,12 @@ const AuditoriaLei = sequelize.define(
 MutuariosLei.hasMany(ImoveisLei, { foreignKey: "mutuario_id" });
 MutuariosLei.hasMany(DocumentosLei, { foreignKey: "mutuario_id" });
 DocumentosLei.hasOne(AuditoriaLei, { foreignKey: "doc_id" });
-
+AuditoriaLei.hasOne(User, { foreignKey: "id" });
 // sequelize.sync({ alter: true });
 // AuditoriaLei.sync({ force: true });
 
 // sequelize.sync();
-DocumentosLei.sync({ alter: true });
+// DocumentosLei.sync({ alter: true });
 // ImoveisLei.sync({ alter: true });
 
 module.exports = {

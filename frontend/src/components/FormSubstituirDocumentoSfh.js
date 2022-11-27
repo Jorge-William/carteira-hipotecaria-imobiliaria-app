@@ -244,6 +244,7 @@ const FormSubstituirDocumentoSfh = ({ dados }) => {
 						<SelectInput
 							tipoDoc={dados.tipoDoc}
 							callback={callback}
+							tipo={'sfh'}
 						/>
 						{/* --------------------------------------------------------------------- */}
 					</div>

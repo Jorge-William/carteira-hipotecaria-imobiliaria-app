@@ -1,5 +1,6 @@
 const express = require("express");
 const log = require("../../models/log.model");
+const sequelize = require("../../database/sequelize.connection");
 
 // const sequelize = require("../../database/sequelize.connection");
 const {
@@ -10,9 +11,26 @@ const {
 const router = express.Router();
 
 router.get("/tabela-operador", async (req, res) => {
-  const documentosPendentes = await AuditoriaLei.findAll();
+  const [result] = await sequelize.query(`SELECT auditoria_lei.id,
+  auditoria_lei.cod_pasta,
+  auditoria_lei.nome_mutuario,
+  auditoria_lei.ordem_pag,
+  auditoria_lei.natureza_doc,
+  auditoria_lei.alinhamento,
+  auditoria_lei.legibilidade,
+  auditoria_lei.qtd_pag,
+  auditoria_lei.scan_verso,
+  auditoria_lei.obs,
+  auditoria_lei.tipo_documento,
+  auditoria_lei.doc_id,
+  auditoria_lei.dt_auditoria,
+  operadores.name
+    FROM auditoria_lei
+    INNER JOIN operadores ON auditoria_lei.auditado_por = operadores.id  
+    ORDER BY auditoria_lei.dt_auditoria`);
 
-  res.send(documentosPendentes);
+  console.log(result);
+  res.send(result);
 });
 
 // eslint-disable-next-line

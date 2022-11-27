@@ -30,7 +30,7 @@ console.log(lista);
 	return lista.length === 0 ? (
 		<>
 			<h4 className='mt-5 mb-5 text-center'>
-				Não há documentos pendentes
+				Aguardando dados...
 			</h4>
 			<SkeletonTabela />
 		</>
