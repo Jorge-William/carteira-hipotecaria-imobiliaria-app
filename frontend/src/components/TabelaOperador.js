@@ -109,7 +109,7 @@ const TabelaOperador = () => {
 							<td>{dado.tipo_documento}</td>
 
 							<td>{acertoData(dado.dt_auditoria)}</td>
-							<td>{dado.auditado_por}</td>
+							<td>{dado.name}</td>
 							<td>{dado.obs}</td>
 							<td>
 								{dado.nome_mutuario === 'false' ? (

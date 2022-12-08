@@ -23,7 +23,6 @@ router.post('/audicao-sfh', async (req, res) => {
 		cod_pasta,
     descricao,
   } = req.body.params.docData;
-  console.log(req.body.params.docData);
 
   const { observacao } = req.body.params.observacao;
 
