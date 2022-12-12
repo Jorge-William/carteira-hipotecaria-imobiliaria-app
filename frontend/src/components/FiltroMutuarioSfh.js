@@ -106,6 +106,7 @@ const FiltroMutuarioSfh = (data) => {
 							placeholder='Pasta'
 							onChange={handleChange}
 							name='rotulo'
+							value={busca.rotulo}
 						/>
 						<datalist id='rotulo'>
 							{asArray.map((item, key) => {
