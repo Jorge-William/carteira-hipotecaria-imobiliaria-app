@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Pagination from './Pagination'
 
-const FiltroMutuarioLei = (data) => {
+const FiltroMutuarioSfh = (data) => {
 	const [busca, setBusca] = useState({
 		nome: '',
 		complemento: '',
@@ -43,8 +43,8 @@ const FiltroMutuarioLei = (data) => {
 	const lowercaseNum = busca.numero.toLowerCase()
 
 	// const noUndefinedItems = asArray.map((item) =>
-	// 	// (item) => item.imoveis_leis.end !== undefined
-	// 	console.log(item.imoveis_leis[0])
+	// 	// (item) => item.imoveis_sfhs.end !== undefined
+	// 	console.log(item.imoveis_sfhs[0])
 	// )
 	// console.log(noUndefinedItems)
 
@@ -71,18 +71,18 @@ const FiltroMutuarioLei = (data) => {
 		//
 		return (
 			item.nome.toLowerCase().includes(lowercaseNome) &&
-			item.imoveis_leis[0].end.toLowerCase().includes(lowercaseEnd) &&
-			item.imoveis_leis[0].complemento
+			item.imoveis_sfhs[0].complemento
 				.toLowerCase()
 				.includes(lowercaseComplemento) &&
-			item.imoveis_leis[0].bairro
+			item.imoveis_sfhs[0].end.toLowerCase().includes(lowercaseEnd) &&
+			item.imoveis_sfhs[0].bairro
 				.toLowerCase()
 				.includes(lowercaseBairro) &&
 			item.rotulo.toLowerCase().includes(lowercaseRotulo) &&
-			item.imoveis_leis[0].cidade
+			item.imoveis_sfhs[0].cidade
 				.toLowerCase()
 				.includes(lowercaseCidade) &&
-			item.imoveis_leis[0].numero.toLowerCase().includes(lowercaseNum)
+			item.imoveis_sfhs[0].numero.toLowerCase().includes(lowercaseNum)
 		)
 	})
 
@@ -144,7 +144,7 @@ const FiltroMutuarioLei = (data) => {
 								return (
 									<option
 										key={key}
-										value={item.imoveis_leis[0].end}
+										value={item.imoveis_sfhs[0].end}
 									/>
 								)
 							})}
@@ -165,7 +165,7 @@ const FiltroMutuarioLei = (data) => {
 								return (
 									<option
 										key={key}
-										value={item.imoveis_leis[0].numero}
+										value={item.imoveis_sfhs[0].numero}
 									/>
 								)
 							})}
@@ -186,7 +186,7 @@ const FiltroMutuarioLei = (data) => {
 								return (
 									<option
 										key={key}
-										value={item.imoveis_leis[0].complemento}
+										value={item.imoveis_sfhs[0].complemento}
 									/>
 								)
 							})}
@@ -207,7 +207,7 @@ const FiltroMutuarioLei = (data) => {
 								return (
 									<option
 										key={key}
-										value={item.imoveis_leis[0].bairro}
+										value={item.imoveis_sfhs[0].bairro}
 									/>
 								)
 							})}
@@ -300,50 +300,50 @@ const FiltroMutuarioLei = (data) => {
 											</Link>
 										</td>
 										<td>
-											{data.imoveis_leis.length === 0 ? (
+											{data.imoveis_sfhs.length === 0 ? (
 												<p>-----</p>
 											) : (
-												data.imoveis_leis[0].end
+												data.imoveis_sfhs[0].end
 											)}
 										</td>
 										<td>
-											{data.imoveis_leis.length === 0 ? (
+											{data.imoveis_sfhs.length === 0 ? (
 												<p>-----</p>
 											) : (
-												data.imoveis_leis[0].numero
+												data.imoveis_sfhs[0].numero
 											)}
 										</td>
 										<td>
-											{data.imoveis_leis.length === 0 ? (
+											{data.imoveis_sfhs.length === 0 ? (
 												<p>-----</p>
 											) : (
-												data.imoveis_leis[0].complemento
+												data.imoveis_sfhs[0].complemento
 											)}
 										</td>
 										<td>
-											{data.imoveis_leis.length === 0 ? (
+											{data.imoveis_sfhs.length === 0 ? (
 												<p>-----</p>
 											) : (
-												data.imoveis_leis[0].bairro
+												data.imoveis_sfhs[0].bairro
 											)}
 										</td>
 										<td>
-											{data.imoveis_leis.length === 0 ? (
+											{data.imoveis_sfhs.length === 0 ? (
 												<p>-----</p>
 											) : (
-												data.imoveis_leis[0].cidade
+												data.imoveis_sfhs[0].cidade
 											)}
 										</td>
 										<td>
-											{data.imoveis_leis.length === 0 ? (
+											{data.imoveis_sfhs.length === 0 ? (
 												<p>-----</p>
 											) : (
-												data.imoveis_leis[0].uf
+												data.imoveis_sfhs[0].uf
 											)}
 										</td>
 										<td>
-											{data.imoveis_leis.length !== 0 &&
-												(data.imoveis_leis[0]
+											{data.imoveis_sfhs.length !== 0 &&
+												(data.imoveis_sfhs[0]
 													.escritura === 1 ? (
 													<i className='ms-3 bi disponivel bi-file-earmark-text'></i>
 												) : (
@@ -351,8 +351,8 @@ const FiltroMutuarioLei = (data) => {
 												))}
 										</td>
 										<td>
-											{data.imoveis_leis.length !== 0 &&
-												(data.imoveis_leis[0]
+											{data.imoveis_sfhs.length !== 0 &&
+												(data.imoveis_sfhs[0]
 													.hipoteca === 1 ? (
 													<i className='ms-2 bi disponivel bi-house'></i>
 												) : (
@@ -377,4 +377,4 @@ const FiltroMutuarioLei = (data) => {
 	)
 }
 
-export default FiltroMutuarioLei
+export default FiltroMutuarioSfh
