@@ -15,6 +15,7 @@ const TabelaMutuarioSfh = () => {
 	const [mutSfhData, setMutSfhData] = useState([])
 	const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
+
 	const fetchMutuarios = () => {
 		getMutuariosSfh().then((mutuario) => setMutSfhData(mutuario))
 		setLoading(false)
