@@ -2,8 +2,6 @@ import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Pagination from './Pagination'
 
-let PageSize = 15
-
 const FiltroMutuarioLei = (data) => {
 	const [busca, setBusca] = useState({
 		nome: '',
@@ -14,10 +12,26 @@ const FiltroMutuarioLei = (data) => {
 		cidade: '',
 		numero: ''
 	})
-	const [itensPorPagina, setItensPorPagina] = useState({ itens: '15' })
+	const [itensPorPagina, setItensPorPagina] = useState({ itens: 15 })
 	const [currentPage, setCurrentPage] = useState(1)
 
+	const callback = () => {
+		setBusca({
+			nome: '',
+			complemento: '',
+			bairro: '',
+			rotulo: '',
+			end: '',
+			cidade: '',
+			numero: ''
+		})
+	}
+
 	const asArray = Object.entries(data)[0][1][0]
+
+	useEffect(() => {
+		// console.log('OIIIIII JORGE')
+	}, [busca])
 
 	// console.log(asArray)
 	const lowercaseBairro = busca.bairro.toLowerCase()
@@ -73,14 +87,13 @@ const FiltroMutuarioLei = (data) => {
 	})
 
 	const currentTableData = useMemo(() => {
-		const firstPageIndex = (currentPage - 1) * itensPorPagina.itens
-		const lastPageIndex = firstPageIndex + itensPorPagina.itens
+		const firstPageIndex =
+			(currentPage - 1) * Number.parseInt(itensPorPagina.itens)
+		const lastPageIndex =
+			firstPageIndex + Number.parseInt(itensPorPagina.itens)
 		return itensFiltrados.slice(firstPageIndex, lastPageIndex)
 	}, [currentPage, itensFiltrados, itensPorPagina])
 	// console.log(itensFiltrados)
-	useEffect(() => {
-		// console.log(itensFiltrados)
-	}, [busca])
 	return (
 		<>
 			<form className='mb-5'>
@@ -108,6 +121,7 @@ const FiltroMutuarioLei = (data) => {
 							placeholder='Nome'
 							onChange={handleChange}
 							name='nome'
+							value={busca.nome}
 						/>
 						<datalist id='nome'>
 							{asArray.map((item, key) => {
@@ -123,6 +137,7 @@ const FiltroMutuarioLei = (data) => {
 							placeholder='Endereço'
 							name='end'
 							onChange={handleChange}
+							value={busca.end}
 						/>
 						<datalist id='endereco'>
 							{asArray.map((item, key) => {
@@ -143,6 +158,7 @@ const FiltroMutuarioLei = (data) => {
 							placeholder='N°'
 							name='numero'
 							onChange={handleChange}
+							value={busca.numero}
 						/>
 						<datalist id='numero'>
 							{asArray.map((item, key) => {
@@ -163,6 +179,7 @@ const FiltroMutuarioLei = (data) => {
 							placeholder='Complemento'
 							name='complemento'
 							onChange={handleChange}
+							value={busca.complemento}
 						/>
 						<datalist id='complemento'>
 							{asArray.map((item, key) => {
@@ -183,6 +200,7 @@ const FiltroMutuarioLei = (data) => {
 							placeholder='Bairro'
 							name='bairro'
 							onChange={handleChange}
+							value={busca.bairro}
 						/>
 						<datalist id='bairro'>
 							{asArray.map((item, key) => {
@@ -205,29 +223,19 @@ const FiltroMutuarioLei = (data) => {
 							<option selected value='15'>
 								Itens por página
 							</option>
-							<option value='10'>10</option>
-							<option value='20'>20</option>
-							<option value='30'>30</option>
-							<option value='40'>40</option>
-							<option value='50'>50</option>
-							<option value='60'>60</option>
+							<option value={Number.parseInt(10)}>10</option>
+							<option value={20}>20</option>
+							<option value={30}>30</option>
+							<option value={40}>40</option>
+							<option value={50}>50</option>
+							<option value={60}>60</option>
 						</select>
 					</div>
 					<div className='col'>
 						<button
 							className='btn btn-primary'
 							type='button'
-							onClick={() =>
-								setBusca({
-									nome: '',
-									complemento: '',
-									bairro: '',
-									rotulo: '',
-									end: '',
-									cidade: '',
-									numero: ''
-								})
-							}
+							onClick={() => callback()}
 						>
 							Limpar busca
 						</button>
@@ -238,6 +246,9 @@ const FiltroMutuarioLei = (data) => {
 				<>Nada por aqui</>
 			) : (
 				<div>
+					<div className='m-5 text-center'>
+						<h3>Itens encontrados: {itensFiltrados.length}</h3>
+					</div>
 					<table class='table'>
 						<thead>
 							<tr className='table-light'>
@@ -274,7 +285,6 @@ const FiltroMutuarioLei = (data) => {
 								>
 									Hip
 								</th>
-								<th>Resultados: {itensFiltrados.length}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -358,7 +368,7 @@ const FiltroMutuarioLei = (data) => {
 						className='pagination-bar justify-content-center mt-3'
 						currentPage={currentPage}
 						totalCount={itensFiltrados.length}
-						pageSize={PageSize}
+						pageSize={itensPorPagina.itens}
 						onPageChange={(page) => setCurrentPage(page)}
 					/>
 				</div>
