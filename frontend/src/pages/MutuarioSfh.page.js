@@ -4,7 +4,8 @@ import TabelaMutuarioSfh from '../components/TabelaMutuarioSfh'
 const MutuarioSfh = () => {
 	return (
 		<section>
-			<h1>Mutuário SFH</h1>
+			<h1 className='mb-5'>Mutuário SFH</h1>
+			<hr />
 			<TabelaMutuarioSfh />
 		</section>
 	)

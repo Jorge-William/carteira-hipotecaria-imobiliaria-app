@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Pagination from './Pagination'
+import SkeletonTabela from './SkeletonTabela'
 
 const FiltroMutuarioSfh = (data) => {
 	const [busca, setBusca] = useState({
@@ -63,12 +64,6 @@ const FiltroMutuarioSfh = (data) => {
 	}
 
 	const itensFiltrados = asArray.filter((item) => {
-		// item.includes(busca.toLowerCase())
-		// .filter((item) => item !== undefined)
-
-		//  ||
-		// 	item.bairro.toLowerCase().includes(lowercaseBairro)
-		//
 		return (
 			item.nome.toLowerCase().includes(lowercaseNome) &&
 			item.imoveis_sfhs[0].complemento
@@ -82,10 +77,12 @@ const FiltroMutuarioSfh = (data) => {
 			item.imoveis_sfhs[0].cidade
 				.toLowerCase()
 				.includes(lowercaseCidade) &&
-			item.imoveis_sfhs[0].numero.toLowerCase().includes(lowercaseNum)
+			item.imoveis_sfhs[0].numero.toLowerCase().includes(lowercaseNum) &&
+			item.imoveis_sfhs[0].cidade.toLowerCase().includes(lowercaseCidade)
 		)
 	})
 
+	// console.log(itensFiltrados)
 	const currentTableData = useMemo(() => {
 		const firstPageIndex =
 			(currentPage - 1) * Number.parseInt(itensPorPagina.itens)
@@ -95,7 +92,7 @@ const FiltroMutuarioSfh = (data) => {
 	}, [currentPage, itensFiltrados, itensPorPagina])
 	// console.log(itensFiltrados)
 	return (
-		<>
+		<div className='mt-5'>
 			<form className='mb-5'>
 				<div className='row'>
 					<div className='col-1'>
@@ -215,6 +212,27 @@ const FiltroMutuarioSfh = (data) => {
 						</datalist>
 					</div>
 					<div className='col'>
+						<input
+							class='form-control'
+							list='cidade'
+							id='campo-cidade'
+							placeholder='Cidade'
+							name='cidade'
+							onChange={handleChange}
+							value={busca.cidade}
+						/>
+						<datalist id='cidade'>
+							{asArray.map((item, key) => {
+								return (
+									<option
+										key={key}
+										value={item.imoveis_sfhs[0].cidade}
+									/>
+								)
+							})}
+						</datalist>
+					</div>
+					<div className='col'>
 						<select
 							class='form-select'
 							aria-label='Default select example'
@@ -296,7 +314,9 @@ const FiltroMutuarioSfh = (data) => {
 										<td>{data.rotulo}</td>
 										{/*  Link nomes */}
 										<td>
-											<Link to={`/detalhes/${data.id}`}>
+											<Link
+												to={`/detalhes-sfh/${data.id}`}
+											>
 												{data.nome}
 											</Link>
 										</td>
@@ -374,7 +394,7 @@ const FiltroMutuarioSfh = (data) => {
 					/>
 				</div>
 			)}
-		</>
+		</div>
 	)
 }
 

@@ -82,7 +82,8 @@ const FiltroMutuarioLei = (data) => {
 			item.imoveis_leis[0].cidade
 				.toLowerCase()
 				.includes(lowercaseCidade) &&
-			item.imoveis_leis[0].numero.toLowerCase().includes(lowercaseNum)
+			item.imoveis_leis[0].numero.toLowerCase().includes(lowercaseNum) &&
+			item.imoveis_leis[0].cidade.toLowerCase().includes(lowercaseCidade)
 		)
 	})
 
@@ -95,8 +96,8 @@ const FiltroMutuarioLei = (data) => {
 	}, [currentPage, itensFiltrados, itensPorPagina])
 	// console.log(itensFiltrados)
 	return (
-		<>
-			<form className='mb-5'>
+		<div className='mt-5'>
+			<form>
 				<div className='row'>
 					<div className='col-1'>
 						<input
@@ -209,6 +210,27 @@ const FiltroMutuarioLei = (data) => {
 									<option
 										key={key}
 										value={item.imoveis_leis[0].bairro}
+									/>
+								)
+							})}
+						</datalist>
+					</div>
+					<div className='col-2'>
+						<input
+							class='form-control'
+							list='cidade'
+							id='campo-cidade'
+							placeholder='Cidade'
+							name='cidade'
+							onChange={handleChange}
+							value={busca.cidade}
+						/>
+						<datalist id='cidade'>
+							{asArray.map((item, key) => {
+								return (
+									<option
+										key={key}
+										value={item.imoveis_leis[0].cidade}
 									/>
 								)
 							})}
@@ -374,7 +396,7 @@ const FiltroMutuarioLei = (data) => {
 					/>
 				</div>
 			)}
-		</>
+		</div>
 	)
 }
 
