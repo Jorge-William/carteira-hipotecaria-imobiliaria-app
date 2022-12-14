@@ -11,6 +11,7 @@ export function AuditandoDocSfh() {
 	const [docData, setDocData] = useState()
 	// const [isLoading, setIsloading] = useState(true)
 	const [observacao, setObservacao] = useState({ observacao: '' })
+	const [marcados, setMarcados] = useState(false)
 	// console.log(docData)
 	let userInfo = null
 	userInfo = JSON.parse(localStorage.getItem('userData'))
@@ -33,6 +34,27 @@ export function AuditandoDocSfh() {
 	// }
 
 	useEffect(() => {
+		if (marcados) {
+			setChecklist([
+				{ id: 1, prop: 'Natureza do documento', status: true },
+				{ id: 2, prop: 'Legibilidade', status: true },
+				{ id: 3, prop: 'Quantidade de páginas', status: true },
+				{ id: 4, prop: 'Nome do mutuário', status: true },
+				{ id: 5, prop: 'Ordem páginas', status: true },
+				{ id: 6, prop: 'Alinhamento do documento', status: true },
+				{ id: 7, prop: 'Informações do Verso', status: true }
+			])
+		} else {
+			setChecklist([
+				{ id: 1, prop: 'Natureza do documento', status: false },
+				{ id: 2, prop: 'Legibilidade', status: false },
+				{ id: 3, prop: 'Quantidade de páginas', status: false },
+				{ id: 4, prop: 'Nome do mutuário', status: false },
+				{ id: 5, prop: 'Ordem páginas', status: false },
+				{ id: 6, prop: 'Alinhamento do documento', status: false },
+				{ id: 7, prop: 'Informações do Verso', status: false }
+			])
+		}
 		const callServices = async () => {
 			const response = await getDocAuditandoSfh(id)
 
@@ -43,7 +65,7 @@ export function AuditandoDocSfh() {
 
 		callServices()
 		// setIsloading(false)
-	}, [id])
+	}, [id, marcados])
 
 	const onCheck = (id) => {
 		setChecklist(
@@ -53,10 +75,14 @@ export function AuditandoDocSfh() {
 		)
 	}
 
+	const checkAll = () => {
+		setMarcados((prev) => !prev)
+	}
+
 	const handleClick = () => {
 		Swal.fire({
 			title: 'Atenção!',
-			text: 'Deseja salvar a audição?',
+			text: `Deseja salvar a audição do cdocumento: ${docData.id_documento}?`,
 			icon: 'question',
 			showCancelButton: true,
 			cancelButtonText: 'Cancelar',
@@ -133,6 +159,9 @@ export function AuditandoDocSfh() {
 				<div className='col-sm-12 col-md-6'>
 					<h3 className='mb-4'>Informações do documento</h3>
 					<hr />
+					<p>
+						ID documento: <b>{docData.id_documento}</b>
+					</p>
 					<p>Pasta: {docData.cod_pasta}</p>
 					<p>Mutuário: {docData.nome}</p>
 					<p>Natureza do documento: {docData.descricao}</p>
@@ -166,6 +195,21 @@ export function AuditandoDocSfh() {
 					))}
 					<br />
 					<div className='mb-3'>
+						<button
+							type='button'
+							className={
+								marcados ? 'btn btn-warning' : 'btn btn-success'
+							}
+							onClick={() => checkAll()}
+						>
+							{marcados ? (
+								<p>Desmarcar todos</p>
+							) : (
+								<p>Marcar todos</p>
+							)}
+						</button>
+					</div>
+					<div className='mb-3'>
 						<label
 							htmlFor='exampleFormControlInput1'
 							className='form-label'
@@ -187,7 +231,7 @@ export function AuditandoDocSfh() {
 				<div className='col-md-2 d-flex justify-content-center'>
 					<button
 						type='button'
-						className='btn btn-success mb-5'
+						className='btn btn-primary mb-5'
 						onClick={handleClick}
 					>
 						Salvar audição

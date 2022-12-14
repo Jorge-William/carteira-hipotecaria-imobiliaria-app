@@ -8,11 +8,9 @@ import axios from 'axios'
 export function AuditandoDoc() {
 	const { id } = useParams()
 	const [docData, setDocData] = useState()
-	// console.log(docData)
 	const navigate = useNavigate()
-	// const [isLoading, setIsloading] = useState(true)
 	const [observacao, setObservacao] = useState({ observacao: '' })
-	// console.log(docData)
+	const [marcados, setMarcados] = useState(false)
 	let userInfo = null
 	userInfo = JSON.parse(localStorage.getItem('userData'))
 	const { id: usuario_id } = userInfo
@@ -35,9 +33,30 @@ export function AuditandoDoc() {
 	// }
 
 	useEffect(() => {
+		if (marcados) {
+			setChecklist([
+				{ id: 1, prop: 'Natureza do documento', status: true },
+				{ id: 2, prop: 'Legibilidade', status: true },
+				{ id: 3, prop: 'Quantidade de páginas', status: true },
+				{ id: 4, prop: 'Nome do mutuário', status: true },
+				{ id: 5, prop: 'Ordem páginas', status: true },
+				{ id: 6, prop: 'Alinhamento do documento', status: true },
+				{ id: 7, prop: 'Informações do Verso', status: true }
+			])
+		} else {
+			setChecklist([
+				{ id: 1, prop: 'Natureza do documento', status: false },
+				{ id: 2, prop: 'Legibilidade', status: false },
+				{ id: 3, prop: 'Quantidade de páginas', status: false },
+				{ id: 4, prop: 'Nome do mutuário', status: false },
+				{ id: 5, prop: 'Ordem páginas', status: false },
+				{ id: 6, prop: 'Alinhamento do documento', status: false },
+				{ id: 7, prop: 'Informações do Verso', status: false }
+			])
+		}
 		const callServices = async () => {
 			const response = await getDocAuditando(id)
-			console.log(`Resposta ${response}`)
+			// console.log(`Resposta ${response}`)
 
 			const data = response[0]
 			// console.log(data)
@@ -46,7 +65,11 @@ export function AuditandoDoc() {
 
 		callServices()
 		// setIsloading(false)
-	}, [id])
+	}, [id, marcados])
+
+	const checkAll = () => {
+		setMarcados((prev) => !prev)
+	}
 
 	const onCheck = (id) => {
 		setChecklist(
@@ -59,7 +82,7 @@ export function AuditandoDoc() {
 	const handleClick = () => {
 		Swal.fire({
 			title: 'Atenção!',
-			text: 'Deseja salvar a audição?',
+			text: `Deseja salvar a audição do documento: ${docData.id_documento}?`,
 			icon: 'question',
 			showCancelButton: true,
 			cancelButtonText: 'Cancelar',
@@ -136,6 +159,9 @@ export function AuditandoDoc() {
 				<div className='col-sm-12 col-md-6'>
 					<h3 className='mb-4'>Informações do documento</h3>
 					<hr />
+					<p>
+						ID documento: <b>{docData.id_documento}</b>
+					</p>
 					<p>Pasta: {docData.cod_pasta}</p>
 					<p>Mutuário: {docData.nome}</p>
 					<p>Natureza do documento: {docData.descricao}</p>
@@ -169,6 +195,21 @@ export function AuditandoDoc() {
 					))}
 					<br />
 					<div className='mb-3'>
+						<button
+							type='button'
+							className={
+								marcados ? 'btn btn-warning' : 'btn btn-success'
+							}
+							onClick={() => checkAll()}
+						>
+							{marcados ? (
+								<p>Desmarcar todos</p>
+							) : (
+								<p>Marcar todos</p>
+							)}
+						</button>
+					</div>
+					<div className='mb-3'>
 						<label
 							htmlFor='exampleFormControlInput1'
 							className='form-label'
@@ -190,7 +231,7 @@ export function AuditandoDoc() {
 				<div className='col-md-2 d-flex justify-content-center'>
 					<button
 						type='button'
-						className='btn btn-success mb-5'
+						className='btn btn-primary mb-5'
 						onClick={handleClick}
 					>
 						Salvar audição
