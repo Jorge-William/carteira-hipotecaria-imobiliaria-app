@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Pagination from './Pagination'
-import SkeletonTabela from './SkeletonTabela'
 
 const FiltroMutuarioSfh = (data) => {
 	const [busca, setBusca] = useState({
@@ -34,7 +33,7 @@ const FiltroMutuarioSfh = (data) => {
 		// console.log('OIIIIII JORGE')
 	}, [busca])
 
-	console.log(asArray)
+	// console.log(asArray)
 	const lowercaseBairro = busca.bairro.toLowerCase()
 	const lowercaseNome = busca.nome.toLowerCase()
 	const lowercaseComplemento = busca.complemento.toLowerCase()
@@ -97,7 +96,7 @@ const FiltroMutuarioSfh = (data) => {
 				<div className='row'>
 					<div className='col-1'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='rotulo'
 							id='campo-rotulo'
 							placeholder='Pasta'
@@ -113,7 +112,7 @@ const FiltroMutuarioSfh = (data) => {
 					</div>
 					<div className='col'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='nome'
 							id='campo-nome'
 							placeholder='Nome'
@@ -129,7 +128,7 @@ const FiltroMutuarioSfh = (data) => {
 					</div>
 					<div className='col'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='endereco'
 							id='campo-endereco'
 							placeholder='Endereço'
@@ -150,7 +149,7 @@ const FiltroMutuarioSfh = (data) => {
 					</div>
 					<div className='col-1'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='numero'
 							id='campo-numero'
 							placeholder='N°'
@@ -171,7 +170,7 @@ const FiltroMutuarioSfh = (data) => {
 					</div>
 					<div className='col'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='complemento'
 							id='campo-complemento'
 							placeholder='Complemento'
@@ -192,7 +191,7 @@ const FiltroMutuarioSfh = (data) => {
 					</div>
 					<div className='col-1'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='bairro'
 							id='campo-bairro'
 							placeholder='Bairro'
@@ -213,7 +212,7 @@ const FiltroMutuarioSfh = (data) => {
 					</div>
 					<div className='col'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='cidade'
 							id='campo-cidade'
 							placeholder='Cidade'
@@ -234,7 +233,7 @@ const FiltroMutuarioSfh = (data) => {
 					</div>
 					<div className='col'>
 						<select
-							class='form-select'
+							className='form-select'
 							aria-label='Default select example'
 							name='itens'
 							onChange={handleItens}
@@ -268,7 +267,7 @@ const FiltroMutuarioSfh = (data) => {
 					<div className='m-5 text-center'>
 						<h3>Itens encontrados: {itensFiltrados.length}</h3>
 					</div>
-					<table class='table'>
+					<table className='table'>
 						<thead>
 							<tr className='table-light'>
 								<th scope='col'>#</th>
@@ -276,7 +275,7 @@ const FiltroMutuarioSfh = (data) => {
 								<th scope='col'>
 									Nome{' '}
 									{/* <button
-									class='bi bi-arrow-down-up'
+									className='bi bi-arrow-down-up'
 									onClick={() =>
 										setOrdemAlfabetica((prev) => !prev)
 									}

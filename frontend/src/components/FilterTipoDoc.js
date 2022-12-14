@@ -10,7 +10,12 @@ const FilterTipoDoc = (props) => {
 	])
 	const [valorBusca, setValorBusca] = useState('0')
 	// const [showtable, setShowTable] = useState(false)
-	const [tableData, setTableData] = useState({id: '', tipo: '', abrev: '', descricao: ''})
+	const [tableData, setTableData] = useState({
+		id: '',
+		tipo: '',
+		abrev: '',
+		descricao: ''
+	})
 	const [isEdit, setIsEdit] = useState(false)
 	const [abrev, setAbrev] = useState({ abrev: '' })
 	const [descricao, setDescricao] = useState({ descricao: '' })
@@ -18,7 +23,7 @@ const FilterTipoDoc = (props) => {
 
 	useEffect(() => {
 		setShowTable(false)
-	},[valorBusca])
+	}, [valorBusca])
 
 	const userData = JSON.parse(localStorage.getItem('userData'))
 	const usuario_id = userData.id
@@ -30,7 +35,7 @@ const FilterTipoDoc = (props) => {
 	useEffect(() => {
 		setAbrev(tableData.abrev)
 		setDescricao(tableData.descricao)
-	},[isEdit,tableData])
+	}, [isEdit, tableData])
 
 	// const tipoMutuario = 'sfh'
 
@@ -40,8 +45,8 @@ const FilterTipoDoc = (props) => {
 			// return {id: '', tipo: '', abrev: '', descricao: ''}
 		})
 		console.log(result)
-		if(result === undefined) {
-			return setTableData({id: '', tipo: '', abrev: '', descricao: ''})
+		if (result === undefined) {
+			return setTableData({ id: '', tipo: '', abrev: '', descricao: '' })
 		} else {
 			setShowTable(true)
 			// setValorBusca('')
@@ -71,7 +76,12 @@ const FilterTipoDoc = (props) => {
 							throw new Error()
 						}
 						props.callbackFilter()
-						setTableData({id: '', tipo: '', abrev: '', descricao: ''})
+						setTableData({
+							id: '',
+							tipo: '',
+							abrev: '',
+							descricao: ''
+						})
 						setShowTable(false)
 						setValorBusca('0')
 						return response
@@ -113,7 +123,7 @@ const FilterTipoDoc = (props) => {
 							throw new Error()
 						}
 						props.callbackFilter()
-						setTableData({abrev: '', descricao: ''})
+						setTableData({ abrev: '', descricao: '' })
 						setShowTable(false)
 						setIsEdit(false)
 						return response
@@ -163,11 +173,10 @@ const FilterTipoDoc = (props) => {
 					</button>
 				</div>
 
-				
-				{isEdit  && (
+				{isEdit && (
 					<div className='col-md-12 mt-4 '>
 						<hr />
-						<table class='table table-hover table-borderless align-middle'>
+						<table className='table table-hover table-borderless align-middle'>
 							<thead>
 								<tr>
 									<th scope='col'>#ID</th>
@@ -182,7 +191,7 @@ const FilterTipoDoc = (props) => {
 									<td>{tableData.tipo}</td>
 									<td>
 										<input
-										size='10'
+											size='10'
 											className='form-control upper-case'
 											placeholder={tableData.abrev}
 											type='text'
@@ -195,7 +204,7 @@ const FilterTipoDoc = (props) => {
 									</td>
 									<td>
 										<input
-										size='50'
+											size='50'
 											className='form-control upper-case'
 											placeholder={tableData.descricao}
 											type='text'
@@ -229,12 +238,12 @@ const FilterTipoDoc = (props) => {
 						</table>
 						<hr />
 					</div>
-				) }
-				
+				)}
+
 				{!isEdit && showTable ? (
 					<div className='col-md-12 mt-4 '>
 						<hr />
-						<table class='table table-hover table-borderless align-middle'>
+						<table className='table table-hover table-borderless align-middle'>
 							<thead>
 								<tr>
 									<th scope='col'>#ID</th>
@@ -272,7 +281,9 @@ const FilterTipoDoc = (props) => {
 						</table>
 						<hr />
 					</div>
-				): <></>}
+				) : (
+					<></>
+				)}
 			</div>
 		</div>
 	)

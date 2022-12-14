@@ -14,12 +14,11 @@ const DetalheMutuarioSfh = ({ id }) => {
 	const [mostrarEdicao, setMostrarEdicao] = useState(false)
 	const [load, setLoad] = useState(false)
 
-
-	const callServices = useCallback( async () => {
+	const callServices = useCallback(async () => {
 		// Posição 0 é o id do mutuário e a posição 17 é o tipo(L ou C)
 		const documentos = await getDocumentosSfh(id)
 		const mutuario = await getMutuarioSfhById(id)
-		console.log('Estão me chamando!');
+		console.log('Estão me chamando!')
 		setDocumentos(documentos)
 		setDados(mutuario)
 	}, [id])
@@ -53,12 +52,12 @@ const DetalheMutuarioSfh = ({ id }) => {
 						{!mostrarEdicao ? (
 							<i className='bi bi-person-lines-fill'></i>
 						) : (
-							<i class='bi bi-person'></i>
+							<i className='bi bi-person'></i>
 						)}
 					</button>
 				</div>
 				<div className='col-md'>
-				<Link to={`/mutuario/sfh/adicionardocumento/${id}`}>
+					<Link to={`/mutuario/sfh/adicionardocumento/${id}`}>
 						<button
 							className='btn btn-outline-success crud-btn'
 							data-bs-toggle='tooltip'
@@ -73,9 +72,16 @@ const DetalheMutuarioSfh = ({ id }) => {
 			{!mostrarEdicao ? (
 				<ExibirMutuarioSfh dados={dados} />
 			) : (
-				<EditarMutuario dadosMutuario={dados} callback={reload}  tipo={'sfh'}/>
+				<EditarMutuario
+					dadosMutuario={dados}
+					callback={reload}
+					tipo={'sfh'}
+				/>
 			)}
-			<AccordionDeDocumentos documentos={documentos} callServices={() => callServices()} />
+			<AccordionDeDocumentos
+				documentos={documentos}
+				callServices={() => callServices()}
+			/>
 		</section>
 	)
 }

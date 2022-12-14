@@ -30,11 +30,11 @@ const SelectInput = (props) => {
 					)
 				})}
 			</select> */}
-			{/* <label for='exampleDataList' class='form-label'>
+			{/* <label for='exampleDataList' className='form-label'>
 				Datalist example
 			</label> */}
 			<input
-				class='form-control'
+				className='form-control'
 				list='datalistOptions'
 				id='exampleDataList'
 				placeholder='Digite a abrevição do documento...'

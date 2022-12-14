@@ -10,7 +10,12 @@ const FilterTipoDocLei = (props) => {
 	])
 	const [valorBusca, setValorBusca] = useState('0')
 	// const [showtable, setShowTable] = useState(false)
-	const [tableData, setTableData] = useState({id: '', tipo: '', abreviacao: '', descricao: ''})
+	const [tableData, setTableData] = useState({
+		id: '',
+		tipo: '',
+		abreviacao: '',
+		descricao: ''
+	})
 	const [isEdit, setIsEdit] = useState(false)
 	const [abreviacao, setAbrev] = useState({ abreviacao: '' })
 	const [descricao, setDescricao] = useState({ descricao: '' })
@@ -18,7 +23,7 @@ const FilterTipoDocLei = (props) => {
 
 	useEffect(() => {
 		setShowTable(false)
-	},[valorBusca])
+	}, [valorBusca])
 
 	const userData = JSON.parse(localStorage.getItem('userData'))
 	const usuario_id = userData.id
@@ -30,7 +35,7 @@ const FilterTipoDocLei = (props) => {
 	useEffect(() => {
 		setAbrev(tableData.abreviacao)
 		setDescricao(tableData.descricao)
-	},[isEdit,tableData])
+	}, [isEdit, tableData])
 
 	// const tipoMutuario = 'sfh'
 
@@ -40,8 +45,13 @@ const FilterTipoDocLei = (props) => {
 			// return {id: '', tipo: '', abrev: '', descricao: ''}
 		})
 		console.log(result)
-		if(result === undefined) {
-			return setTableData({id: '', tipo: '', abreviacao: '', descricao: ''})
+		if (result === undefined) {
+			return setTableData({
+				id: '',
+				tipo: '',
+				abreviacao: '',
+				descricao: ''
+			})
 		} else {
 			setShowTable(true)
 			// setValorBusca('')
@@ -71,7 +81,12 @@ const FilterTipoDocLei = (props) => {
 							throw new Error()
 						}
 						props.callbackFilter()
-						setTableData({id: '', tipo: '', abreviacao: '', descricao: ''})
+						setTableData({
+							id: '',
+							tipo: '',
+							abreviacao: '',
+							descricao: ''
+						})
 						setShowTable(false)
 						setValorBusca('0')
 						return response
@@ -113,7 +128,7 @@ const FilterTipoDocLei = (props) => {
 							throw new Error()
 						}
 						props.callbackFilter()
-						setTableData({abreviacao: '', descricao: ''})
+						setTableData({ abreviacao: '', descricao: '' })
 						setShowTable(false)
 						setIsEdit(false)
 						return response
@@ -141,7 +156,7 @@ const FilterTipoDocLei = (props) => {
 			<div className='row mb-5 align-items-end'>
 				<div className='col-md-8'>
 					<input
-						class='form-control'
+						className='form-control'
 						list='datalistOptionsLEI'
 						id='exampleDataList'
 						placeholder='Digite para buscar um tipo...'
@@ -163,11 +178,10 @@ const FilterTipoDocLei = (props) => {
 					</button>
 				</div>
 
-				
-				{isEdit  && (
+				{isEdit && (
 					<div className='col-md-12 mt-4 '>
 						<hr />
-						<table class='table table-hover table-borderless align-middle'>
+						<table className='table table-hover table-borderless align-middle'>
 							<thead>
 								<tr>
 									<th scope='col'>#ID</th>
@@ -182,7 +196,7 @@ const FilterTipoDocLei = (props) => {
 									<td>{tableData.tipo}</td>
 									<td>
 										<input
-										size='10'
+											size='10'
 											className='form-control upper-case'
 											placeholder={tableData.abreviacao}
 											type='text'
@@ -195,7 +209,7 @@ const FilterTipoDocLei = (props) => {
 									</td>
 									<td>
 										<input
-										size='50'
+											size='50'
 											className='form-control upper-case'
 											placeholder={tableData.descricao}
 											type='text'
@@ -229,12 +243,12 @@ const FilterTipoDocLei = (props) => {
 						</table>
 						<hr />
 					</div>
-				) }
-				
+				)}
+
 				{!isEdit && showTable ? (
 					<div className='col-md-12 mt-4 '>
 						<hr />
-						<table class='table table-hover table-borderless align-middle'>
+						<table className='table table-hover table-borderless align-middle'>
 							<thead>
 								<tr>
 									<th scope='col'>#ID</th>
@@ -272,7 +286,9 @@ const FilterTipoDocLei = (props) => {
 						</table>
 						<hr />
 					</div>
-				): <></>}
+				) : (
+					<></>
+				)}
 			</div>
 		</div>
 	)

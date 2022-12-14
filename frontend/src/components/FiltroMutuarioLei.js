@@ -101,7 +101,7 @@ const FiltroMutuarioLei = (data) => {
 				<div className='row'>
 					<div className='col-1'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='rotulo'
 							id='campo-rotulo'
 							placeholder='Pasta'
@@ -117,7 +117,7 @@ const FiltroMutuarioLei = (data) => {
 					</div>
 					<div className='col'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='nome'
 							id='campo-nome'
 							placeholder='Nome'
@@ -133,7 +133,7 @@ const FiltroMutuarioLei = (data) => {
 					</div>
 					<div className='col'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='endereco'
 							id='campo-endereco'
 							placeholder='Endereço'
@@ -154,7 +154,7 @@ const FiltroMutuarioLei = (data) => {
 					</div>
 					<div className='col-1'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='numero'
 							id='campo-numero'
 							placeholder='N°'
@@ -175,7 +175,7 @@ const FiltroMutuarioLei = (data) => {
 					</div>
 					<div className='col'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='complemento'
 							id='campo-complemento'
 							placeholder='Complemento'
@@ -196,7 +196,7 @@ const FiltroMutuarioLei = (data) => {
 					</div>
 					<div className='col-1'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='bairro'
 							id='campo-bairro'
 							placeholder='Bairro'
@@ -217,7 +217,7 @@ const FiltroMutuarioLei = (data) => {
 					</div>
 					<div className='col-2'>
 						<input
-							class='form-control'
+							className='form-control'
 							list='cidade'
 							id='campo-cidade'
 							placeholder='Cidade'
@@ -238,7 +238,7 @@ const FiltroMutuarioLei = (data) => {
 					</div>
 					<div className='col'>
 						<select
-							class='form-select'
+							className='form-select'
 							aria-label='Default select example'
 							name='itens'
 							onChange={handleItens}
@@ -272,7 +272,7 @@ const FiltroMutuarioLei = (data) => {
 					<div className='m-5 text-center'>
 						<h3>Itens encontrados: {itensFiltrados.length}</h3>
 					</div>
-					<table class='table'>
+					<table className='table'>
 						<thead>
 							<tr className='table-light'>
 								<th scope='col'>#</th>
@@ -280,7 +280,7 @@ const FiltroMutuarioLei = (data) => {
 								<th scope='col'>
 									Nome{' '}
 									{/* <button
-									class='bi bi-arrow-down-up'
+									className='bi bi-arrow-down-up'
 									onClick={() =>
 										setOrdemAlfabetica((prev) => !prev)
 									}
