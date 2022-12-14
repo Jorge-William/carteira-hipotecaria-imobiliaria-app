@@ -11,12 +11,12 @@ export function AuditandoDoc() {
 	// console.log(docData)
 	const navigate = useNavigate()
 	// const [isLoading, setIsloading] = useState(true)
-	const [observacao, setObservacao] = useState({observacao: ''})
+	const [observacao, setObservacao] = useState({ observacao: '' })
 	// console.log(docData)
 	let userInfo = null
 	userInfo = JSON.parse(localStorage.getItem('userData'))
 	const { id: usuario_id } = userInfo
-	
+
 	const [checklist, setChecklist] = useState([
 		{ id: 1, prop: 'Natureza do documento', status: false },
 		{ id: 2, prop: 'Legibilidade', status: false },
@@ -37,7 +37,7 @@ export function AuditandoDoc() {
 	useEffect(() => {
 		const callServices = async () => {
 			const response = await getDocAuditando(id)
-			console.log(`Resposta ${response}`);
+			console.log(`Resposta ${response}`)
 
 			const data = response[0]
 			// console.log(data)
@@ -82,12 +82,15 @@ export function AuditandoDoc() {
 							Swal.fire({
 								icon: 'success',
 								title: 'Tudo certo!',
-								text: 'A audição foi salva com sucesso!',
+								text: 'A audição foi salva com sucesso!'
 								// footer: '<a href="">Why do I have this issue?</a>'
 							})
-							return navigate(`/detalhes-auditoria/${docData.mutuario_id}`, {
-								replace: true
-							})
+							return navigate(
+								`/detalhes-auditoria/${docData.mutuario_id}`,
+								{
+									replace: true
+								}
+							)
 						}
 						throw new Error(response.statusText)
 					})
@@ -146,18 +149,18 @@ export function AuditandoDoc() {
 					</small>
 
 					{checklist.map((item, key) => (
-						<div key={key} class='form-check'>
+						<div key={key} className='form-check'>
 							<input
 								name={item}
 								key={key}
-								class='form-check-input'
+								className='form-check-input'
 								type='checkbox'
 								id='flexCheckDefault'
 								checked={item.status}
 								onChange={() => onCheck(item.id)}
 							/>
 							<label
-								class='form-check-label'
+								className='form-check-label'
 								htmlFor='flexCheckDefault'
 							>
 								{item.prop}
@@ -165,16 +168,16 @@ export function AuditandoDoc() {
 						</div>
 					))}
 					<br />
-					<div class='mb-3'>
+					<div className='mb-3'>
 						<label
 							htmlFor='exampleFormControlInput1'
-							class='form-label'
+							className='form-label'
 						>
 							Outros:
 						</label>
 						<textarea
 							type='text-area'
-							class='form-control'
+							className='form-control'
 							id='exampleFormControlInput1'
 							placeholder='Exemplo: Faltou escanear o verso do documento xyz'
 							onChange={handleChange}

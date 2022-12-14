@@ -70,10 +70,10 @@ const AdicionaTipoLei = ({ callback }) => {
 	return (
 		<div className='container'>
 			<div className='row align-items-end'>
-				<div class=' col-md-1 mb-3'>
+				<div className=' col-md-1 mb-3'>
 					<label
 						htmlFor='exampleFormControlInput1'
-						class='form-label'
+						className='form-label'
 					>
 						Abreviação
 					</label>
@@ -88,7 +88,7 @@ const AdicionaTipoLei = ({ callback }) => {
 				<div className=' col-md-8 mb-3'>
 					<label
 						htmlFor='exampleFormControlInput1'
-						class='form-label'
+						className='form-label'
 					>
 						Descrição
 					</label>

@@ -1,0 +1,11 @@
+.card-qtd { 
+    border: solid rgb(193, 191, 191) 2px;
+    border-radius: 5px
+}
+
+.input-itens-por-pagina {
+    height: 60px;
+    border: solid rgb(193, 191, 191) 2px;
+    border-radius: 5px;
+    font-size: 1.2em;
+}

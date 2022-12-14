@@ -95,26 +95,26 @@ const ModalEditarUsuario = ({ user, callback }) => {
 		<Skeleton count={3} />
 	) : (
 		<div
-			class='modal fade'
+			className='modal fade'
 			id={`edita-mutuario`}
 			tabIndex='-1'
 			aria-labelledby='exampleModalLabel'
 			aria-hidden='true'
 		>
-			<div class='modal-dialog modal-dialog-centered'>
-				<div class='modal-content'>
-					<div class='modal-header'>
-						<h1 class='modal-title fs-5' id='exampleModalLabel'>
+			<div className='modal-dialog modal-dialog-centered'>
+				<div className='modal-content'>
+					<div className='modal-header'>
+						<h1 className='modal-title fs-5' id='exampleModalLabel'>
 							Edição de usuário
 						</h1>
 						<button
 							type='button'
-							class='btn-close'
+							className='btn-close'
 							data-bs-dismiss='modal'
 							aria-label='Close'
 						></button>
 					</div>
-					<div class='modal-body'>
+					<div className='modal-body'>
 						{/* -------------------------------------------- */}
 						<section className='container'>
 							<div className='row mt-5 mb-3'>
@@ -170,17 +170,17 @@ const ModalEditarUsuario = ({ user, callback }) => {
 							</div>
 						</section>
 					</div>
-					<div class='modal-footer'>
+					<div className='modal-footer'>
 						<button
 							type='button'
-							class='btn btn-secondary'
+							className='btn btn-secondary'
 							data-bs-dismiss='modal'
 						>
 							Cancelar
 						</button>
 						<button
 							type='button'
-							class='btn btn-primary'
+							className='btn btn-primary'
 							onClick={handleClick}
 						>
 							Salvar mudanças

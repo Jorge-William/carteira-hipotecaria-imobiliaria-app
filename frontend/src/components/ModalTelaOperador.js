@@ -51,37 +51,40 @@ const ModalTelaOperador = (props, callback) => {
 
 	return documentoInfo.length === 0 ? (
 		<div
-			class='modal fade'
+			className='modal fade'
 			id='modalOperador'
 			tabIndex='-2'
 			aria-labelledby='exampleModalLabel'
 			aria-hidden='true'
 		>
-			<div class='modal-dialog modal-dialog-centered'>
-				<div class='modal-content'>
-					<div class='modal-header'>
-						<h1 class='modal-title fs-5' id='exampleModalLabel'>
+			<div className='modal-dialog modal-dialog-centered'>
+				<div className='modal-content'>
+					<div className='modal-header'>
+						<h1 className='modal-title fs-5' id='exampleModalLabel'>
 							Modal title
 						</h1>
 						<button
 							type='button'
-							class='btn-close'
+							className='btn-close'
 							data-bs-dismiss='modal'
 							aria-label='Close'
 						></button>
 					</div>
-					<div class='modal-body'>
+					<div className='modal-body'>
 						<p>Nada por aqui</p>
 					</div>
-					<div class='modal-footer'>
+					<div className='modal-footer'>
 						<button
 							type='button'
-							class='btn btn-outline-secondary'
+							className='btn btn-outline-secondary'
 							data-bs-dismiss='modal'
 						>
 							Cancelar
 						</button>
-						<button type='button' class='btn btn-outline-primary'>
+						<button
+							type='button'
+							className='btn btn-outline-primary'
+						>
 							Salvar alterações
 						</button>
 					</div>
@@ -90,17 +93,17 @@ const ModalTelaOperador = (props, callback) => {
 		</div>
 	) : (
 		<div
-			class='modal fade'
+			className='modal fade'
 			id='modalOperador'
 			tabIndex='-1'
 			aria-labelledby='exampleModalLabel'
 			aria-hidden='true'
 		>
-			<div class='modal-dialog modal-dialog-centered'>
-				<div class='modal-content'>
-					<div class='modal-header'>
+			<div className='modal-dialog modal-dialog-centered'>
+				<div className='modal-content'>
+					<div className='modal-header'>
 						<h1
-							class='modal-title fs-5'
+							className='modal-title fs-5'
 							id='exampleModalLabel'
 							style={{ color: 'red' }}
 						>
@@ -108,18 +111,18 @@ const ModalTelaOperador = (props, callback) => {
 						</h1>
 						<button
 							type='button'
-							class='btn-close'
+							className='btn-close'
 							data-bs-dismiss='modal'
 							aria-label='Close'
 						></button>
 					</div>
-					<div class='modal-body'>
+					<div className='modal-body'>
 						<h4>Deseja substituir o documento?</h4>
 					</div>
-					<div class='modal-footer'>
+					<div className='modal-footer'>
 						<button
 							type='button'
-							class='btn btn-outline-secondary'
+							className='btn btn-outline-secondary'
 							data-bs-dismiss='modal'
 						>
 							Cancelar
@@ -127,7 +130,7 @@ const ModalTelaOperador = (props, callback) => {
 
 						<button
 							type='button'
-							class='btn btn-outline-primary'
+							className='btn btn-outline-primary'
 							onClick={() => alterarDoc()}
 							data-bs-dismiss='modal'
 						>

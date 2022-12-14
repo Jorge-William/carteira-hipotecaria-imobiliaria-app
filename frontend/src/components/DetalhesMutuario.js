@@ -51,7 +51,7 @@ const DetalheMutuario = ({ id }) => {
 						{!mostrarEdicao ? (
 							<i className='bi bi-person-lines-fill'></i>
 						) : (
-							<i class='bi bi-person'></i>
+							<i className='bi bi-person'></i>
 						)}
 					</button>
 				</div>

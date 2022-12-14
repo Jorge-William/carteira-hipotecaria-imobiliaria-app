@@ -65,7 +65,7 @@ const TabelaUsuarios = ({ infoUser, callback }) => {
 		<p>Loading</p>
 	) : (
 		<>
-			<table class='table'>
+			<table className='table'>
 				<thead>
 					<tr>
 						<th scope='col'>#</th>
@@ -92,7 +92,7 @@ const TabelaUsuarios = ({ infoUser, callback }) => {
 											data-bs-target={`#edita-mutuario`}
 											onClick={() => teste(user.id)}
 										>
-											<i class='bi bi-pencil-fill'></i>
+											<i className='bi bi-pencil-fill'></i>
 										</button>
 									</td>
 									<td>
@@ -103,7 +103,7 @@ const TabelaUsuarios = ({ infoUser, callback }) => {
 													user.id,
 													user.name,
 													user.lastName,
-													id,
+													id
 												)
 											}
 										>
@@ -114,11 +114,7 @@ const TabelaUsuarios = ({ infoUser, callback }) => {
 								{
 									<ModalEditarUsuario
 										key={key}
-										user={
-
-											id_operador
-
-										}
+										user={id_operador}
 										callback={callback}
 									/>
 								}

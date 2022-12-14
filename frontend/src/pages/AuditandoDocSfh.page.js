@@ -82,9 +82,12 @@ export function AuditandoDocSfh() {
 								text: 'A audição foi salva com sucesso!'
 								// footer: '<a href="">Why do I have this issue?</a>'
 							})
-							return navigate(`/detalhes-auditoria-sfh/${docData.mutuario_id}`, {
-								replace: true
-							})
+							return navigate(
+								`/detalhes-auditoria-sfh/${docData.mutuario_id}`,
+								{
+									replace: true
+								}
+							)
 						}
 						throw new Error(response.statusText)
 					})
@@ -143,18 +146,18 @@ export function AuditandoDocSfh() {
 					</small>
 
 					{checklist.map((item, key) => (
-						<div key={key} class='form-check'>
+						<div key={key} className='form-check'>
 							<input
 								name={item}
 								key={key}
-								class='form-check-input'
+								className='form-check-input'
 								type='checkbox'
 								id='flexCheckDefault'
 								checked={item.status}
 								onChange={() => onCheck(item.id)}
 							/>
 							<label
-								class='form-check-label'
+								className='form-check-label'
 								htmlFor='flexCheckDefault'
 							>
 								{item.prop}
@@ -162,16 +165,16 @@ export function AuditandoDocSfh() {
 						</div>
 					))}
 					<br />
-					<div class='mb-3'>
+					<div className='mb-3'>
 						<label
 							htmlFor='exampleFormControlInput1'
-							class='form-label'
+							className='form-label'
 						>
 							Outros:
 						</label>
 						<textarea
 							type='text-area'
-							class='form-control'
+							className='form-control'
 							id='exampleFormControlInput1'
 							placeholder='Exemplo: Faltou escanear o verso do documento xyz'
 							onChange={handleChange}

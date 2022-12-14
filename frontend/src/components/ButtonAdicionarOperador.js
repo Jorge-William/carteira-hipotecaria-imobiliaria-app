@@ -74,7 +74,7 @@ const ButtonAdicionarOperador = ({ callback }) => {
 				style={{ width: 70, height: 70 }}
 				onClick={() => setMostraForm((prev) => !prev)}
 			>
-				<i class='bi bi-person-plus' style={{ fontSize: 30 }}></i>
+				<i className='bi bi-person-plus' style={{ fontSize: 30 }}></i>
 			</button>
 
 			{mostraForm && (

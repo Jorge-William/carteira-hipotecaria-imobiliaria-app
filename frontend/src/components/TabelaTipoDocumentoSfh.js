@@ -13,6 +13,14 @@ const TabelaTipoDocumentoSfh = () => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [alternateCompon, setAlternateCompon] = useState(false)
 	const [reloadTabela, setReloadTabela] = useState(false)
+	const [itensPorPagina, setItensPorPagina] = useState({ itens: 15 })
+
+	const handleItens = (event) => {
+		const value = event.target.value
+		const name = event.target.name
+
+		setItensPorPagina({ ...itensPorPagina, [name]: value })
+	}
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -28,13 +36,13 @@ const TabelaTipoDocumentoSfh = () => {
 	// 	setReloadTabela({ reload: true })
 	// }
 
-	const PageSize = 15
-
 	const currentTableData = useMemo(() => {
-		const firstPageIndex = (currentPage - 1) * PageSize
-		const lastPageIndex = firstPageIndex + PageSize
+		const firstPageIndex =
+			(currentPage - 1) * Number.parseInt(itensPorPagina.itens)
+		const lastPageIndex =
+			firstPageIndex + Number.parseInt(itensPorPagina.itens)
 		return lista.slice(firstPageIndex, lastPageIndex)
-	}, [currentPage, lista])
+	}, [currentPage, lista, itensPorPagina])
 
 	const callback = () => {
 		console.log('foi callback')
@@ -53,13 +61,20 @@ const TabelaTipoDocumentoSfh = () => {
 		</>
 	) : (
 		<section className='mt-5'>
-			{alternateCompon ? <></> : <FilterTipoDoc tiposDoc={lista}  callbackFilter={callbackFilter}/>}
+			{alternateCompon ? (
+				<></>
+			) : (
+				<FilterTipoDoc
+					tiposDoc={lista}
+					callbackFilter={callbackFilter}
+				/>
+			)}
 			<button
 				className='btn btn-outline-success mb-5'
 				type='button'
 				onClick={(prev) => setAlternateCompon((prev) => !prev)}
 			>
-				{!alternateCompon ? "Adicionar tipo": "Voltar"}
+				{!alternateCompon ? 'Adicionar tipo' : 'Voltar'}
 			</button>
 
 			{alternateCompon ? (
@@ -68,7 +83,38 @@ const TabelaTipoDocumentoSfh = () => {
 				</>
 			) : (
 				<>
-					<table class='table table-hover align-middle table-responsive-md mt-5'>
+					<hr />
+					<br />
+					<div className='container-fluid'>
+						<div className='row justify-content-md-center'>
+							<div className='card-qtd col-2'>
+								<div className='p-3 '>
+									<h4>Total de registros: {lista.length}</h4>
+								</div>
+							</div>
+							<div className='col-2'>
+								<select
+									className='form-select input-itens-por-pagina'
+									aria-label='Default select example'
+									name='itens'
+									onChange={handleItens}
+								>
+									<option selected value='15'>
+										Itens por página
+									</option>
+									<option value={Number.parseInt(10)}>
+										10
+									</option>
+									<option value={20}>20</option>
+									<option value={30}>30</option>
+									<option value={40}>40</option>
+									<option value={50}>50</option>
+									<option value={60}>60</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<table className='table table-hover align-middle table-responsive-md mt-5'>
 						<thead>
 							<tr>
 								<th scope='col'>#</th>
@@ -98,7 +144,7 @@ const TabelaTipoDocumentoSfh = () => {
 						className='pagination-bar justify-content-center mt-3'
 						currentPage={currentPage}
 						totalCount={lista.length}
-						pageSize={PageSize}
+						pageSize={itensPorPagina.itens}
 						onPageChange={(page) => setCurrentPage(page)}
 					/>
 				</>

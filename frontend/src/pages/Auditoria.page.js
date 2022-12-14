@@ -17,9 +17,13 @@ const Auditoria = () => {
 			<div className='row d-flex flex-xs-wrap-reverse flex-sm-wrap-reverse flex-md-wrap-reverse'>
 				<div className='col-xs-12 col-md-12 col-lg-8'>
 					<nav className='mt-5'>
-						<div class='nav nav-tabs' id='nav-tab' role='tablist'>
+						<div
+							className='nav nav-tabs'
+							id='nav-tab'
+							role='tablist'
+						>
 							<button
-								class='nav-link active'
+								className='nav-link active'
 								id='nav-home-tab'
 								data-bs-toggle='tab'
 								data-bs-target='#nav-home'
@@ -34,7 +38,7 @@ const Auditoria = () => {
 								Mutuario LEI
 							</button>
 							<button
-								class='nav-link'
+								className='nav-link'
 								id='nav-profile-tab'
 								data-bs-toggle='tab'
 								data-bs-target='#nav-profile'
@@ -50,9 +54,9 @@ const Auditoria = () => {
 							</button>
 						</div>
 					</nav>
-					<div class='tab-content' id='nav-tabContent'>
+					<div className='tab-content' id='nav-tabContent'>
 						<div
-							class='tab-pane fade show active'
+							className='tab-pane fade show active'
 							id='nav-home'
 							role='tabpanel'
 							aria-labelledby='nav-home-tab'
@@ -62,7 +66,7 @@ const Auditoria = () => {
 							</div>
 						</div>
 						<div
-							class='tab-pane fade'
+							className='tab-pane fade'
 							id='nav-profile'
 							role='tabpanel'
 							aria-labelledby='nav-profile-tab'

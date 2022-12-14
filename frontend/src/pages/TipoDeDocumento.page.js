@@ -8,9 +8,9 @@ const TipoDeDocumento = () => {
 				<h1 className='mb-4'>Tipo de Documentos</h1>
 			</div>
 			<nav className='mt-5'>
-				<div class='nav nav-tabs' id='nav-tab' role='tablist'>
+				<div className='nav nav-tabs' id='nav-tab' role='tablist'>
 					<button
-						class='nav-link active'
+						className='nav-link active'
 						id='nav-home-tab'
 						data-bs-toggle='tab'
 						data-bs-target='#nav-home'
@@ -22,7 +22,7 @@ const TipoDeDocumento = () => {
 						Documentos LEI
 					</button>
 					<button
-						class='nav-link'
+						className='nav-link'
 						id='nav-profile-tab'
 						data-bs-toggle='tab'
 						data-bs-target='#nav-profile'
@@ -35,9 +35,9 @@ const TipoDeDocumento = () => {
 					</button>
 				</div>
 			</nav>
-			<div class='tab-content' id='nav-tabContent'>
+			<div className='tab-content' id='nav-tabContent'>
 				<div
-					class='tab-pane fade show active'
+					className='tab-pane fade show active'
 					id='nav-home'
 					role='tabpanel'
 					aria-labelledby='nav-home-tab'
@@ -47,7 +47,7 @@ const TipoDeDocumento = () => {
 					</div>
 				</div>
 				<div
-					class='tab-pane fade'
+					className='tab-pane fade'
 					id='nav-profile'
 					role='tabpanel'
 					aria-labelledby='nav-profile-tab'
