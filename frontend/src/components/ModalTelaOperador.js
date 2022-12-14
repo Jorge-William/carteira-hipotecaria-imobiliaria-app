@@ -41,9 +41,7 @@ const ModalTelaOperador = (props, callback) => {
 				mutuario_id
 			)
 			if (result) {
-				navigate(
-					`/mutuario/lei/substituir-documento-lei/${mutuario_id}`
-				)
+				navigate(`/mutuario/lei/adicionardocumento/${mutuario_id}`)
 			}
 			callback()
 		}
