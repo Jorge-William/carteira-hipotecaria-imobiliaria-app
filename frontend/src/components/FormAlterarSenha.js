@@ -107,7 +107,7 @@ const FormAlterarSenha = ({ callback }) => {
 						<div className='col-10'>
 							<label
 								for='exampleFormControlInput1'
-								class='form-label text-secondary'
+								className='form-label text-secondary'
 							>
 								Digite uma nova senha
 							</label>
@@ -149,7 +149,7 @@ const FormAlterarSenha = ({ callback }) => {
 						<div className='col-10'>
 							<label
 								for='exampleFormControlInput1'
-								class='form-label text-secondary'
+								className='form-label text-secondary'
 							>
 								Repita a senha
 							</label>

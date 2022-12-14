@@ -62,7 +62,7 @@ const TabelaOperador = () => {
 		</>
 	) : (
 		<section className='mt-5'>
-			<table class='table table-hover align-middle table-responsive-md'>
+			<table className='table table-hover align-middle table-responsive-md'>
 				<thead>
 					<tr>
 						<th scope='col'>#</th>
@@ -114,12 +114,12 @@ const TabelaOperador = () => {
 							<td>
 								{dado.nome_mutuario === 'false' ? (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'red' }}
 									></i>
 								) : (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'green' }}
 									></i>
 								)}
@@ -127,12 +127,12 @@ const TabelaOperador = () => {
 							<td>
 								{dado.ordem_pag === 'false' ? (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'red' }}
 									></i>
 								) : (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'green' }}
 									></i>
 								)}
@@ -140,12 +140,12 @@ const TabelaOperador = () => {
 							<td>
 								{dado.natureza_doc === 'false' ? (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'red' }}
 									></i>
 								) : (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'green' }}
 									></i>
 								)}
@@ -153,12 +153,12 @@ const TabelaOperador = () => {
 							<td>
 								{dado.alinhamento === 'false' ? (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'red' }}
 									></i>
 								) : (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'green' }}
 									></i>
 								)}
@@ -166,12 +166,12 @@ const TabelaOperador = () => {
 							<td>
 								{dado.legibilidade === 'false' ? (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'red' }}
 									></i>
 								) : (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'green' }}
 									></i>
 								)}
@@ -179,12 +179,12 @@ const TabelaOperador = () => {
 							<td>
 								{dado.qtd_pag === 'false' ? (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'red' }}
 									></i>
 								) : (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'green' }}
 									></i>
 								)}
@@ -192,12 +192,12 @@ const TabelaOperador = () => {
 							<td>
 								{dado.scan_verso === 'false' ? (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'red' }}
 									></i>
 								) : (
 									<i
-										class='bi bi-check-square-fill'
+										className='bi bi-check-square-fill'
 										style={{ color: 'green' }}
 									></i>
 								)}

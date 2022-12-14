@@ -4,7 +4,7 @@ const renderSwitch = (status) => {
 			return (
 				<p className='ms-2' style={{ color: 'red' }}>
 					<i
-						class='bi bi-exclamation-triangle-fill'
+						className='bi bi-exclamation-triangle-fill'
 						style={{ fontSize: 28 }}
 					></i>
 				</p>
@@ -13,7 +13,7 @@ const renderSwitch = (status) => {
 			return (
 				<p className='ms-2' style={{ color: 'grey' }}>
 					<i
-						class='bi bi-patch-exclamation-fill'
+						className='bi bi-patch-exclamation-fill'
 						style={{ fontSize: 28 }}
 					></i>
 				</p>
@@ -22,7 +22,7 @@ const renderSwitch = (status) => {
 			return (
 				<p className='ms-2' style={{ color: 'green' }}>
 					<i
-						class='bi bi-patch-check-fill'
+						className='bi bi-patch-check-fill'
 						style={{ fontSize: 28 }}
 					></i>
 				</p>

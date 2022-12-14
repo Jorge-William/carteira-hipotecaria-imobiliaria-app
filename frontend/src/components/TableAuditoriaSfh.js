@@ -28,7 +28,7 @@ export default function TableAuditoriaSfh() {
 	return (
 		<section>
 			<TableFilterAuditoriaSfh data={lista} />
-			<table class='table table-hover align-middle'>
+			<table className='table table-hover align-middle'>
 				<thead>
 					<tr>
 						<th scope='col'>#</th>
