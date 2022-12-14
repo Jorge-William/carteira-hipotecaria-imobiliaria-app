@@ -27,11 +27,13 @@ const UserProfileIcon = () => {
 					<h3>{name}</h3>
 				</li>
 				<li className='dropdown-divider'></li>
-				<li>
-					<Link className='dropdown-item' to='/atividade'>
-						Atividade
-					</Link>
-				</li>
+				{type === 'administrador' && (
+					<li>
+						<Link className='dropdown-item' to='/atividade'>
+							Atividade
+						</Link>
+					</li>
+				)}
 				<li>
 					<Link className='dropdown-item' to='/alterar-senha'>
 						Alterar senha
