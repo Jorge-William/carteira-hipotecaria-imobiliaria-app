@@ -22,9 +22,9 @@ const TabelaMutuarioLei = () => {
 		getMutuariosLei().then((mutuario) => setMutLeiData(mutuario))
 	}
 	useEffect(() => {
-		setTimeout(() => {
-			fetchMutuarios()
-		}, 500)
+		// setTimeout(() => {
+		fetchMutuarios()
+		// }, 500)
 	}, [])
 
 	useEffect(() => {}, [mutLeiData])
