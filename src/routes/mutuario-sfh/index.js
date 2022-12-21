@@ -20,6 +20,10 @@ router.get("/mutuariosfh", async (req, res) => {
         model: await ImoveisSfh,
         required: false,
       },
+      {
+        model: await DocumentosSfh,
+        required: false,
+      },
     ],
     order: [["id", "ASC"]],
   });
@@ -34,7 +38,8 @@ router.post("/alldatamutuario-sfh-byid", async (req, res) => {
   if (process.env.NODE_ENV === "production") {
     // PRODUÇÃO
     // eslint-disable-next-line
-    const [result] =			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
+		const [result] =
+			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
     FROM app_chi.mutuarios_sfh a
     LEFT JOIN app_chi.imoveis_sfh b 
@@ -44,7 +49,8 @@ router.post("/alldatamutuario-sfh-byid", async (req, res) => {
   } else if (process.env.NODE_ENV === "development") {
     // DESENVOLVIMENTO
     // eslint-disable-next-line
-    const [result] =			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
+		const [result] =
+			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
     FROM testdb.mutuarios_sfh a
     LEFT JOIN testdb.imoveis_sfh b 
@@ -94,7 +100,7 @@ router.post("/criar-mutuario-sfh", async (req, res) => {
     uf,
   } = req.body.imovelData;
   // eslint-disable-next-line
-  const { usuario_id } = req.body;
+	const { usuario_id } = req.body
 
   try {
     // verificar se a pasta já existe
@@ -143,7 +149,7 @@ router.post("/criar-mutuario-sfh", async (req, res) => {
       const log = await Log.create({
         data: Date.now(),
         // eslint-disable-next-line
-        usuario: usuario_id,
+				usuario: usuario_id,
         tabela: "Mutuario SFH",
         operacao: `A pasta ${pasta.toUpperCase()}, do mutuário ${nome}, foi criada.`,
       });
@@ -182,7 +188,7 @@ router.post("/retorna-id-mutuario-sfh", async (req, res) => {
 
 router.post("/editar-mutuario-sfh", async (req, res) => {
   // eslint-disable-next-line
-  const { usuario_id } = req.body.params;
+	const { usuario_id } = req.body.params
 
   const {
     id,

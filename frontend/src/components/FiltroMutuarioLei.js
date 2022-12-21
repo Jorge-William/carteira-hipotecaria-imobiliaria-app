@@ -25,6 +25,8 @@ const FiltroMutuarioLei = (data) => {
 			cidade: '',
 			numero: ''
 		})
+		setCurrentPage(1)
+		setItensPorPagina({ itens: 15 })
 	}
 
 	const asArray = Object.entries(data)[0][1][0]
@@ -33,7 +35,7 @@ const FiltroMutuarioLei = (data) => {
 		// console.log('OIIIIII JORGE')
 	}, [busca])
 
-	console.log(asArray)
+	// console.log(asArray)
 	const lowercaseBairro = busca.bairro.toLowerCase()
 	const lowercaseNome = busca.nome.toLowerCase()
 	const lowercaseComplemento = busca.complemento.toLowerCase()
@@ -63,12 +65,6 @@ const FiltroMutuarioLei = (data) => {
 	}
 
 	const itensFiltrados = asArray.filter((item) => {
-		// item.includes(busca.toLowerCase())
-		// .filter((item) => item !== undefined)
-
-		//  ||
-		// 	item.bairro.toLowerCase().includes(lowercaseBairro)
-		//
 		return (
 			item.nome.toLowerCase().includes(lowercaseNome) &&
 			item.imoveis_leis[0].end.toLowerCase().includes(lowercaseEnd) &&
@@ -308,6 +304,34 @@ const FiltroMutuarioLei = (data) => {
 								>
 									Hip
 								</th>
+								<th scope='col'>Total</th>
+								<th scope='col'>
+									<p className='' style={{ color: 'red' }}>
+										<i
+											className='bi bi-exclamation-triangle-fill'
+											style={{ fontSize: 18 }}
+										></i>
+									</p>
+								</th>
+								<th scope='col'>
+									<p className='' style={{ color: 'grey' }}>
+										<i
+											className='bi bi-patch-exclamation-fill'
+											style={{ fontSize: 18 }}
+										></i>
+									</p>
+								</th>
+								<th scope='col'>
+									<div
+										className=''
+										style={{ color: 'green' }}
+									>
+										<i
+											className='bi bi-patch-check-fill'
+											style={{ fontSize: 18 }}
+										></i>
+									</div>
+								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -315,7 +339,8 @@ const FiltroMutuarioLei = (data) => {
 								return (
 									<tr key={key}>
 										<th scope='row'>{data.id}</th>
-										<td>{data.rotulo}</td>
+										<td>
+											{data.rotulo}</td>
 										{/*  Link nomes */}
 										<td>
 											<Link to={`/detalhes/${data.id}`}>
@@ -381,6 +406,31 @@ const FiltroMutuarioLei = (data) => {
 												) : (
 													<i className='ms-2 bi indisponivel bi-house'></i>
 												))}
+										</td>
+										<td>{data.documentos_leis.length}</td>
+										<td>
+											{
+												data.documentos_leis.filter(
+													(item) =>
+														item.status === '0'
+												).length
+											}
+										</td>
+										<td>
+											{
+												data.documentos_leis.filter(
+													(item) =>
+														item.status === '10'
+												).length
+											}
+										</td>
+										<td>
+											{
+												data.documentos_leis.filter(
+													(item) =>
+														item.status === '3'
+												).length
+											}
 										</td>
 									</tr>
 								)

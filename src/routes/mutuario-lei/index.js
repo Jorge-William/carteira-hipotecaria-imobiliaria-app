@@ -21,6 +21,10 @@ router.get("/mutuariolei", async (req, res) => {
         model: await ImoveisLei,
         required: false,
       },
+      {
+        model: await DocumentosLei,
+        required: false,
+      },
     ],
     order: [["id", "ASC"]],
   });
@@ -36,7 +40,7 @@ router.post("/alldatamutuariobyid", async (req, res) => {
     // PRODUÇÃO
     // eslint-disable-next-line
 		const [result] =
-    // eslint-disable-next-line
+			// eslint-disable-next-line
 			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
     FROM app_chi.mutuarios_lei a
@@ -48,8 +52,8 @@ router.post("/alldatamutuariobyid", async (req, res) => {
     // DESENVOLVIMENTO
     // eslint-disable-next-line
 		const [result] =
-    // eslint-disable-next-line
-	await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
+			// eslint-disable-next-line
+			await sequelize.query(`SELECT a.id, rotulo, nome, end, numero, bairro, cidade, uf, hipoteca,escritura, complemento,
     telefone, dt_liq, num_obra, cod_historico, obs, cep
     FROM testdb.mutuarios_lei a
     LEFT JOIN testdb.imoveis_lei b 
@@ -83,9 +87,7 @@ router.post("/criar-mutuario-lei", async (req, res) => {
     nome, tipo, pasta, telefone,
   } = req.body.mutuarioData;
 
-  const {
-    usuario_id,
-  } = req.body;
+  const { usuario_id } = req.body;
 
   const {
     dataLiq,
@@ -150,7 +152,7 @@ router.post("/criar-mutuario-lei", async (req, res) => {
       const log = await Log.create({
         data: Date.now(),
         // eslint-disable-next-line
-        usuario: usuario_id,
+				usuario: usuario_id,
         tabela: "Mutuario Lei",
         operacao: `A pasta ${pasta.toUpperCase()}, do mutuário ${nome}, foi criada.`,
       });
@@ -190,12 +192,13 @@ router.post("/retorna-id-mutuario", async (req, res) => {
 
 // ------------------------------------ Editar  ------------------------------------
 // eslint-disable-next-line
-router.post("/editar-mutuario-lei", async (req, res) => {
-// eslint-disable-next-line
-  const { usuario_id } = req.body.params;
+router.post('/editar-mutuario-lei', async (req, res) => {
+  // eslint-disable-next-line
+	const { usuario_id } = req.body.params
 
   const {
-    id, nome,
+    id,
+    nome,
     end,
     numero,
     bairro,
@@ -206,43 +209,49 @@ router.post("/editar-mutuario-lei", async (req, res) => {
     complemento,
     telefone,
     // eslint-disable-next-line
-    dt_liq,
+		dt_liq,
     // eslint-disable-next-line
-    num_obra,
+		num_obra,
     // eslint-disable-next-line
-    cod_historico,
+		cod_historico,
     obs,
     cep,
   } = req.body.params.dados;
   try {
-    const imovel = await ImoveisLei.update({
-      // eslint-disable-next-line
-      dt_liq,
-      escritura,
-      hipoteca,
-      // eslint-disable-next-line
-      num_obra,
-      // eslint-disable-next-line
-      cod_historico,
-      obs,
-      cep,
-      end,
-      numero,
-      complemento,
-      bairro,
-      cidade,
-      uf,
-    }, { where: { mutuario_id: id } });
+    const imovel = await ImoveisLei.update(
+      {
+        // eslint-disable-next-line
+				dt_liq,
+        escritura,
+        hipoteca,
+        // eslint-disable-next-line
+				num_obra,
+        // eslint-disable-next-line
+				cod_historico,
+        obs,
+        cep,
+        end,
+        numero,
+        complemento,
+        bairro,
+        cidade,
+        uf,
+      },
+      { where: { mutuario_id: id } },
+    );
 
-    const mutuario = await MutuariosLei.update({ nome, telefone }, { where: { id } });
+    const mutuario = await MutuariosLei.update(
+      { nome, telefone },
+      { where: { id } },
+    );
 
     const log = await Log.create({
       data: Date.now(),
       // eslint-disable-next-line
-      usuario: usuario_id,
+			usuario: usuario_id,
       tabela: "Mutuario Lei",
       // eslint-disable-next-line
-      operacao: `O Mutuario ${nome}, id: ${id} foi editado.`
+			operacao: `O Mutuario ${nome}, id: ${id} foi editado.`
     });
     console.log(log);
     if (mutuario && imovel && log) {
