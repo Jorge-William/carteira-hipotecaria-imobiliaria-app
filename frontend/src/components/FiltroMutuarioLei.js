@@ -35,7 +35,7 @@ const FiltroMutuarioLei = (data) => {
 		// console.log('OIIIIII JORGE')
 	}, [busca])
 
-	console.log(asArray)
+	// console.log(asArray)
 	const lowercaseBairro = busca.bairro.toLowerCase()
 	const lowercaseNome = busca.nome.toLowerCase()
 	const lowercaseComplemento = busca.complemento.toLowerCase()
@@ -65,12 +65,6 @@ const FiltroMutuarioLei = (data) => {
 	}
 
 	const itensFiltrados = asArray.filter((item) => {
-		// item.includes(busca.toLowerCase())
-		// .filter((item) => item !== undefined)
-
-		//  ||
-		// 	item.bairro.toLowerCase().includes(lowercaseBairro)
-		//
 		return (
 			item.nome.toLowerCase().includes(lowercaseNome) &&
 			item.imoveis_leis[0].end.toLowerCase().includes(lowercaseEnd) &&
@@ -345,7 +339,8 @@ const FiltroMutuarioLei = (data) => {
 								return (
 									<tr key={key}>
 										<th scope='row'>{data.id}</th>
-										<td>{data.rotulo}</td>
+										<td>
+											{data.rotulo}</td>
 										{/*  Link nomes */}
 										<td>
 											<Link to={`/detalhes/${data.id}`}>
