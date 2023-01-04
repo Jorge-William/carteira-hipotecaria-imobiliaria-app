@@ -10,7 +10,8 @@ const Atividades = () => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [itensPorPagina, setItensPorPagina] = useState({ itens: 15 })
 	const [busca, setBusca] = useState({
-		name: ''
+		name: '',
+		date: ''
 	})
 	console.log(lista)
 	useEffect(() => {
@@ -25,7 +26,8 @@ const Atividades = () => {
 
 	const callback = () => {
 		setBusca({
-			name: ''
+			name: '',
+			date: ''
 			// complemento: '',
 			// bairro: '',
 			// rotulo: '',
@@ -95,16 +97,16 @@ const Atividades = () => {
 							})}
 						</datalist>
 					</div>
-					<div className='col-md-2'>
+					{/* <div className='col-md-2'>
 						<input
 							type='date'
 							className='form-control'
-							id='campo-rotulo'
-							// onChange={handleChange}
-							name='rotulo'
+							id='campo-date'
+							onChange={handleChange}
+							name='date'
 							// value={busca.rotulo}
 						/>
-					</div>
+					</div> */}
 					<div className='col-md-2'>
 						<select
 							className='form-select'
