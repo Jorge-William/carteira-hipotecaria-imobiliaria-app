@@ -8,6 +8,10 @@ const Atividades = () => {
 	const [lista, setLista] = useState([])
 	// const [isLoading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
+	const [itensPorPagina, setItensPorPagina] = useState({ itens: 15 })
+	const [busca, setBusca] = useState({
+		name: ''
+	})
 	console.log(lista)
 	useEffect(() => {
 		setTimeout(() => {
@@ -19,13 +23,51 @@ const Atividades = () => {
 		}, 1000)
 	}, [])
 
-	const PageSize = 15
+	const callback = () => {
+		setBusca({
+			name: ''
+			// complemento: '',
+			// bairro: '',
+			// rotulo: '',
+			// end: '',
+			// cidade: '',
+			// numero: ''
+		})
+		setCurrentPage(1)
+		setItensPorPagina({ itens: 15 })
+	}
+
+	// const asArray = Object.entries(data)[0][1][0]
+
+	useEffect(() => {
+		// console.log('OIIIIII JORGE')
+	}, [busca])
+
+	const lowercaseName = busca.name.toLowerCase()
+
+	const handleChange = (event) => {
+		const value = event.target.value
+		const name = event.target.name
+
+		setBusca({ ...busca, [name]: value })
+	}
+
+	const handleItens = (event) => {
+		const value = event.target.value
+		const name = event.target.name
+
+		setItensPorPagina({ ...itensPorPagina, [name]: value })
+	}
+
+	const itensFiltrados = lista.filter((item) => {
+		return item.name.toLowerCase().includes(lowercaseName)
+	})
 
 	const currentTableData = useMemo(() => {
-		const firstPageIndex = (currentPage - 1) * PageSize
-		const lastPageIndex = firstPageIndex + PageSize
-		return lista.slice(firstPageIndex, lastPageIndex)
-	}, [currentPage, lista])
+		const firstPageIndex = (currentPage - 1) * itensPorPagina.itens
+		const lastPageIndex = firstPageIndex + itensPorPagina.itens
+		return itensFiltrados.slice(firstPageIndex, lastPageIndex)
+	}, [currentPage, itensPorPagina, itensFiltrados])
 
 	return lista.length === 0 ? (
 		<>
@@ -36,6 +78,61 @@ const Atividades = () => {
 		<>
 			<h1>Log de atividades</h1>
 			<section className='mt-5'>
+				<div className='row mb-5'>
+					<div className='col-md-4'>
+						<input
+							className='form-control'
+							list='rotulo'
+							id='campo-nome'
+							placeholder='Nome do Operador'
+							onChange={handleChange}
+							name='name'
+							value={busca.name}
+						/>
+						<datalist id='nome'>
+							{lista.map((item, key) => {
+								return <option key={key} value={item.name} />
+							})}
+						</datalist>
+					</div>
+					<div className='col-md-2'>
+						<input
+							type='date'
+							className='form-control'
+							id='campo-rotulo'
+							// onChange={handleChange}
+							name='rotulo'
+							// value={busca.rotulo}
+						/>
+					</div>
+					<div className='col-md-2'>
+						<select
+							className='form-select'
+							aria-label='Default select example'
+							name='itens'
+							onChange={handleItens}
+						>
+							<option selected value='15'>
+								Itens por página
+							</option>
+							<option value={Number.parseInt(10)}>10</option>
+							<option value={20}>20</option>
+							<option value={30}>30</option>
+							<option value={40}>40</option>
+							<option value={50}>50</option>
+							<option value={60}>60</option>
+						</select>
+					</div>
+					<div className='col'>
+						<button
+							className='btn btn-primary'
+							type='button'
+							onClick={() => callback()}
+						>
+							Limpar busca
+						</button>
+					</div>
+				</div>
 				<div className='table-responsive'>
 					<table className='table table-hover align-middle'>
 						<thead>
@@ -69,7 +166,7 @@ const Atividades = () => {
 					className='pagination-bar justify-content-center mt-3'
 					currentPage={currentPage}
 					totalCount={lista.length}
-					pageSize={PageSize}
+					pageSize={itensPorPagina.itens}
 					onPageChange={(page) => setCurrentPage(page)}
 				/>
 			</section>
