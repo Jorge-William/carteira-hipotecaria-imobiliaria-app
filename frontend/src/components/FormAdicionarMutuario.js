@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
+import InputMask from 'react-input-mask'
 import 'animate.css'
 
 const FormAdicionarMutuario = () => {
@@ -35,7 +36,6 @@ const FormAdicionarMutuario = () => {
 	const localStorageData = JSON.parse(localStorage.getItem('userData'))
 
 	const { id: usuario_id } = localStorageData
-
 
 	const handleChangeMutuario = (event) => {
 		const value = event.target.value
@@ -211,11 +211,12 @@ const FormAdicionarMutuario = () => {
 								>
 									Telefone
 								</label>
-								<input
+								<InputMask
+									mask='(999) 99999-9999'
 									type='text'
 									className='form-control'
 									id='exampleInputEmail1'
-									aria-describedby='emailHelp'
+									aria-describedby='Telefone'
 									name='telefone'
 									onChange={handleChangeMutuario}
 								/>
@@ -318,7 +319,7 @@ const FormAdicionarMutuario = () => {
 								</div>
 								<div className='mb-3 col-md-4'>
 									<label
-										htmlFor='exampleInputEmail1'
+										htmlFor='observacao'
 										className='form-label'
 									>
 										Observação
@@ -326,7 +327,7 @@ const FormAdicionarMutuario = () => {
 									<input
 										type='text'
 										className='form-control'
-										id='exampleInputEmail1'
+										id='observacao'
 										aria-describedby='emailHelp'
 										name='obs'
 										onChange={handleChangeImovel}
@@ -336,16 +337,14 @@ const FormAdicionarMutuario = () => {
 						</section>
 						<div className='row'>
 							<div className='mb-3 col-md-2'>
-								<label
-									htmlFor='exampleInputEmail1'
-									className='form-label'
-								>
+								<label htmlFor='CEP' className='form-label'>
 									CEP
 								</label>
-								<input
+								<InputMask
+									mask='99999-999'
 									type='text'
 									className='form-control'
-									id='exampleInputEmail1'
+									id='CEP'
 									aria-describedby='emailHelp'
 									name='cep'
 									onChange={handleChangeImovel}
@@ -353,7 +352,7 @@ const FormAdicionarMutuario = () => {
 							</div>
 							<div className='mb-3 col-md-3'>
 								<label
-									htmlFor='exampleInputEmail1'
+									htmlFor='endereco'
 									className='form-label'
 								>
 									Endereço
@@ -361,7 +360,7 @@ const FormAdicionarMutuario = () => {
 								<input
 									type='text'
 									className='form-control'
-									id='exampleInputEmail1'
+									id='endereco'
 									aria-describedby='emailHelp'
 									name='endereco'
 									onChange={handleChangeImovel}
@@ -439,12 +438,14 @@ const FormAdicionarMutuario = () => {
 									UF
 								</label>
 								<input
-									type='text'
+									type='char'
 									className='form-control'
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='uf'
 									onChange={handleChangeImovel}
+									maxlength='2'
+									style={{ textTransform: 'uppercase' }}
 								/>
 							</div>
 						</div>

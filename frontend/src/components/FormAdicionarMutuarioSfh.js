@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
+import InputMask from 'react-input-mask'
 import 'animate.css'
 
 const FormAdicionarMutuario = () => {
@@ -36,7 +37,6 @@ const FormAdicionarMutuario = () => {
 	const localStorageData = JSON.parse(localStorage.getItem('userData'))
 
 	const { id: usuario_id } = localStorageData
-
 
 	const handleChangeMutuario = (event) => {
 		const value = event.target.value
@@ -216,11 +216,12 @@ const FormAdicionarMutuario = () => {
 								>
 									Telefone
 								</label>
-								<input
+								<InputMask
+									mask='(999) 99999-9999'
 									type='text'
 									className='form-control'
 									id='exampleInputEmail1'
-									aria-describedby='emailHelp'
+									aria-describedby='Telefone'
 									name='telefone'
 									onChange={handleChangeMutuario}
 								/>
@@ -347,7 +348,8 @@ const FormAdicionarMutuario = () => {
 								>
 									CEP
 								</label>
-								<input
+								<InputMask
+									mask='99999-999'
 									type='text'
 									className='form-control'
 									id='exampleInputEmail1'
@@ -444,12 +446,14 @@ const FormAdicionarMutuario = () => {
 									UF
 								</label>
 								<input
-									type='text'
+									type='char'
 									className='form-control'
 									id='exampleInputEmail1'
 									aria-describedby='emailHelp'
 									name='uf'
 									onChange={handleChangeImovel}
+									maxlength='2'
+									style={{ textTransform: 'uppercase' }}
 								/>
 							</div>
 						</div>
